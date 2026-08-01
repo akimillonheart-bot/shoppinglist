@@ -1,0 +1,270 @@
+[
+  {
+    "id": "nikusoboro_harusame_umami_mushi",
+    "title": "肉そぼろと春雨のうまみ蒸し",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "春雨(乾燥)", "amount": "16～20g", "janCode": "" },
+      { "name": "にんじん", "amount": "0.5本", "janCode": "" },
+      { "name": "ニラ", "amount": "0.5束", "janCode": "" },
+      { "name": "もやし", "amount": "1袋", "janCode": "" },
+      { "name": "豚ひき肉", "amount": "150g", "janCode": "" },
+      { "name": "しょうゆ", "amount": "大さじ2", "janCode": "" },
+      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
+      { "name": "酒", "amount": "大さじ1", "janCode": "" },
+      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
+      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" },
+      { "name": "片栗粉", "amount": "小さじ1", "janCode": "" },
+      { "name": "しょうゆ（仕上げ用）", "amount": "適宜", "janCode": "" }
+    ],
+    "instructions": [
+      "春雨は水につけてもどす。にんじんはせん切りにし、ニラは食べやすい長さに切る。",
+      "せいろにクッキングシートを敷き、水けをきった春雨、にんじん、もやし、ひき肉を順に重ね入れる。混ぜ合わせたソース(A)を回しかける。",
+      "中火で12分蒸す。軽く混ぜてニラをのせ、さらに3分蒸す。",
+      "お好みでしょうゆをかける。"
+    ]
+  },
+  {
+    "id": "butakoma_peeman_oyster_mushi",
+    "title": "豚こまとピーマンのオイスター蒸し",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "豚こま肉", "amount": "150g", "janCode": "" },
+      { "name": "片栗粉", "amount": "小さじ1", "janCode": "" },
+      { "name": "ピーマン", "amount": "2個", "janCode": "" },
+      { "name": "玉ねぎ", "amount": "0.5個", "janCode": "" },
+      { "name": "ごま油", "amount": "小さじ1", "janCode": "" },
+      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
+      { "name": "酒", "amount": "小さじ2", "janCode": "" },
+      { "name": "しょうゆ", "amount": "小さじ1", "janCode": "" },
+      { "name": "おろしにんにく", "amount": "少々", "janCode": "" }
+    ],
+    "instructions": [
+      "豚肉はAをもみ込み、片栗粉をまぶす。ピーマンは細切りにし、玉ねぎは薄切りにする。",
+      "せいろにクッキングシートを敷き、玉ねぎ、豚肉、ピーマンを順に重ね入れる。",
+      "中火で10～12分蒸す。",
+      "ごま油を回しかける。"
+    ]
+  },
+  {
+    "id": "butakoma_bulgogi",
+    "title": "豚こまプルコギ",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "豚こま肉", "amount": "200～250g", "janCode": "" },
+      { "name": "玉ねぎ", "amount": "0.5個", "janCode": "" },
+      { "name": "にんじん", "amount": "0.5本", "janCode": "" },
+      { "name": "ピーマン", "amount": "2個", "janCode": "" },
+      { "name": "しょうゆ", "amount": "適量", "janCode": "" },
+      { "name": "白いりごま", "amount": "適量", "janCode": "" },
+      { "name": "しょうゆ（ソースA）", "amount": "大さじ2", "janCode": "" },
+      { "name": "砂糖", "amount": "大さじ1", "janCode": "" },
+      { "name": "酒", "amount": "大さじ1", "janCode": "" },
+      { "name": "ごま油", "amount": "大さじ1", "janCode": "" },
+      { "name": "おろししょうが", "amount": "小さじ1", "janCode": "" },
+      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" }
+    ],
+    "instructions": [
+      "ポリ袋に豚肉、ソース(A)を入れてもみ込む。玉ねぎは薄切りにし、にんじん、ピーマンは細切りにする。ポリ袋に加えて豚肉と混ぜ合わせる。",
+      "せいろにクッキングシートを敷き、1を入れる。",
+      "中火で12分蒸す。",
+      "しょうゆを回しかけて味をととのえ、白いりごまをふる。"
+    ]
+  },
+  {
+    "id": "butanira_tama",
+    "title": "豚ニラ玉",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "卵", "amount": "2個", "janCode": "" },
+      { "name": "豚こま肉", "amount": "250g", "janCode": "" },
+      { "name": "片栗粉", "amount": "大さじ1", "janCode": "" },
+      { "name": "ニラ", "amount": "0.5束", "janCode": "" },
+      { "name": "マヨネーズ", "amount": "大さじ1", "janCode": "" },
+      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
+      { "name": "しょうゆ", "amount": "大さじ1", "janCode": "" },
+      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
+      { "name": "酒", "amount": "大さじ1", "janCode": "" },
+      { "name": "砂糖", "amount": "大さじ0.5", "janCode": "" },
+      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" },
+      { "name": "塩", "amount": "少々", "janCode": "" },
+      { "name": "こしょう", "amount": "少々", "janCode": "" }
+    ],
+    "instructions": [
+      "ポリ袋に豚肉を入れ、ソース(A)をもみ込み、片栗粉をまぶす。",
+      "せいろにクッキングシートを敷き、1をタレごと入れる。",
+      "中火で8分蒸す。蒸している間にニラを食べやすい長さに切る。ボウルに卵を割り入れ、マヨネーズを加えて溶き混ぜる。豚肉にニラをのせ、卵液を回しかける。さらに2~3分蒸す。"
+    ]
+  },
+  {
+    "id": "nikumaki_kimchi",
+    "title": "肉巻きキムチ",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "豚バラ薄切り肉", "amount": "6枚", "janCode": "" },
+      { "name": "白菜キムチ", "amount": "90g", "janCode": "" },
+      { "name": "スライスチーズ", "amount": "2枚", "janCode": "" },
+      { "name": "焼きのり(3切りサイズ)", "amount": "3枚", "janCode": "" },
+      { "name": "塩", "amount": "少々", "janCode": "" },
+      { "name": "こしょう", "amount": "少々", "janCode": "" }
+    ],
+    "instructions": [
+      "スライスチーズは縦3等分、焼きのりは縦半分に切る。豚肉を広げ、塩、こしょうをふり、焼きのり、チーズ、キムチを等分にのせて巻く。",
+      "せいろにクッキングシートを敷き、1を並べ入れる。",
+      "中火で10分蒸す。"
+    ]
+  },
+  {
+    "id": "itsumono_seiro_mushi",
+    "title": "いつものせいろ蒸し",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "豆苗", "amount": "1袋", "janCode": "" },
+      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "8~10枚", "janCode": "" },
+      { "name": "れんこん", "amount": "80g(4~5cm)", "janCode": "" },
+      { "name": "長いも", "amount": "50g(3cm)", "janCode": "" },
+      { "name": "きのこ類(何種でも)", "amount": "50g", "janCode": "" },
+      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
+      { "name": "味噌", "amount": "小さじ1", "janCode": "" },
+      { "name": "豆乳", "amount": "大さじ1", "janCode": "" },
+      { "name": "ごま油", "amount": "小さじ2", "janCode": "" },
+      { "name": "白すりごま", "amount": "大さじ1", "janCode": "" },
+      { "name": "白いりごま", "amount": "小さじ1", "janCode": "" }
+    ],
+    "instructions": [
+      "味噌つけダレの材料を混ぜ合わせておく。豆苗は豚肉に均等にのせて豆苗をそろえ、豚肉を少しずらしながら巻いていく。れんこん、長いもは5mm厚さの輪切りにする(大きい場合は半月切り)。きのこはほぐす。",
+      "せいろにクッキングシートを敷き、1を肉巻きは巻き終わりを下にして並べる。",
+      "ふたをして16分ほど蒸す(様子を見て調整する)。味噌つけダレを添える。"
+    ]
+  },
+  {
+    "id": "sengiri_yasai_no_butaniku_mushi",
+    "title": "千切り野菜の豚肉蒸し",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "塩", "amount": "ひとつまみ", "janCode": "" },
+      { "name": "キャベツ", "amount": "0.1個", "janCode": "" },
+      { "name": "にんじん", "amount": "0.3本", "janCode": "" },
+      { "name": "ごぼう", "amount": "0.5本", "janCode": "" },
+      { "name": "玉ねぎ", "amount": "0.25個", "janCode": "" },
+      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "10枚", "janCode": "" },
+      { "name": "白だし", "amount": "大さじ3", "janCode": "" }
+    ],
+    "instructions": [
+      "せいろにクッキングシートを敷き、塩少々をふる。",
+      "キャベツ、にんじん、ごぼう、玉ねぎは千切りにしてせいろに順に重ねていく(スライサーを使うとラク)。野菜の上に豚肉を広げてのせる。白だしを回しかける。",
+      "ふたをし、豚肉に火が通るまで10分ほど蒸す(様子を見て調整する)。"
+    ]
+  },
+  {
+    "id": "nasu_to_butaniku_no_chuuka_mushi",
+    "title": "なすと豚肉の中華蒸し",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "なす", "amount": "3本", "janCode": "" },
+      { "name": "にんじん", "amount": "0.3本", "janCode": "" },
+      { "name": "小ねぎ(または長ねぎ)", "amount": "適量", "janCode": "" },
+      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "80g", "janCode": "" },
+      { "name": "にんにく(みじん切り)", "amount": "1片分", "janCode": "" },
+      { "name": "しょうが(みじん切り)", "amount": "0.3片分", "janCode": "" },
+      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
+      { "name": "醤油", "amount": "大さじ2", "janCode": "" },
+      { "name": "酢", "amount": "小さじ1", "janCode": "" },
+      { "name": "ごま油", "amount": "小さじ2", "janCode": "" },
+      { "name": "白いりごま", "amount": "大さじ1", "janCode": "" }
+    ],
+    "instructions": [
+      "なすは縦4~6等分に切り、1%の塩水(水1lに対し塩10g〈小さじ2〉)に10分ほどつけて色止めをする。調味料の材料を混ぜ合わせておく。にんじんは千切りに、小ねぎは小口切りにする(長ねぎの場合はみじん切り)。",
+      "せいろにクッキングシートを敷き、にんじんをのせる。その上になすの皮目を上側にして並べ、豚肉を広げてのせる。野菜の上に肉を広げ、にんにくとしょうがを散らす。",
+      "にんにくとしょうがを散らしてふたをし、15分蒸す。",
+      "蒸し上がったら調味料をかけ、小ねぎをのせる。"
+    ]
+  },
+  {
+    "id": "peeman_no_nikuzume",
+    "title": "ピーマンの肉詰め",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "ピーマン", "amount": "7~8個", "janCode": "" },
+      { "name": "豚ひき肉", "amount": "200g", "janCode": "" },
+      { "name": "醤油", "amount": "小さじ2", "janCode": "" },
+      { "name": "にんにく(すりおろし)", "amount": "1片分", "janCode": "" },
+      { "name": "みりん", "amount": "小さじ2", "janCode": "" },
+      { "name": "片栗粉", "amount": "大さじ1", "janCode": "" },
+      { "name": "ごま油", "amount": "小さじ1", "janCode": "" },
+      { "name": "醤油（中華風ダレ）", "amount": "小さじ1", "janCode": "" },
+      { "name": "オイスターソース", "amount": "小さじ1", "janCode": "" },
+      { "name": "はちみつ", "amount": "小さじ1", "janCode": "" },
+      { "name": "七味唐辛子", "amount": "適宜", "janCode": "" }
+    ],
+    "instructions": [
+      "ピーマンはヘタを指で押して外す(種は気にならなければ残っていてもOK)。中華風ダレの材料を混ぜ合わせる。",
+      "ひき肉とソース(A)をボウルに入れてよく混ぜ、ピーマンの中に詰める。",
+      "せいろにクッキングシートを敷き、1をのせてふたをして14分ほど蒸す(タネに竹串を刺して火の通りを確認。透明な肉汁が出てきたら火が通っている)。",
+      "中華風ダレを食べる直前に回しかける。"
+    ]
+  },
+  {
+    "id": "chiichiku_no_nikumaki",
+    "title": "チーちくの肉巻き",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "ちくわ", "amount": "6本", "janCode": "" },
+      { "name": "さけるチーズ", "amount": "3本", "janCode": "" },
+      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "6枚", "janCode": "" },
+      { "name": "小麦粉", "amount": "適量", "janCode": "" },
+      { "name": "醤油", "amount": "大さじ1", "janCode": "" },
+      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
+      { "name": "すりごま", "amount": "大さじ2", "janCode": "" },
+      { "name": "酒", "amount": "大さじ1", "janCode": "" },
+      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
+      { "name": "にんにく", "amount": "少々", "janCode": "" },
+      { "name": "バター", "amount": "10g", "janCode": "" }
+    ],
+    "instructions": [
+      "ちくわは縦に切り目を入れて開き、縦半分に切ったチーズをはさむ。同様に計6個作る。豚肉を広げて小麦粉をふり、肉を巻いて半分の長さに切る。",
+      "せいろにクッキングシートを敷き、小さな耐熱容器につけダレの材料を入れて真ん中に置く。",
+      "容器の周りに2を立てて並べる。ふたをして15分蒸す。"
+    ]
+  },
+  {
+    "id": "chuukafuu_ankake",
+    "title": "中華風あんかけ",
+    "servings": 2,
+    "assignedDay": "",
+    "ingredients": [
+      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "100g", "janCode": "" },
+      { "name": "白菜(ざく切り)", "amount": "3枚分", "janCode": "" },
+      { "name": "もやし", "amount": "ひとつかみ", "janCode": "" },
+      { "name": "玉ねぎ(1cm幅に切る)", "amount": "0.15個分", "janCode": "" },
+      { "name": "にんじん(1cm幅の短冊切り)", "amount": "2~3cm分", "janCode": "" },
+      { "name": "ニラ(2~3cmの長さに切る)", "amount": "0.3束分", "janCode": "" },
+      { "name": "むきエビ", "amount": "3~4尾", "janCode": "" },
+      { "name": "醤油", "amount": "大さじ1", "janCode": "" },
+      { "name": "鶏ガラスープの素", "amount": "小さじ2", "janCode": "" },
+      { "name": "酒", "amount": "大さじ2", "janCode": "" },
+      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
+      { "name": "ごま油", "amount": "大さじ1", "janCode": "" },
+      { "name": "りんご酢(または酢)", "amount": "小さじ1", "janCode": "" },
+      { "name": "砂糖", "amount": "小さじ0.5", "janCode": "" },
+      { "name": "にんにく(みじん切り)", "amount": "小さじ1", "janCode": "" },
+      { "name": "片栗粉", "amount": "大さじ2", "janCode": "" },
+      { "name": "水", "amount": "大さじ4", "janCode": "" }
+    ],
+    "instructions": [
+      "豚肉は食べやすい大きさに切り、塩・こしょう各少々(分量外)をまぶす。ソース(A)は混ぜ合わせておく。",
+      "冷凍用保存容器にクッキングシートを敷き、野菜とエビを入れたら豚肉を広げてのせ、Aの調味料を回しかけてふたをし、冷凍する。",
+      "食べるときは冷凍のままクッキングシートごとせいろに移し、ふたをして18分ほど、途中で2~3回混ぜながら蒸す(様子を見て調整する)。凍っていない状態で蒸すときは15分ほど。"
+    ]
+  }
+]
