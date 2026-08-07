@@ -1,0 +1,510 @@
+[
+  {
+    "ingredientId": "ing_soy_sauce",
+    "name": "醤油",
+    "category": "調味料",
+    "isExempt": true,
+    "product": [
+      {
+        "barcode": "4901515122531",
+        "productName": "キッコーマン いつでも新鮮しょうゆ 400ml",
+        "capacity": "400ml"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_pork_loin",
+    "name": "豚ロース肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000001",
+      "productName": "国産豚ロース薄切り",
+      "capacity": "200g"
+    }
+  },
+  {
+    "ingredientId": "ing_onion",
+    "name": "玉ねぎ",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000002",
+      "productName": "玉ねぎ（バラ売り／袋）",
+      "capacity": "1個"
+    }
+  },
+  {
+    "ingredientId": "ing_chicken_thigh",
+    "name": "鶏もも肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000003",
+      "productName": "国産鶏もも肉",
+      "capacity": "250g"
+    }
+  },
+  {
+    "ingredientId": "ing_potato_starch",
+    "name": "片栗粉",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4901001000001",
+      "productName": "片栗粉 300g",
+      "capacity": "300g"
+    }
+  },
+  {
+    "ingredientId": "ing_oil",
+    "name": "揚げ油",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4901760000001",
+      "productName": "サラダ油 1000g",
+      "capacity": "1000g"
+    }
+  },
+  {
+    "ingredientId": "ing_salmon",
+    "name": "生鮭",
+    "category": "魚介類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000004",
+      "productName": "生鮭切り身",
+      "capacity": "2切"
+    }
+  },
+  {
+    "ingredientId": "ing_butter",
+    "name": "バター",
+    "category": "乳製品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4903050000001",
+      "productName": "北海道バター 200g",
+      "capacity": "200g"
+    }
+  },
+  {
+    "ingredientId": "ing_enoki",
+    "name": "えのき",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000005",
+      "productName": "えのき茸",
+      "capacity": "1株"
+    }
+  },
+  {
+    "ingredientId": "ing_beef_slice",
+    "name": "牛切り落とし肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000006",
+      "productName": "牛切り落とし",
+      "capacity": "200g"
+    }
+  },
+  {
+    "ingredientId": "ing_burdock",
+    "name": "ごぼう",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "洗いがリごぼう",
+      "capacity": "1本"
+    }
+  },
+  {
+    "ingredientId": "ing_konjac",
+    "name": "こんにゃく",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4901111000001",
+      "productName": "板こんにゃく",
+      "capacity": "250g"
+    }
+  },
+  {
+    "ingredientId": "ing_tofu",
+    "name": "豆腐",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4902222000001",
+      "productName": "絹ごし豆腐",
+      "capacity": "300g"
+    }
+  },
+  {
+    "ingredientId": "ing_egg",
+    "name": "卵",
+    "category": "卵",
+    "isExempt": false,
+    "product": {
+      "barcode": "4903333000001",
+      "productName": "新鮮たまご 10個入",
+      "capacity": "10個"
+    }
+  },
+  {
+    "ingredientId": "ing_rice",
+    "name": "ご飯",
+    "category": "穀類",
+    "isExempt": false,
+    "product": {
+      "barcode": "4904444000001",
+      "productName": "パックごはん 3食入",
+      "capacity": "3食"
+    }
+  },
+  {
+    "ingredientId": "ing_udon",
+    "name": "うどん",
+    "category": "穀類",
+    "isExempt": false,
+    "product": {
+      "barcode": "4905555000001",
+      "productName": "冷凍ゆでうどん 5食入",
+      "capacity": "5食"
+    }
+  },
+  {
+    "ingredientId": "ing_pork_minced",
+    "name": "豚ひき肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000009",
+      "productName": "国産豚ひき肉",
+      "capacity": "200g"
+    }
+  },
+  {
+    "ingredientId": "ing_cabbage",
+    "name": "キャベツ",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000010",
+      "productName": "キャベツ（1玉）",
+      "capacity": "1玉"
+    }
+  },
+  {
+    "ingredientId": "ing_pork_belly",
+    "name": "豚バラ肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000011",
+      "productName": "国産豚バラ薄切り",
+      "capacity": "200g"
+    }
+  },
+  {
+    "ingredientId": "ing_kimchi",
+    "name": "キムチ",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4906666000001",
+      "productName": "白菜キムチ",
+      "capacity": "300g"
+    }
+  },
+  {
+    "ingredientId": "ing_shimeji",
+    "name": "しめじ",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000012",
+      "productName": "ぶなしめじ",
+      "capacity": "1株"
+    }
+  },
+  {
+    "ingredientId": "ing_bacon",
+    "name": "ベーコン",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4907777000001",
+      "productName": "ハーフベーコン 4パック",
+      "capacity": "4パック"
+    }
+  },
+  {
+    "ingredientId": "ing_daikon",
+    "name": "大根",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000013",
+      "productName": "大根（1本）",
+      "capacity": "1本"
+    }
+  },
+  {
+    "ingredientId": "ing_carrot",
+    "name": "人参",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000014",
+      "productName": "人参（3本束）",
+      "capacity": "3本"
+    }
+  },
+  {
+    "ingredientId": "ing_miso",
+    "name": "味噌",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "だし入り味噌 750g",
+      "capacity": "750g"
+    }
+  },
+  {
+    "ingredientId": "ing_pork_slice",
+    "name": "豚薄切り肉",
+    "category": "肉類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000015",
+      "productName": "国産豚切り落とし",
+      "capacity": "300g"
+    }
+  },
+  {
+    "ingredientId": "ing_garlic",
+    "name": "にんにく",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "4909999000001",
+      "productName": "おろしにんにくチューブ",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_ginger",
+    "name": "生姜",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "4909999000002",
+      "productName": "おろし生姜チューブ",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_starch",
+    "name": "鶏のから揚げデータ",
+    "category": "鶏のから揚げデータ",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000016",
+      "productName": "鶏のから揚げデータ",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_salt",
+    "name": "塩",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000017",
+      "productName": "塩データ",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_potato",
+    "name": "ジャガイモ",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000018",
+      "productName": "野菜",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_pork_mince",
+    "name": "豚ひき肉",
+    "category": "肉",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000018",
+      "productName": "豚ひき肉",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_bean_sprouts",
+    "name": "豆もやし",
+    "category": "やさい",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000019",
+      "productName": "豆もやし",
+      "capacity": "90g"
+    }
+  },
+  {
+    "ingredientId": "ing_beef_pork_mince",
+    "name": "豚合いびき肉",
+    "category": "肉",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000020",
+      "productName": "豚合いびきひき肉",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_yakisoba_noodle",
+    "name": "焼きそば麺",
+    "category": "麺",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000021",
+      "productName": "焼きそば麺",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_green_onion",
+    "name": "青ネギ",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000022",
+      "productName": "青ネギ",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_chuka_noodle",
+    "name": "中華麺",
+    "category": "麺",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000223",
+      "productName": "中華麺",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_cucumber",
+    "name": "きゅうり",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000224",
+      "productName": "きゅうり",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_ham",
+    "name": "ハム",
+    "category": "肉類",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000225",
+      "productName": "ハム",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_macaroni",
+    "name": "マカロニ",
+    "category": "麺",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000226",
+      "productName": "マカロニ",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_milk",
+    "name": "牛乳",
+    "category": "乳製品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000227",
+      "productName": "牛乳",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_cheese",
+    "name": "チーズ",
+    "category": "乳製品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000228",
+      "productName": "チーズ",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_cheese",
+    "name": "チーズ",
+    "category": "乳製品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000228",
+      "productName": "チーズ",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_sesame_oil",
+    "name": "ごま油",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000228",
+      "productName": "ごま油",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_beef_mince",
+    "name": "牛ひき肉",
+    "category": "肉",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000229",
+      "productName": "牛ひき肉",
+      "capacity": "100g"
+    }
+  },
+  {
+    "ingredientId": "ing_spinach",
+    "name": "ほうれん草",
+    "category": "野菜",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "ほうれん草",
+      "capacity": "100g"
+    }
+  }
+]

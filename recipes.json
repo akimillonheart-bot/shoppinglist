@@ -1,270 +1,931 @@
 [
   {
-    "id": "nikusoboro_harusame_umami_mushi",
-    "title": "肉そぼろと春雨のうまみ蒸し",
+    "recipeId": "rec_001",
+    "title": "豚の生姜焼き",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "木曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "春雨(乾燥)", "amount": "16～20g", "janCode": "" },
-      { "name": "にんじん", "amount": "0.5本", "janCode": "" },
-      { "name": "ニラ", "amount": "0.5束", "janCode": "" },
-      { "name": "もやし", "amount": "1袋", "janCode": "" },
-      { "name": "豚ひき肉", "amount": "150g", "janCode": "" },
-      { "name": "しょうゆ", "amount": "大さじ2", "janCode": "" },
-      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
-      { "name": "酒", "amount": "大さじ1", "janCode": "" },
-      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
-      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" },
-      { "name": "片栗粉", "amount": "小さじ1", "janCode": "" },
-      { "name": "しょうゆ（仕上げ用）", "amount": "適宜", "janCode": "" }
+      {
+        "ingredientId": "ing_pork_loin",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_soy_sauce",
+        "amount": 30,
+        "unit": "ml"
+      }
     ],
-    "instructions": [
-      "春雨は水につけてもどす。にんじんはせん切りにし、ニラは食べやすい長さに切る。",
-      "せいろにクッキングシートを敷き、水けをきった春雨、にんじん、もやし、ひき肉を順に重ね入れる。混ぜ合わせたソース(A)を回しかける。",
-      "中火で12分蒸す。軽く混ぜてニラをのせ、さらに3分蒸す。",
-      "お好みでしょうゆをかける。"
+    "steps": [
+      {"stepNo": 1, "text": "豚肉と玉ねぎを一口大に切る。"},
+      {"stepNo": 2, "text": "フライパンで炒めて調味料を絡める。"}
     ]
   },
   {
-    "id": "butakoma_peeman_oyster_mushi",
-    "title": "豚こまとピーマンのオイスター蒸し",
+    "recipeId": "rec_002",
+    "title": "鶏の唐揚げ",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "金曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "豚こま肉", "amount": "150g", "janCode": "" },
-      { "name": "片栗粉", "amount": "小さじ1", "janCode": "" },
-      { "name": "ピーマン", "amount": "2個", "janCode": "" },
-      { "name": "玉ねぎ", "amount": "0.5個", "janCode": "" },
-      { "name": "ごま油", "amount": "小さじ1", "janCode": "" },
-      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
-      { "name": "酒", "amount": "小さじ2", "janCode": "" },
-      { "name": "しょうゆ", "amount": "小さじ1", "janCode": "" },
-      { "name": "おろしにんにく", "amount": "少々", "janCode": "" }
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 250,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_soy_sauce",
+        "amount": 20,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_starch",
+        "amount": 30,
+        "unit": "g"
+      }
     ],
-    "instructions": [
-      "豚肉はAをもみ込み、片栗粉をまぶす。ピーマンは細切りにし、玉ねぎは薄切りにする。",
-      "せいろにクッキングシートを敷き、玉ねぎ、豚肉、ピーマンを順に重ね入れる。",
-      "中火で10～12分蒸す。",
-      "ごま油を回しかける。"
+    "steps": [
+      {"stepNo": 1, "text": "鶏肉を一口大に切り、調味料に漬け込む。"},
+      {"stepNo": 2, "text": "片栗粉をまぶして油で揚げる。"}
     ]
   },
   {
-    "id": "butakoma_bulgogi",
-    "title": "豚こまプルコギ",
+    "recipeId": "rec_003",
+    "title": "鮭の塩焼き",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "土曜日",
+    "meals": "breakfast",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "豚こま肉", "amount": "200～250g", "janCode": "" },
-      { "name": "玉ねぎ", "amount": "0.5個", "janCode": "" },
-      { "name": "にんじん", "amount": "0.5本", "janCode": "" },
-      { "name": "ピーマン", "amount": "2個", "janCode": "" },
-      { "name": "しょうゆ", "amount": "適量", "janCode": "" },
-      { "name": "白いりごま", "amount": "適量", "janCode": "" },
-      { "name": "しょうゆ（ソースA）", "amount": "大さじ2", "janCode": "" },
-      { "name": "砂糖", "amount": "大さじ1", "janCode": "" },
-      { "name": "酒", "amount": "大さじ1", "janCode": "" },
-      { "name": "ごま油", "amount": "大さじ1", "janCode": "" },
-      { "name": "おろししょうが", "amount": "小さじ1", "janCode": "" },
-      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" }
+      {
+        "ingredientId": "ing_salmon",
+        "amount": 2,
+        "unit": "切れ"
+      },
+      {
+        "ingredientId": "ing_salt",
+        "amount": 3,
+        "unit": "g"
+      }
     ],
-    "instructions": [
-      "ポリ袋に豚肉、ソース(A)を入れてもみ込む。玉ねぎは薄切りにし、にんじん、ピーマンは細切りにする。ポリ袋に加えて豚肉と混ぜ合わせる。",
-      "せいろにクッキングシートを敷き、1を入れる。",
-      "中火で12分蒸す。",
-      "しょうゆを回しかけて味をととのえ、白いりごまをふる。"
+    "steps": [
+      {"stepNo": 1, "text": "鮭に塩を振ってしばらくおく。"},
+      {"stepNo": 2, "text": "グリルで両面をこんがり焼く。"}
     ]
   },
   {
-    "id": "butanira_tama",
-    "title": "豚ニラ玉",
+    "recipeId": "rec_004",
+    "title": "肉じゃが",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "日曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "卵", "amount": "2個", "janCode": "" },
-      { "name": "豚こま肉", "amount": "250g", "janCode": "" },
-      { "name": "片栗粉", "amount": "大さじ1", "janCode": "" },
-      { "name": "ニラ", "amount": "0.5束", "janCode": "" },
-      { "name": "マヨネーズ", "amount": "大さじ1", "janCode": "" },
-      { "name": "オイスターソース", "amount": "大さじ1", "janCode": "" },
-      { "name": "しょうゆ", "amount": "大さじ1", "janCode": "" },
-      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
-      { "name": "酒", "amount": "大さじ1", "janCode": "" },
-      { "name": "砂糖", "amount": "大さじ0.5", "janCode": "" },
-      { "name": "おろしにんにく", "amount": "小さじ1", "janCode": "" },
-      { "name": "塩", "amount": "少々", "janCode": "" },
-      { "name": "こしょう", "amount": "少々", "janCode": "" }
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_potato",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_carrot",
+        "amount": 0.5,
+        "unit": "本"
+      }
     ],
-    "instructions": [
-      "ポリ袋に豚肉を入れ、ソース(A)をもみ込み、片栗粉をまぶす。",
-      "せいろにクッキングシートを敷き、1をタレごと入れる。",
-      "中火で8分蒸す。蒸している間にニラを食べやすい長さに切る。ボウルに卵を割り入れ、マヨネーズを加えて溶き混ぜる。豚肉にニラをのせ、卵液を回しかける。さらに2~3分蒸す。"
+    "steps": [
+      {"stepNo": 1, "text": "野菜と肉を食べやすい大きさに切る。"},
+      {"stepNo": 2, "text": "鍋で炒めてから出汁と調味料で煮込む。"}
     ]
   },
   {
-    "id": "nikumaki_kimchi",
-    "title": "肉巻きキムチ",
+    "recipeId": "rec_005",
+    "title": "麻婆豆腐",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "月曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "豚バラ薄切り肉", "amount": "6枚", "janCode": "" },
-      { "name": "白菜キムチ", "amount": "90g", "janCode": "" },
-      { "name": "スライスチーズ", "amount": "2枚", "janCode": "" },
-      { "name": "焼きのり(3切りサイズ)", "amount": "3枚", "janCode": "" },
-      { "name": "塩", "amount": "少々", "janCode": "" },
-      { "name": "こしょう", "amount": "少々", "janCode": "" }
+      {
+        "ingredientId": "ing_tofu",
+        "amount": 1,
+        "unit": "丁"
+      },
+      {
+        "ingredientId": "ing_pork_mince",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_garlic",
+        "amount": 1,
+        "unit": "片"
+      }
     ],
-    "instructions": [
-      "スライスチーズは縦3等分、焼きのりは縦半分に切る。豚肉を広げ、塩、こしょうをふり、焼きのり、チーズ、キムチを等分にのせて巻く。",
-      "せいろにクッキングシートを敷き、1を並べ入れる。",
-      "中火で10分蒸す。"
+    "steps": [
+      {"stepNo": 1, "text": "豆腐をサイコロ状に切る。"},
+      {"stepNo": 2, "text": "ひき肉とにんにくを炒め、調味料と豆腐を入れて煮る。"}
     ]
   },
   {
-    "id": "itsumono_seiro_mushi",
-    "title": "いつものせいろ蒸し",
+    "recipeId": "rec_006",
+    "title": "野菜炒め",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "火曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "豆苗", "amount": "1袋", "janCode": "" },
-      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "8~10枚", "janCode": "" },
-      { "name": "れんこん", "amount": "80g(4~5cm)", "janCode": "" },
-      { "name": "長いも", "amount": "50g(3cm)", "janCode": "" },
-      { "name": "きのこ類(何種でも)", "amount": "50g", "janCode": "" },
-      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
-      { "name": "味噌", "amount": "小さじ1", "janCode": "" },
-      { "name": "豆乳", "amount": "大さじ1", "janCode": "" },
-      { "name": "ごま油", "amount": "小さじ2", "janCode": "" },
-      { "name": "白すりごま", "amount": "大さじ1", "janCode": "" },
-      { "name": "白いりごま", "amount": "小さじ1", "janCode": "" }
+      {
+        "ingredientId": "ing_cabbage",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_bean_sprouts",
+        "amount": 1,
+        "unit": "袋"
+      },
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 100,
+        "unit": "g"
+      }
     ],
-    "instructions": [
-      "味噌つけダレの材料を混ぜ合わせておく。豆苗は豚肉に均等にのせて豆苗をそろえ、豚肉を少しずらしながら巻いていく。れんこん、長いもは5mm厚さの輪切りにする(大きい場合は半月切り)。きのこはほぐす。",
-      "せいろにクッキングシートを敷き、1を肉巻きは巻き終わりを下にして並べる。",
-      "ふたをして16分ほど蒸す(様子を見て調整する)。味噌つけダレを添える。"
+    "steps": [
+      {"stepNo": 1, "text": "野菜と肉を食べやすい大きさに切る。"},
+      {"stepNo": 2, "text": "強火で一気に炒め合わせる。"}
     ]
   },
   {
-    "id": "sengiri_yasai_no_butaniku_mushi",
-    "title": "千切り野菜の豚肉蒸し",
-    "servings": 2,
-    "assignedDay": "",
+    "recipeId": "rec_007",
+    "title": "カレーライス",
+    "servings": 4,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "塩", "amount": "ひとつまみ", "janCode": "" },
-      { "name": "キャベツ", "amount": "0.1個", "janCode": "" },
-      { "name": "にんじん", "amount": "0.3本", "janCode": "" },
-      { "name": "ごぼう", "amount": "0.5本", "janCode": "" },
-      { "name": "玉ねぎ", "amount": "0.25個", "janCode": "" },
-      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "10枚", "janCode": "" },
-      { "name": "白だし", "amount": "大さじ3", "janCode": "" }
+      {
+        "ingredientId": "ing_beef_slice",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_potato",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_carrot",
+        "amount": 1,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 1,
+        "unit": "個"
+      }
     ],
-    "instructions": [
-      "せいろにクッキングシートを敷き、塩少々をふる。",
-      "キャベツ、にんじん、ごぼう、玉ねぎは千切りにしてせいろに順に重ねていく(スライサーを使うとラク)。野菜の上に豚肉を広げてのせる。白だしを回しかける。",
-      "ふたをし、豚肉に火が通るまで10分ほど蒸す(様子を見て調整する)。"
+    "steps": [
+      {"stepNo": 1, "text": "具材を一口大に切る。"},
+      {"stepNo": 2, "text": "鍋で炒めて水を加え、柔らかくなるまで煮込んでからルウを入れる。"}
     ]
   },
   {
-    "id": "nasu_to_butaniku_no_chuuka_mushi",
-    "title": "なすと豚肉の中華蒸し",
+    "recipeId": "rec_008",
+    "title": "オムライス",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "木曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "なす", "amount": "3本", "janCode": "" },
-      { "name": "にんじん", "amount": "0.3本", "janCode": "" },
-      { "name": "小ねぎ(または長ねぎ)", "amount": "適量", "janCode": "" },
-      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "80g", "janCode": "" },
-      { "name": "にんにく(みじん切り)", "amount": "1片分", "janCode": "" },
-      { "name": "しょうが(みじん切り)", "amount": "0.3片分", "janCode": "" },
-      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
-      { "name": "醤油", "amount": "大さじ2", "janCode": "" },
-      { "name": "酢", "amount": "小さじ1", "janCode": "" },
-      { "name": "ごま油", "amount": "小さじ2", "janCode": "" },
-      { "name": "白いりごま", "amount": "大さじ1", "janCode": "" }
+      {
+        "ingredientId": "ing_rice",
+        "amount": 400,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_egg",
+        "amount": 4,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 100,
+        "unit": "g"
+      }
     ],
-    "instructions": [
-      "なすは縦4~6等分に切り、1%の塩水(水1lに対し塩10g〈小さじ2〉)に10分ほどつけて色止めをする。調味料の材料を混ぜ合わせておく。にんじんは千切りに、小ねぎは小口切りにする(長ねぎの場合はみじん切り)。",
-      "せいろにクッキングシートを敷き、にんじんをのせる。その上になすの皮目を上側にして並べ、豚肉を広げてのせる。野菜の上に肉を広げ、にんにくとしょうがを散らす。",
-      "にんにくとしょうがを散らしてふたをし、15分蒸す。",
-      "蒸し上がったら調味料をかけ、小ねぎをのせる。"
+    "steps": [
+      {"stepNo": 1, "text": "鶏肉とご飯をケチャップで炒めてチキンライスを作る。"},
+      {"stepNo": 2, "text": "薄焼き卵で包む。"}
     ]
   },
   {
-    "id": "peeman_no_nikuzume",
-    "title": "ピーマンの肉詰め",
+    "recipeId": "rec_009",
+    "title": "ハンバーグ",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "金曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "ピーマン", "amount": "7~8個", "janCode": "" },
-      { "name": "豚ひき肉", "amount": "200g", "janCode": "" },
-      { "name": "醤油", "amount": "小さじ2", "janCode": "" },
-      { "name": "にんにく(すりおろし)", "amount": "1片分", "janCode": "" },
-      { "name": "みりん", "amount": "小さじ2", "janCode": "" },
-      { "name": "片栗粉", "amount": "大さじ1", "janCode": "" },
-      { "name": "ごま油", "amount": "小さじ1", "janCode": "" },
-      { "name": "醤油（中華風ダレ）", "amount": "小さじ1", "janCode": "" },
-      { "name": "オイスターソース", "amount": "小さじ1", "janCode": "" },
-      { "name": "はちみつ", "amount": "小さじ1", "janCode": "" },
-      { "name": "七味唐辛子", "amount": "適宜", "janCode": "" }
+      {
+        "ingredientId": "ing_beef_pork_mince",
+        "amount": 300,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_egg",
+        "amount": 1,
+        "unit": "個"
+      }
     ],
-    "instructions": [
-      "ピーマンはヘタを指で押して外す(種は気にならなければ残っていてもOK)。中華風ダレの材料を混ぜ合わせる。",
-      "ひき肉とソース(A)をボウルに入れてよく混ぜ、ピーマンの中に詰める。",
-      "せいろにクッキングシートを敷き、1をのせてふたをして14分ほど蒸す(タネに竹串を刺して火の通りを確認。透明な肉汁が出てきたら火が通っている)。",
-      "中華風ダレを食べる直前に回しかける。"
+    "steps": [
+      {"stepNo": 1, "text": "みじん切りにした玉ねぎとひき肉、卵、調味料を混ぜ合わせてこねる。"},
+      {"stepNo": 2, "text": "小判型にまとめてフライパンで両面を焼き、蒸し焼きにする。"}
     ]
   },
   {
-    "id": "chiichiku_no_nikumaki",
-    "title": "チーちくの肉巻き",
+    "recipeId": "rec_010",
+    "title": "親子丼",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "土曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "ちくわ", "amount": "6本", "janCode": "" },
-      { "name": "さけるチーズ", "amount": "3本", "janCode": "" },
-      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "6枚", "janCode": "" },
-      { "name": "小麦粉", "amount": "適量", "janCode": "" },
-      { "name": "醤油", "amount": "大さじ1", "janCode": "" },
-      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
-      { "name": "すりごま", "amount": "大さじ2", "janCode": "" },
-      { "name": "酒", "amount": "大さじ1", "janCode": "" },
-      { "name": "砂糖", "amount": "小さじ1", "janCode": "" },
-      { "name": "にんにく", "amount": "少々", "janCode": "" },
-      { "name": "バター", "amount": "10g", "janCode": "" }
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_egg",
+        "amount": 3,
+        "unit": "個"
+      }
     ],
-    "instructions": [
-      "ちくわは縦に切り目を入れて開き、縦半分に切ったチーズをはさむ。同様に計6個作る。豚肉を広げて小麦粉をふり、肉を巻いて半分の長さに切る。",
-      "せいろにクッキングシートを敷き、小さな耐熱容器につけダレの材料を入れて真ん中に置く。",
-      "容器の周りに2を立てて並べる。ふたをして15分蒸す。"
+    "steps": [
+      {"stepNo": 1, "text": "鶏肉と玉ねぎを切る。"},
+      {"stepNo": 2, "text": "出汁で煮てから溶き卵でとじ、ご飯にのせる。"}
     ]
   },
   {
-    "id": "chuukafuu_ankake",
-    "title": "中華風あんかけ",
+    "recipeId": "rec_011",
+    "title": "焼きそば",
     "servings": 2,
-    "assignedDay": "",
+    "recommendedDay": "日曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     "ingredients": [
-      { "name": "豚薄切り肉(バラ、ロースなど)", "amount": "100g", "janCode": "" },
-      { "name": "白菜(ざく切り)", "amount": "3枚分", "janCode": "" },
-      { "name": "もやし", "amount": "ひとつかみ", "janCode": "" },
-      { "name": "玉ねぎ(1cm幅に切る)", "amount": "0.15個分", "janCode": "" },
-      { "name": "にんじん(1cm幅の短冊切り)", "amount": "2~3cm分", "janCode": "" },
-      { "name": "ニラ(2~3cmの長さに切る)", "amount": "0.3束分", "janCode": "" },
-      { "name": "むきエビ", "amount": "3~4尾", "janCode": "" },
-      { "name": "醤油", "amount": "大さじ1", "janCode": "" },
-      { "name": "鶏ガラスープの素", "amount": "小さじ2", "janCode": "" },
-      { "name": "酒", "amount": "大さじ2", "janCode": "" },
-      { "name": "みりん", "amount": "大さじ1", "janCode": "" },
-      { "name": "ごま油", "amount": "大さじ1", "janCode": "" },
-      { "name": "りんご酢(または酢)", "amount": "小さじ1", "janCode": "" },
-      { "name": "砂糖", "amount": "小さじ0.5", "janCode": "" },
-      { "name": "にんにく(みじん切り)", "amount": "小さじ1", "janCode": "" },
-      { "name": "片栗粉", "amount": "大さじ2", "janCode": "" },
-      { "name": "水", "amount": "大さじ4", "janCode": "" }
+      {
+        "ingredientId": "ing_yakisoba_noodle",
+        "amount": 2,
+        "unit": "玉"
+      },
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_cabbage",
+        "amount": 150,
+        "unit": "g"
+      }
     ],
-    "instructions": [
-      "豚肉は食べやすい大きさに切り、塩・こしょう各少々(分量外)をまぶす。ソース(A)は混ぜ合わせておく。",
-      "冷凍用保存容器にクッキングシートを敷き、野菜とエビを入れたら豚肉を広げてのせ、Aの調味料を回しかけてふたをし、冷凍する。",
-      "食べるときは冷凍のままクッキングシートごとせいろに移し、ふたをして18分ほど、途中で2~3回混ぜながら蒸す(様子を見て調整する)。凍っていない状態で蒸すときは15分ほど。"
+    "steps": [
+      {"stepNo": 1, "text": "具材と麺を準備する。"},
+      {"stepNo": 2, "text": "肉と野菜を炒め、麺と付属のソースを加えて炒め合わせる。"}
+    ]
+  },
+  {
+    "recipeId": "rec_012",
+    "title": "チャーハン",
+    "servings": 2,
+    "recommendedDay": "月曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_rice",
+        "amount": 400,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_egg",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_green_onion",
+        "amount": 0.5,
+        "unit": "本"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "ねぎをみじん切りにする。"},
+      {"stepNo": 2, "text": "卵とご飯、具材を強火でパラパラになるまで炒める。"}
+    ]
+  },
+  {
+    "recipeId": "rec_013",
+    "title": "冷やし中華",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "lunch",
+    "month": [ 6, 7, 8, 9],
+    "ingredients": [
+      {
+        "ingredientId": "ing_chuka_noodle",
+        "amount": 2,
+        "unit": "玉"
+      },
+      {
+        "ingredientId": "ing_cucumber",
+        "amount": 1,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_ham",
+        "amount": 4,
+        "unit": "枚"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "麺を茹でて冷水でしめる。具材を細切りにする。"},
+      {"stepNo": 2, "text": "皿に麺と具材を盛り付け、タレをかける。"}
+    ]
+  },
+  {
+    "recipeId": "rec_014",
+    "title": "グラタン",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_macaroni",
+        "amount": 80,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_milk",
+        "amount": 300,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_cheese",
+        "amount": 50,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "マカロニを茹で、具材を炒めてホワイトソースを作る。"},
+      {"stepNo": 2, "text": "耐熱皿に入れてチーズを乗せ、オーブンで焼く。"}
+    ]
+  },
+  {
+    "recipeId": "rec_015",
+    "title": "クリームシチュー",
+    "servings": 4,
+    "recommendedDay": "木曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_potato",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_carrot",
+        "amount": 1,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_milk",
+        "amount": 400,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "具材を一口大に切って鍋で炒める。"},
+      {"stepNo": 2, "text": "水と牛乳、シチュールウを入れて煮込む。"}
+    ]
+  },
+  {
+    "recipeId": "rec_016",
+    "title": "豚キムチ",
+    "servings": 2,
+    "recommendedDay": "金曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_kimchi",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_sesame_oil",
+        "amount": 15,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉を一口大に切る。"},
+      {"stepNo": 2, "text": "ごま油で豚肉とキムチを一緒に炒める。"}
+    ]
+  },
+  {
+    "recipeId": "rec_017",
+    "title": "ビビンバ",
+    "servings": 2,
+    "recommendedDay": "土曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_beef_mince",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_spinach",
+        "amount": 1,
+        "unit": "束"
+      },
+      {
+        "ingredientId": "ing_bean_sprouts",
+        "amount": 1,
+        "unit": "袋"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "ナムルを作り、ひき肉を甘辛く炒める。"},
+      {"stepNo": 2, "text": "ご飯の上に彩りよく盛り付ける。"}
+    ]
+  },
+  {
+    "recipeId": "rec_018",
+    "title": "餃子",
+    "servings": 2,
+    "recommendedDay": "日曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_mince",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_cabbage",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_gyoza_skin",
+        "amount": 20,
+        "unit": "枚"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "みじん切りにした野菜とひき肉を混ぜて餡を作る。"},
+      {"stepNo": 2, "text": "皮で包み、フライパンで蒸し焼きにする。"}
+    ]
+  },
+  {
+    "recipeId": "rec_019",
+    "title": "回鍋肉",
+    "servings": 2,
+    "recommendedDay": "月曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_cabbage",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_pepper",
+        "amount": 1,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉と野菜を一口大に切る。"},
+      {"stepNo": 2, "text": "甜麺醤などの調味料とともに炒め合わせる。"}
+    ]
+  },
+  {
+    "recipeId": "rec_020",
+    "title": "青椒肉絲",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_pepper",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_bamboo_shoot",
+        "amount": 100,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉、ピーマン、筍を細切りにする。"},
+      {"stepNo": 2, "text": "強火で一気に炒めて調味料で味付けする。"}
+    ]
+  },
+  {
+    "recipeId": "rec_021",
+    "title": "酢豚",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_block",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_pepper",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_pineapple",
+        "amount": 2,
+        "unit": "切れ"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉を一口大に切って揚げ、野菜も一口大に切る。"},
+      {"stepNo": 2, "text": "野菜を炒めてから肉を加え、甘酢あんを絡める。"}
+    ]
+  },
+  {
+    "recipeId": "rec_022",
+    "title": "チキン南蛮",
+    "servings": 2,
+    "recommendedDay": "木曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_chicken_thigh",
+        "amount": 250,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_egg",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_vinegar",
+        "amount": 30,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "鶏肉に小麦粉と溶き卵をつけて揚げ、甘酢だれに浸す。"},
+      {"stepNo": 2, "text": "ゆで卵とマヨネーズで作ったタルタルソースをかける。"}
+    ]
+  },
+  {
+    "recipeId": "rec_023",
+    "title": "牛丼",
+    "servings": 2,
+    "recommendedDay": "金曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_beef_slice",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_soy_sauce",
+        "amount": 40,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "玉ねぎを薄切りにする。"},
+      {"stepNo": 2, "text": "鍋に出汁、調味料、玉ねぎ、牛肉を入れて煮込む。"}
+    ]
+  },
+  {
+    "recipeId": "rec_024",
+    "title": "サバの味噌煮",
+    "servings": 2,
+    "recommendedDay": "土曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_mackerel",
+        "amount": 2,
+        "unit": "切れ"
+      },
+      {
+        "ingredientId": "ing_ginger",
+        "amount": 1,
+        "unit": "かけ"
+      },
+      {
+        "ingredientId": "ing_miso",
+        "amount": 40,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "サバの霜降りをする。生姜は千切りにする。"},
+      {"stepNo": 2, "text": "鍋に調味料と水を入れて煮立たせ、サバと生姜を入れて落とし蓋をして煮る。"}
+    ]
+  },
+  {
+    "recipeId": "rec_025",
+    "title": "タコライス",
+    "servings": 2,
+    "recommendedDay": "日曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_beef_pork_mince",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_lettuce",
+        "amount": 3,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_tomato",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_cheese",
+        "amount": 40,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "ひき肉をスパイスや調味料で炒めてタコミートを作る。"},
+      {"stepNo": 2, "text": "ご飯の上にレタス、トマト、チーズ、タコミートをのせる。"}
+    ]
+  },
+  {
+    "recipeId": "rec_026",
+    "title": "ポークチャップ",
+    "servings": 2,
+    "recommendedDay": "月曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_loin",
+        "amount": 2,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_ketchup",
+        "amount": 50,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉に塩コショウをして焼き、取り出す。"},
+      {"stepNo": 2, "text": "玉ねぎを炒め、ケチャップなどの調味料を合わせてソースを作り、肉に絡める。"}
+    ]
+  },
+  {
+    "recipeId": "rec_027",
+    "title": "エビチリ",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "dinner",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_shrimp",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_garlic",
+        "amount": 1,
+        "unit": "片"
+      },
+      {
+        "ingredientId": "ing_green_onion",
+        "amount": 0.5,
+        "unit": "本"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "エビの下処理をして片栗粉をまぶし、軽く焼く。"},
+      {"stepNo": 2, "text": "調味料と炒め合わせ、とろみをつける。"}
+    ]
+  },
+  {
+    "recipeId": "rec_028",
+    "title": "ジャーマンポテト",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "breakfast",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_potato",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_bacon",
+        "amount": 1,
+        "unit": "パック"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 0.5,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "ジャガイモを電子レンジで加熱し、一口大に切る。ベーコンと玉ねぎも切る。"},
+      {"stepNo": 2, "text": "フライパンで香ばしく炒め合わせる。"}
+    ]
+  },
+  {
+    "recipeId": "rec_029",
+    "title": "ミネストローネ",
+    "servings": 4,
+    "recommendedDay": "木曜日",
+    "meals": "breakfast",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_tomato_canned",
+        "amount": 1,
+        "unit": "缶"
+      },
+      {
+        "ingredientId": "ing_onion",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_carrot",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_bacon",
+        "amount": 1,
+        "unit": "パック"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "具材をすべてサイコロ状に切る。"},
+      {"stepNo": 2, "text": "鍋で炒めてからトマト缶と水、コンソメを入れて煮込む。"}
+    ]
+  },
+  {
+    "recipeId": "rec_030",
+    "title": "豚汁",
+    "servings": 4,
+    "recommendedDay": "金曜日",
+    "meals": "breakfast",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pork_slice",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_daikon",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_carrot",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_miso",
+        "amount": 50,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "豚肉と根菜を食べやすい大きさに切る。"},
+      {"stepNo": 2, "text": "鍋で炒めて出汁を加え、柔らかくなったら味噌を溶き入れる。"}
+    ]
+  },
+  {
+    "recipeId": "rec_031",
+    "title": "和風パスタ",
+    "servings": 2,
+    "recommendedDay": "土曜日",
+    "meals": "lunch",
+    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "ingredients": [
+      {
+        "ingredientId": "ing_pasta",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_mushroom",
+        "amount": 1,
+        "unit": "パック"
+      },
+      {
+        "ingredientId": "ing_soy_sauce",
+        "amount": 30,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {"stepNo": 1, "text": "パスタを茹で、きのこ類を食べやすく切る。"},
+      {"stepNo": 2, "text": "フライパンで具材を炒め、茹で上がったパスタと醤油で和える。"}
     ]
   }
 ]

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>レシピ一覧 - KotoRo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen font-sans">
+    <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-3xl sm:shadow-2xl flex flex-col overflow-hidden relative border-x sm:border border-gray-300">
+      <header class="bg-emerald-600 text-white px-4 py-4 flex items-center justify-between shadow-md z-10">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-utensils text-xl"></i>
+          <h1 class="font-bold text-base tracking-wider">レシピ一覧</h1>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="goBackToMenu()" class="text-white hover:text-emerald-200 text-sm px-2 py-1 rounded transition"><i class="fa-solid fa-xmark text-lg"></i> 戻る</button>
+        </div>
+      </header>
+
+      <div class="bg-white px-4 py-3 border-b border-gray-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <label for="monthSelect" class="text-xs font-bold text-gray-600">月選択:</label>
+          <select id="monthSelect" class="bg-gray-50 border border-gray-300 text-gray-800 text-xs rounded-lg px-3 py-1.5 focus:ring-emerald-500 focus:border-emerald-500"></select>
+        </div>
+
+        <div>
+          <span class="text-xs font-bold text-gray-600 block mb-1">推奨曜日:</span>
+          <div id="dayTabs" class="grid grid-cols-7 gap-1"></div>
+        </div>
+
+        <div>
+          <span class="text-xs font-bold text-gray-600 block mb-1">食事:</span>
+          <div id="mealTabs" class="grid grid-cols-3 gap-1"></div>
+        </div>
+      </div>
+
+      <main class="flex-1 overflow-y-auto p-4 space-y-3 pb-40">
+        <div id="recipeListContainer" class="space-y-3">
+          <div class="text-center py-10 text-gray-400 text-sm">読み込み中...</div>
+        </div>
+      </main>
+
+      <!-- 決定ボタンバー（ボトムナビの上に固定表示） -->
+      <div class="absolute bottom-16 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg z-10 flex items-center justify-between">
+        <div class="text-xs text-gray-500">
+          <span id="selectedCountText" class="font-bold text-emerald-600">0件選択中</span>
+        </div>
+        <button id="decideMenuBtn" disabled onclick="decideMenu()" class="bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 text-white font-bold text-sm px-6 py-2.5 rounded-xl shadow transition duration-200">この献立に決定する。</button>
+      </div>
+
+      <!-- ボトムナビゲーションバー（KotoRo共通・5タブ：レシピがアクティブ） -->
+      <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 flex justify-around items-center text-gray-400 z-20 shadow-lg">
+        <button onclick="location.href='index.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-basket-shopping text-base"></i>
+          <span class="text-[10px] mt-1">買い物</span>
+        </button>
+        <button onclick="location.href='stock.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-boxes-stacked text-base"></i>
+          <span class="text-[10px] mt-1">在庫</span>
+        </button>
+        <button class="flex flex-col items-center hover:text-emerald-600 focus:outline-none -mt-4">
+          <div class="bg-emerald-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md border-4 border-slate-50 hover:bg-emerald-700 transition-all">
+            <i class="fa-solid fa-barcode text-lg"></i>
+          </div>
+          <span class="text-[10px] mt-0.5 font-bold text-gray-600">スキャン</span>
+        </button>
+        <button onclick="location.href='menu.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-calendar-days text-base"></i>
+          <span class="text-[10px] mt-1">献立</span>
+        </button>
+        <button class="flex flex-col items-center text-emerald-600 focus:outline-none font-bold">
+          <i class="fa-solid fa-utensils text-base"></i>
+          <span class="text-[10px] mt-1">レシピ</span>
+        </button>
+      </nav>
+    </div>
+
+    <script>
+      // 曜日の定義（土曜始まり）
+      const daysOfWeek = ["土曜日", "日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
+      // 食事の定義
+      const mealsMap = {
+        breakfast: "朝食",
+        lunch: "昼食",
+        dinner: "夕食",
+      };
+
+      // クエリパラメータの取得
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryWeekStart = urlParams.get("weekStart") || "";
+      const currentMonth = new Date().getMonth() + 1;
+      const queryMonth = parseInt(urlParams.get("month")) || currentMonth;
+
+      // 今日の曜日の判定
+      function getTodayDayName() {
+        const jsDay = new Date().getDay(); // 0:日, 1:月, ... 6:土
+        // 土(6)->土曜, 日(0)->日曜, 月(1)->月曜...
+        const mapping = ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"];
+        return mapping[jsDay];
+      }
+      const queryRecommendedDay = urlParams.get("recommendedDay") || getTodayDayName();
+      const queryMeals = urlParams.get("meals") || "dinner";
+
+      let allRecipes = [];
+      let selectedRecipeId = null;
+      let selectedRecipeTitle = "";
+
+      // 初期化処理
+      window.addEventListener("DOMContentLoaded", async () => {
+        initMonthSelect();
+        initDayTabs();
+        initMealTabs();
+
+        try {
+          const response = await fetch("recipes.json");
+          if (!response.ok) throw new Error("recipes.jsonの読み込みに失敗しました");
+          allRecipes = await response.json();
+          filterAndRenderRecipes();
+        } catch (error) {
+          console.error(error);
+          document.getElementById("recipeListContainer").innerHTML = `
+            <div class="text-center py-8 text-red-500 text-xs">
+              レシピデータの読み込みに失敗しました。<br>（GitHub上のパスをご確認ください）
+            </div>
+          `;
+        }
+      });
+
+      // 月セレクトボックスの構築
+      function initMonthSelect() {
+        const select = document.getElementById("monthSelect");
+        let html = "";
+        for (let i = 1; i <= 12; i++) {
+          const selected = i === queryMonth ? "selected" : "";
+          html += `<option value="${i}" ${selected}>${i}月</option>`;
+        }
+        select.innerHTML = html;
+        select.addEventListener("change", (e) => {
+          filterAndRenderRecipes();
+        });
+      }
+
+      // 曜日タブの構築
+      function initDayTabs() {
+        const container = document.getElementById("dayTabs");
+        let html = "";
+        daysOfWeek.forEach((day) => {
+          const active = day === queryRecommendedDay;
+          const bgClass = active ? "bg-emerald-600 text-white font-bold" : "bg-gray-100 text-gray-700 hover:bg-gray-200";
+          html += `
+            <button type="button" onclick="changeDay('${day}')" class="py-1.5 text-[11px] rounded-lg transition text-center ${bgClass}">
+              ${day.replace("曜日", "")}
+            </button>
+          `;
+        });
+        container.innerHTML = html;
+      }
+
+      // 食事タブの構築
+      function initMealTabs() {
+        const container = document.getElementById("mealTabs");
+        let html = "";
+        Object.keys(mealsMap).forEach((key) => {
+          const active = key === queryMeals;
+          const bgClass = active ? "bg-emerald-600 text-white font-bold" : "bg-gray-100 text-gray-700 hover:bg-gray-200";
+          html += `
+            <button type="button" onclick="changeMeal('${key}')" class="py-1.5 text-[11px] rounded-lg transition text-center ${bgClass}">
+              ${mealsMap[key]}
+            </button>
+          `;
+        });
+        container.innerHTML = html;
+      }
+
+      let currentSelectedDay = queryRecommendedDay;
+      let currentSelectedMeal = queryMeals;
+
+      function changeDay(day) {
+        currentSelectedDay = day;
+        initDayTabs();
+        filterAndRenderRecipes();
+      }
+
+      function changeMeal(meal) {
+        currentSelectedMeal = meal;
+        initMealTabs();
+        filterAndRenderRecipes();
+      }
+
+      // フィルター条件に合致するレシピを描画
+      function filterAndRenderRecipes() {
+        const monthSelectVal = parseInt(document.getElementById("monthSelect").value);
+
+        // フィルタリング（month配列に該当月が含まれるか、recommendedDayが一致するか、mealsが一致するか）
+        // ※仕様に応じてmonthやrecommendedDayの絞り込み条件を調整可能です
+        const filtered = allRecipes.filter((recipe) => {
+          const matchMonth = !recipe.month || recipe.month.includes(monthSelectVal);
+          const matchDay = !recipe.recommendedDay || recipe.recommendedDay === currentSelectedDay;
+          const matchMeal = !recipe.meals || recipe.meals === currentSelectedMeal;
+          return matchMonth && matchDay && matchMeal;
+        });
+
+        const container = document.getElementById("recipeListContainer");
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-10 text-gray-400 text-xs">
+              条件に一致するレシピがありません。
+            </div>
+          `;
+          document.getElementById("decideMenuBtn").disabled = true;
+          document.getElementById("selectedCountText").textContent = "0件選択中";
+          return;
+        }
+
+        let html = "";
+        filtered.forEach((recipe, idx) => {
+          const ingredientsText = recipe.ingredients ? recipe.ingredients.map((i) => i.ingredientId).join(", ") : "";
+
+          if (idx === 0) {
+            selectedRecipeId = recipe.recipeId;
+            selectedRecipeTitle = recipe.title;
+          }
+
+          html += `
+            <label class="block bg-white p-3.5 rounded-2xl border border-gray-200 shadow-sm cursor-pointer hover:border-emerald-500 transition">
+              <div class="flex items-start justify-between gap-3">
+                <div class="flex items-start gap-3 flex-1">
+                  <input type="checkbox" value="${recipe.recipeId}" data-title="${recipe.title}"
+                    class="recipe-checkbox mt-1 h-4 w-4 rounded text-emerald-600 focus:ring-emerald-500" ${idx === 0 ? "checked" : ""}
+                    onchange="selectRecipe(this)">
+                  <div>
+                    <h2 class="font-bold text-sm text-gray-800">${recipe.title}</h2>
+                    <p class="text-[11px] text-gray-500 mt-1"><strong>材料ID:</strong> ${ingredientsText}</p>
+                    <div class="flex gap-2 mt-2">
+                      <span class="bg-emerald-50 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${recipe.recommendedDay || currentSelectedDay}</span>
+                      <span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-2 py-0.5 rounded-full">${mealsMap[recipe.meals] || currentSelectedMeal}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </label>
+          `;
+        });
+
+        container.innerHTML = html;
+        document.getElementById("decideMenuBtn").disabled = false;
+        document.getElementById("selectedCountText").textContent = "1件選択中";
+      }
+
+      // レシピのチェックボックスをチェックした時の処理（1件のみ選択可能）
+      function selectRecipe(checkboxEl) {
+        const checkboxes = document.querySelectorAll(".recipe-checkbox");
+
+        if (checkboxEl.checked) {
+          // 他のチェックボックスは解除し、1件のみ選択状態にする
+          checkboxes.forEach((cb) => {
+            if (cb !== checkboxEl) cb.checked = false;
+          });
+          selectedRecipeId = checkboxEl.value;
+          selectedRecipeTitle = checkboxEl.dataset.title;
+          document.getElementById("decideMenuBtn").disabled = false;
+          document.getElementById("selectedCountText").textContent = "1件選択中";
+        } else {
+          selectedRecipeId = null;
+          selectedRecipeTitle = "";
+          document.getElementById("decideMenuBtn").disabled = true;
+          document.getElementById("selectedCountText").textContent = "0件選択中";
+        }
+      }
+
+      // 「この献立に決定する。」ボタンの処理
+      function decideMenu() {
+        if (!selectedRecipeId) {
+          alert("レシピが選択されていません。");
+          return;
+        }
+
+        // localStorage（kotoro_menus）から現在の献立データを取得、あるいは新規構築
+        let kotoroMenus = JSON.parse(localStorage.getItem("kotoro_menus")) || {};
+
+        // weekStartキーがなければクエリまたはデフォルトを設定
+        const targetWeekStart = queryWeekStart || "2026-08-01"; // デフォルト等の処理
+
+        if (!kotoroMenus[targetWeekStart]) {
+          kotoroMenus[targetWeekStart] = {};
+        }
+        if (!kotoroMenus[targetWeekStart][currentSelectedDay]) {
+          kotoroMenus[targetWeekStart][currentSelectedDay] = {};
+        }
+
+        // 該当の食事枠に recipeId を保存
+        kotoroMenus[targetWeekStart][currentSelectedDay][currentSelectedMeal] = {
+          recipeId: selectedRecipeId,
+          title: selectedRecipeTitle,
+          done: false,
+        };
+
+        localStorage.setItem("kotoro_menus", JSON.stringify(kotoroMenus));
+
+        // menu.html へパラメーターを保持したままリダイレクト
+        window.location.href = `menu.html?weekStart=${encodeURIComponent(targetWeekStart)}`;
+      }
+
+      function goBackToMenu() {
+        const targetWeekStart = queryWeekStart || "";
+        window.location.href = targetWeekStart ? `menu.html?weekStart=${encodeURIComponent(targetWeekStart)}` : "menu.html";
+      }
+    </script>
+  </body>
+</html>
