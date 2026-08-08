@@ -5,25 +5,94 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_春雨", "amount": 18, "unit": "g" },
-      { "ingredientId": "ing_にんじん", "amount": 0.5, "unit": "本" },
-      { "ingredientId": "ing_ニラ", "amount": 0.5, "unit": "束" },
-      { "ingredientId": "ing_もやし", "amount": 1, "unit": "袋" },
-      { "ingredientId": "ing_豚ひき肉", "amount": 150, "unit": "g" },
-      { "ingredientId": "ing_しょうゆ", "amount": 30, "unit": "ml" },
-      { "ingredientId": "ing_オイスターソース", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_酒", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_砂糖", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_片栗粉", "amount": 5, "unit": "g" }
+      {
+        "ingredientId": "ing_春雨",
+        "amount": 18,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_ニラ",
+        "amount": 0.5,
+        "unit": "束"
+      },
+      {
+        "ingredientId": "ing_もやし",
+        "amount": 1,
+        "unit": "袋"
+      },
+      {
+        "ingredientId": "ing_豚ひき肉",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 30,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_オイスターソース",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_片栗粉",
+        "amount": 5,
+        "unit": "g"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "春雨は水につけてもどす。にんじんはせん切りにし、ニラは食べやすい長さに切る。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、水けをきった春雨、にんじん、もやし、ひき肉を順に重ね入れる。混ぜ合わせたソース(A)を回しかける。" },
-      { "stepNo": 3, "text": "中火で12分蒸す。軽く混ぜてニラをのせ、さらに3分蒸す。" },
-      { "stepNo": 4, "text": "お好みでしょうゆをかける。" }
+      {
+        "stepNo": 1,
+        "text": "春雨は水につけてもどす。にんじんはせん切りにし、ニラは食べやすい長さに切る。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、水けをきった春雨、にんじん、もやし、ひき肉を順に重ね入れる。混ぜ合わせたソース(A)を回しかける。"
+      },
+      {
+        "stepNo": 3,
+        "text": "中火で12分蒸す。軽く混ぜてニラをのせ、さらに3分蒸す。"
+      },
+      {
+        "stepNo": 4,
+        "text": "お好みでしょうゆをかける。"
+      }
     ]
   },
   {
@@ -32,23 +101,84 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_豚こま肉", "amount": 150, "unit": "g" },
-      { "ingredientId": "ing_片栗粉", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_ピーマン", "amount": 2, "unit": "個" },
-      { "ingredientId": "ing_玉ねぎ", "amount": 0.5, "unit": "個" },
-      { "ingredientId": "ing_ごま油", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_オイスターソース", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_酒", "amount": 10, "unit": "ml" },
-      { "ingredientId": "ing_しょうゆ", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 0, "unit": "少々" }
+      {
+        "ingredientId": "ing_豚こま肉",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_片栗粉",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_ピーマン",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_オイスターソース",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 10,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 0,
+        "unit": "少々"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "豚肉はAをもみ込み、片栗粉をまぶす。ピーマンは細切りにし、玉ねぎは薄切りにする。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、玉ねぎ、豚肉、ピーマンを順に重ね入れる。" },
-      { "stepNo": 3, "text": "中火で10～12分蒸す。" },
-      { "stepNo": 4, "text": "ごま油を回しかける。" }
+      {
+        "stepNo": 1,
+        "text": "豚肉はAをもみ込み、片栗粉をまぶす。ピーマンは細切りにし、玉ねぎは薄切りにする。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、玉ねぎ、豚肉、ピーマンを順に重ね入れる。"
+      },
+      {
+        "stepNo": 3,
+        "text": "中火で10～12分蒸す。"
+      },
+      {
+        "stepNo": 4,
+        "text": "ごま油を回しかける。"
+      }
     ]
   },
   {
@@ -57,25 +187,94 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_豚こま肉", "amount": 225, "unit": "g" },
-      { "ingredientId": "ing_玉ねぎ", "amount": 0.5, "unit": "個" },
-      { "ingredientId": "ing_にんじん", "amount": 0.5, "unit": "本" },
-      { "ingredientId": "ing_ピーマン", "amount": 2, "unit": "個" },
-      { "ingredientId": "ing_しょうゆ", "amount": 30, "unit": "ml" },
-      { "ingredientId": "ing_砂糖", "amount": 15, "unit": "g" },
-      { "ingredientId": "ing_酒", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_ごま油", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_おろししょうが", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_白いりごま", "amount": 0, "unit": "適量" }
+      {
+        "ingredientId": "ing_豚こま肉",
+        "amount": 225,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_ピーマン",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 30,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_おろししょうが",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_白いりごま",
+        "amount": 0,
+        "unit": "適量"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "ポリ袋に豚肉、ソース(A)を入れてもみ込む。玉ねぎは薄切りにし、にんじん、ピーマンは細切りにする。ポリ袋に加えて豚肉と混ぜ合わせる。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、1を入れる。" },
-      { "stepNo": 3, "text": "中火で12分蒸す。" },
-      { "stepNo": 4, "text": "しょうゆを回しかけて味をととのえ、白いりごまをふる。" }
+      {
+        "stepNo": 1,
+        "text": "ポリ袋に豚肉、ソース(A)を入れてもみ込む。玉ねぎは薄切りにし、にんじん、ピーマンは細切りにする。ポリ袋に加えて豚肉と混ぜ合わせる。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、1を入れる。"
+      },
+      {
+        "stepNo": 3,
+        "text": "中火で12分蒸す。"
+      },
+      {
+        "stepNo": 4,
+        "text": "しょうゆを回しかけて味をととのえ、白いりごまをふる。"
+      }
     ]
   },
   {
@@ -84,27 +283,104 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_卵", "amount": 2, "unit": "個" },
-      { "ingredientId": "ing_豚こま肉", "amount": 250, "unit": "g" },
-      { "ingredientId": "ing_片栗粉", "amount": 15, "unit": "g" },
-      { "ingredientId": "ing_ニラ", "amount": 0.5, "unit": "束" },
-      { "ingredientId": "ing_マヨネーズ", "amount": 15, "unit": "g" },
-      { "ingredientId": "ing_オイスターソース", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_しょうゆ", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_みりん", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_酒", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_砂糖", "amount": 7.5, "unit": "g" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_塩", "amount": 0, "unit": "少々" },
-      { "ingredientId": "ing_こしょう", "amount": 0, "unit": "少々" }
+      {
+        "ingredientId": "ing_卵",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_豚こま肉",
+        "amount": 250,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_片栗粉",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_ニラ",
+        "amount": 0.5,
+        "unit": "束"
+      },
+      {
+        "ingredientId": "ing_マヨネーズ",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_オイスターソース",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_みりん",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 7.5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_塩",
+        "amount": 0,
+        "unit": "少々"
+      },
+      {
+        "ingredientId": "ing_こしょう",
+        "amount": 0,
+        "unit": "少々"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "ポリ袋に豚肉を入れ、ソース(A)をもみ込み、片栗粉をまぶす。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、1をタレごと入れる。" },
-      { "stepNo": 3, "text": "中火で8分蒸す。蒸している間にニラを食べやすい長さに切る。ボウルに卵を割り入れ、マヨネーズを加えて溶き混ぜる。" },
-      { "stepNo": 4, "text": "豚肉にニラをのせ、卵液を回しかける。さらに2~3分蒸す。" }
+      {
+        "stepNo": 1,
+        "text": "ポリ袋に豚肉を入れ、ソース(A)をもみ込み、片栗粉をまぶす。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、1をタレごと入れる。"
+      },
+      {
+        "stepNo": 3,
+        "text": "中火で8分蒸す。蒸している間にニラを食べやすい長さに切る。ボウルに卵を割り入れ、マヨネーズを加えて溶き混ぜる。"
+      },
+      {
+        "stepNo": 4,
+        "text": "豚肉にニラをのせ、卵液を回しかける。さらに2~3分蒸す。"
+      }
     ]
   },
   {
@@ -113,19 +389,65 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_豚薄切り肉", "amount": 100, "unit": "g" },
-      { "ingredientId": "ing_白菜キムチ", "amount": 90, "unit": "g" },
-      { "ingredientId": "ing_スライスチーズ", "amount": 2, "unit": "枚" },
-      { "ingredientId": "ing_焼きのり", "amount": 3, "unit": "枚" },
-      { "ingredientId": "ing_塩", "amount": 0, "unit": "少々" },
-      { "ingredientId": "ing_こしょう", "amount": 0, "unit": "少々" }
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_白菜キムチ",
+        "amount": 90,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_スライスチーズ",
+        "amount": 2,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_焼きのり",
+        "amount": 3,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_塩",
+        "amount": 0,
+        "unit": "少々"
+      },
+      {
+        "ingredientId": "ing_こしょう",
+        "amount": 0,
+        "unit": "少々"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "スライスチーズは縦3等分、焼きのりは縦半分に切る。豚肉を広げ、塩、こしょうをふり、焼きのり、チーズ、キムチを等分にのせて巻く。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、1を並べ入れる。" },
-      { "stepNo": 3, "text": "中火で10分蒸す。" }
+      {
+        "stepNo": 1,
+        "text": "スライスチーズは縦3等分、焼きのりは縦半分に切る。豚肉を広げ、塩、こしょうをふり、焼きのり、チーズ、キムチを等分にのせて巻く。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、1を並べ入れる。"
+      },
+      {
+        "stepNo": 3,
+        "text": "中火で10分蒸す。"
+      }
     ]
   },
   {
@@ -134,24 +456,90 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_豆苗", "amount": 1, "unit": "袋" },
-      { "ingredientId": "ing_豚薄切り肉", "amount": 9, "unit": "枚" },
-      { "ingredientId": "ing_れんこん", "amount": 80, "unit": "g" },
-      { "ingredientId": "ing_長いも", "amount": 50, "unit": "g" },
-      { "ingredientId": "ing_きのこ類", "amount": 50, "unit": "g" },
-      { "ingredientId": "ing_砂糖", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_みそ", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_豆乳", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_ごま油", "amount": 10, "unit": "ml" },
-      { "ingredientId": "ing_白すりごま", "amount": 15, "unit": "g" },
-      { "ingredientId": "ing_白いりごま", "amount": 5, "unit": "g" }
+      {
+        "ingredientId": "ing_豆苗",
+        "amount": 1,
+        "unit": "袋"
+      },
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 9,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_れんこん",
+        "amount": 80,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_長いも",
+        "amount": 50,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_きのこ類",
+        "amount": 50,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_みそ",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_豆乳",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 10,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_白すりごま",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_白いりごま",
+        "amount": 5,
+        "unit": "g"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "味噌つけダレの材料を混ぜ合わせておく。" },
-      { "stepNo": 2, "text": "豆苗は豚肉に均等にのせて豆苗をそろえ、豚肉を少しずらしながら巻いていく。れんこん、長いもは5mm厚さの輪切りにする(大きい場合は半月切り)。きのこはほぐす。" },
-      { "stepNo": 3, "text": "せいろにクッキングシートを敷き、肉巻きは巻き終わりを下にして並べる。ふたをして16分ほど蒸す(様子を見て調整する)。味噌つけダレを添える。" }
+      {
+        "stepNo": 1,
+        "text": "味噌つけダレの材料を混ぜ合わせておく。"
+      },
+      {
+        "stepNo": 2,
+        "text": "豆苗は豚肉に均等にのせて豆苗をそろえ、豚肉を少しずらしながら巻いていく。れんこん、長いもは5mm厚さの輪切りにする(大きい場合は半月切り)。きのこはほぐす。"
+      },
+      {
+        "stepNo": 3,
+        "text": "せいろにクッキングシートを敷き、肉巻きは巻き終わりを下にして並べる。ふたをして16分ほど蒸す(様子を見て調整する)。味噌つけダレを添える。"
+      }
     ]
   },
   {
@@ -160,20 +548,70 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_塩", "amount": 0, "unit": "ひとつまみ" },
-      { "ingredientId": "ing_キャベツ", "amount": 0.1, "unit": "個" },
-      { "ingredientId": "ing_にんじん", "amount": 0.3, "unit": "本" },
-      { "ingredientId": "ing_ごぼう", "amount": 0.5, "unit": "本" },
-      { "ingredientId": "ing_玉ねぎ", "amount": 0.25, "unit": "個" },
-      { "ingredientId": "ing_豚薄切り肉", "amount": 10, "unit": "枚" },
-      { "ingredientId": "ing_白だし", "amount": 45, "unit": "ml" }
+      {
+        "ingredientId": "ing_塩",
+        "amount": 0,
+        "unit": "ひとつまみ"
+      },
+      {
+        "ingredientId": "ing_キャベツ",
+        "amount": 0.1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 0.3,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_ごぼう",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 0.25,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 10,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_白だし",
+        "amount": 45,
+        "unit": "ml"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "せいろにクッキングシートを敷き、塩少々をふる。" },
-      { "stepNo": 2, "text": "キャベツ、にんじん、ごぼう、玉ねぎは千切りにしてせいろに順に重ねていく。野菜の上に豚肉を広げてのせる。白だしを回しかける。" },
-      { "stepNo": 3, "text": "ふたをし、豚肉に火が通るまで10分ほど蒸す(様子を見て調整する)。" }
+      {
+        "stepNo": 1,
+        "text": "せいろにクッキングシートを敷き、塩少々をふる。"
+      },
+      {
+        "stepNo": 2,
+        "text": "キャベツ、にんじん、ごぼう、玉ねぎは千切りにしてせいろに順に重ねていく。野菜の上に豚肉を広げてのせる。白だしを回しかける。"
+      },
+      {
+        "stepNo": 3,
+        "text": "ふたをし、豚肉に火が通るまで10分ほど蒸す(様子を見て調整する)。"
+      }
     ]
   },
   {
@@ -182,25 +620,94 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_なす", "amount": 3, "unit": "本" },
-      { "ingredientId": "ing_にんじん", "amount": 0.3, "unit": "本" },
-      { "ingredientId": "ing_小ねぎ", "amount": 0, "unit": "適量" },
-      { "ingredientId": "ing_豚薄切り肉", "amount": 80, "unit": "g" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 1, "unit": "片" },
-      { "ingredientId": "ing_おろししょうが", "amount": 2, "unit": "g" },
-      { "ingredientId": "ing_砂糖", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_しょうゆ", "amount": 30, "unit": "ml" },
-      { "ingredientId": "ing_酢", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_ごま油", "amount": 10, "unit": "ml" },
-      { "ingredientId": "ing_白いりごま", "amount": 15, "unit": "g" }
+      {
+        "ingredientId": "ing_なす",
+        "amount": 3,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 0.3,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_小ねぎ",
+        "amount": 0,
+        "unit": "適量"
+      },
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 80,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 1,
+        "unit": "片"
+      },
+      {
+        "ingredientId": "ing_おろししょうが",
+        "amount": 2,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 30,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_酢",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 10,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_白いりごま",
+        "amount": 15,
+        "unit": "g"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "なすは縦4~6等分に切り、1%の塩水に10分ほどつけて色止めをする。調味料の材料を混ぜ合わせておく。にんじんは千切りに、小ねぎは小口切りにする。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、にんじんをのせる。その上になすの皮目を上側にして並べ、豚肉を広げてのせる。野菜の上に肉を広げ、にんにくとしょうがを散らす。" },
-      { "stepNo": 3, "text": "にんにくとしょうがを散らしてふたをし、15分蒸す。" },
-      { "stepNo": 4, "text": "蒸し上がったら調味料をかけ、小ねぎをのせる。" }
+      {
+        "stepNo": 1,
+        "text": "なすは縦4~6等分に切り、1%の塩水に10分ほどつけて色止めをする。調味料の材料を混ぜ合わせておく。にんじんは千切りに、小ねぎは小口切りにする。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、にんじんをのせる。その上になすの皮目を上側にして並べ、豚肉を広げてのせる。野菜の上に肉を広げ、にんにくとしょうがを散らす。"
+      },
+      {
+        "stepNo": 3,
+        "text": "にんにくとしょうがを散らしてふたをし、15分蒸す。"
+      },
+      {
+        "stepNo": 4,
+        "text": "蒸し上がったら調味料をかけ、小ねぎをのせる。"
+      }
     ]
   },
   {
@@ -209,24 +716,89 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_ピーマン", "amount": 7.5, "unit": "個" },
-      { "ingredientId": "ing_豚ひき肉", "amount": 200, "unit": "g" },
-      { "ingredientId": "ing_しょうゆ", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_みりん", "amount": 10, "unit": "ml" },
-      { "ingredientId": "ing_片栗粉", "amount": 15, "unit": "g" },
-      { "ingredientId": "ing_ごま油", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_オイスターソース", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_はちみつ", "amount": 5, "unit": "ml" },
-      { "ingredientId": "ing_七味唐辛子", "amount": 0, "unit": "適宜" }
+      {
+        "ingredientId": "ing_ピーマン",
+        "amount": 7.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_豚ひき肉",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_みりん",
+        "amount": 10,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_片栗粉",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_オイスターソース",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_はちみつ",
+        "amount": 5,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_七味唐辛子",
+        "amount": 0,
+        "unit": "適宜"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "ピーマンはヘタを指で押して外す。中華風ダレの材料を混ぜ合わせる。" },
-      { "stepNo": 2, "text": "ひき肉とソース(A)をボウルに入れてよく混ぜ、ピーマンの中に詰める。" },
-      { "stepNo": 3, "text": "せいろにクッキングシートを敷き、1をのせてふたをして14分ほど蒸す。" },
-      { "stepNo": 4, "text": "中華風ダレを食べる直前に回しかける。" }
+      {
+        "stepNo": 1,
+        "text": "ピーマンはヘタを指で押して外す。中華風ダレの材料を混ぜ合わせる。"
+      },
+      {
+        "stepNo": 2,
+        "text": "ひき肉とソース(A)をボウルに入れてよく混ぜ、ピーマンの中に詰める。"
+      },
+      {
+        "stepNo": 3,
+        "text": "せいろにクッキングシートを敷き、1をのせてふたをして14分ほど蒸す。"
+      },
+      {
+        "stepNo": 4,
+        "text": "中華風ダレを食べる直前に回しかける。"
+      }
     ]
   },
   {
@@ -235,23 +807,515 @@
     "servings": 2,
     "recommendedDay": "",
     "meals": "",
-    "month": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
     "ingredients": [
-      { "ingredientId": "ing_ちくわ", "amount": 6, "unit": "本" },
-      { "ingredientId": "ing_スライスチーズ", "amount": 3, "unit": "本" },
-      { "ingredientId": "ing_豚薄切り肉", "amount": 6, "unit": "枚" },
-      { "ingredientId": "ing_小麦粉", "amount": 0, "unit": "適量" },
-      { "ingredientId": "ing_しょうゆ", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_みりん", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_白すりごま", "amount": 30, "unit": "g" },
-      { "ingredientId": "ing_酒", "amount": 15, "unit": "ml" },
-      { "ingredientId": "ing_砂糖", "amount": 5, "unit": "g" },
-      { "ingredientId": "ing_おろしにんにく", "amount": 0, "unit": "g" }
+      {
+        "ingredientId": "ing_ちくわ",
+        "amount": 6,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_スライスチーズ",
+        "amount": 3,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 6,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_小麦粉",
+        "amount": 0,
+        "unit": "適量"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_みりん",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_白すりごま",
+        "amount": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 15,
+        "unit": "ml"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろしにんにく",
+        "amount": 0,
+        "unit": "g"
+      }
     ],
     "steps": [
-      { "stepNo": 1, "text": "ちくわは縦に切り目を入れて開き、縦半分に切ったチーズをはさむ。豚肉を広げて小麦粉をふり、肉を巻いて半分の長さに切る。" },
-      { "stepNo": 2, "text": "せいろにクッキングシートを敷き、小さな耐熱容器につけダレの材料を入れて真ん中に置く。" },
-      { "stepNo": 3, "text": "容器の周りに2を立てて並べる。ふたをして15分蒸す。" }
+      {
+        "stepNo": 1,
+        "text": "ちくわは縦に切り目を入れて開き、縦半分に切ったチーズをはさむ。豚肉を広げて小麦粉をふり、肉を巻いて半分の長さに切る。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにクッキングシートを敷き、小さな耐熱容器につけダレの材料を入れて真ん中に置く。"
+      },
+      {
+        "stepNo": 3,
+        "text": "容器の周りに2を立てて並べる。ふたをして15分蒸す。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_011",
+    "title": "カレーライス",
+    "servings": 2,
+    "recommendedDay": "金曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_カレーライス",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_らっきょ",
+        "amount": 3,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_福神漬け",
+        "amount": 6,
+        "unit": "枚"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "ご飯を炊く。"
+      },
+      {
+        "stepNo": 2,
+        "text": "カレーライスを回答する。"
+      },
+      {
+        "stepNo": 3,
+        "text": "盛り付ける。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_012",
+    "title": "カレー(冷凍）",
+    "servings": 4,
+    "recommendedDay": "月曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_カレールー",
+        "amount": 0.5,
+        "unit": "箱"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_みず",
+        "amount": 700,
+        "unit": "ml"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "具材を炒めて水を加える。"
+      },
+      {
+        "stepNo": 2,
+        "text": "沸騰後アクを取り20分煮込む。"
+      },
+      {
+        "stepNo": 3,
+        "text": "火を止めてルウを入れて溶かす。"
+      },
+      {
+        "stepNo": 4,
+        "text": "5分弱火で煮込む。"
+      }
+    ]
+  },
+    {
+    "recipeId": "rec_013",
+    "title": "鳥そぼろ弁当",
+    "servings": 2,
+    "recommendedDay": "金曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_鳥そぼろ弁当",
+        "amount": 1,
+        "unit": "個"
+      }
+
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "鳥そぼろ弁当を解凍する。"
+      }
+    ]
+  },
+      {
+    "recipeId": "rec_014",
+    "title": "鳥そぼろ",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_鶏ひき肉",
+        "amount": 150,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 15,
+        "unit": "ml"
+      },
+            {
+        "ingredientId": "ing_みりん",
+        "amount": 15,
+        "unit": "ml"
+      },
+                  {
+        "ingredientId": "ing_砂糖",
+        "amount": 15,
+        "unit": "g"
+      },
+                        {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 30,
+        "unit": "ml"
+      },
+                              {
+        "ingredientId": "ing_卵",
+        "amount": 4,
+        "unit": "個"
+      },
+                                    {
+        "ingredientId": "ing_ほうれん草",
+        "amount": 0.5,
+        "unit": "束"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "鶏ひき肉に調味料を入れて煮込む。"
+      },
+            {
+        "stepNo": 2,
+        "text": "炒り卵を作る。"
+      },
+                  {
+        "stepNo": 3,
+        "text": "ほうれん草をゆでる。"
+      }
+    ]
+  },
+{
+    "recipeId": "rec_015",
+    "title": "ハンバーグ",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_ハンバーグ",
+        "amount": 1,
+        "unit": "個"
+      },
+            {
+        "ingredientId": "ing_レタス",
+        "amount": 1,
+        "unit": "袋"
+      },
+                  {
+        "ingredientId": "ing_ポテトサラダ",
+        "amount": 1,
+        "unit": "パック"
+      }
+
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "ハンバーグを焼くする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_016",
+    "title": "マーボ豆腐",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_麻婆豆腐の素",
+        "amount": 0.5,
+        "unit": "箱"
+      },
+            {
+        "ingredientId": "ing_長ネギ",
+        "amount": 1,
+        "unit": "袋"
+      },
+                  {
+        "ingredientId": "ing_豚ひき肉",
+        "amount": 50,
+        "unit": "g"
+      },
+                        {
+        "ingredientId": "ing_もやし",
+        "amount": 1,
+        "unit": "袋"
+      }
+
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "麻婆豆腐を作る。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_017",
+    "title": "餃子",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_餃子",
+        "amount": 0.5,
+        "unit": "箱"
+      },
+                        {
+        "ingredientId": "ing_もやし",
+        "amount": 1,
+        "unit": "袋"
+      }
+
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "餃子を焼く。"
+      }
+    ]
+  },
+    {
+    "recipeId": "rec_018",
+    "title": "ビビンバ丼",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_ビビンバの素",
+        "amount": 1,
+        "unit": "パック"
+      },
+                        {
+        "ingredientId": "ing_牛肉",
+        "amount": 100,
+        "unit": "g"
+      }
+
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "牛肉を焼く。"
+      }
+    ]
+  },
+      {
+    "recipeId": "rec_019",
+    "title": "ローストビーフ丼",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_ローストビーフ",
+        "amount": 1,
+        "unit": "パック"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "牛肉を焼く。"
+      }
     ]
   }
+
 ]
