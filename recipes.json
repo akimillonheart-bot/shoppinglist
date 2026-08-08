@@ -916,13 +916,13 @@
       },
       {
         "ingredientId": "ing_らっきょ",
-        "amount": 3,
-        "unit": "本"
+        "amount": 0.1,
+        "unit": "パック"
       },
       {
         "ingredientId": "ing_福神漬け",
-        "amount": 6,
-        "unit": "枚"
+        "amount": 0.1,
+        "unit": "パック"
       }
     ],
     "steps": [
@@ -1316,6 +1316,44 @@
         "text": "牛肉を焼く。"
       }
     ]
+  },
+      {
+    "recipeId": "rec_020",
+    "title": "パスタ",
+    "servings": 2,
+    "recommendedDay": "土曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_パスタ",
+        "amount": 2,
+        "unit": "束"
+      },
+            {
+        "ingredientId": "ing_パスタソース",
+      "amount": 2,
+      "unit": "パック"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "牛肉を焼く。"
+      }
+    ]
   }
-
 ]

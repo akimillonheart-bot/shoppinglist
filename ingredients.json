@@ -91,7 +91,7 @@
       "unit": "g"
     }
   },
-    {
+  {
     "ingredientId": "ing_みず",
     "name": "水",
     "category": "調味料",
@@ -247,7 +247,7 @@
       "unit": "ml"
     }
   },
-    {
+  {
     "ingredientId": "ing_カレールー",
     "name": "カレールー",
     "category": "調味料",
@@ -543,7 +543,7 @@
     "product": {
       "barcode": "4905555000001",
       "productName": "鳥そぼろ弁当",
-        "amount": 1,
+      "amount": 1,
       "unit": "個"
     }
   },
@@ -559,7 +559,6 @@
       "unit": "g"
     }
   },
-
   {
     "ingredientId": "ing_pork_belly",
     "name": "豚バラ肉",
@@ -571,7 +570,7 @@
       "capacity": "200g"
     }
   },
-    {
+  {
     "ingredientId": "ing_鶏ひき肉",
     "name": "鶏ひき肉",
     "category": "肉類",
@@ -639,7 +638,6 @@
       "unit": "本"
     }
   },
-
   {
     "ingredientId": "ing_garlic",
     "name": "にんにく",
@@ -684,7 +682,6 @@
       "capacity": "90g"
     }
   },
-
   {
     "ingredientId": "ing_bean_sprouts",
     "name": "豆もやし",
@@ -795,8 +792,6 @@
       "capacity": "100g"
     }
   },
-
-
   {
     "ingredientId": "ing_beef_mince",
     "name": "牛ひき肉",
@@ -816,11 +811,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "ほうれん草",
-        "amount": 0.5,
-        "unit": "束"
+      "amount": 0.5,
+      "unit": "束"
     }
   },
-    {
+  {
     "ingredientId": "ing_ハンバーグ",
     "name": "ハンバーグ",
     "category": "肉類",
@@ -828,11 +823,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "ハンバーグ",
-        "amount": 1,
-        "unit": "個"
+      "amount": 1,
+      "unit": "個"
     }
   },
-      {
+  {
     "ingredientId": "ing_レタス",
     "name": "レタス",
     "category": "野菜類",
@@ -840,11 +835,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "野菜類",
-        "amount": 1,
-        "unit": "袋"
+      "amount": 1,
+      "unit": "袋"
     }
   },
-        {
+  {
     "ingredientId": "ing_ポテトサラダ",
     "name": "ポテトサラダ",
     "category": "野菜類",
@@ -852,11 +847,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "ポテトサラダ",
-        "amount": 1,
-        "unit": "パック"
+      "amount": 1,
+      "unit": "パック"
     }
   },
-          {
+  {
     "ingredientId": "ing_麻婆豆腐の素",
     "name": "麻婆豆腐の素",
     "category": "調味料",
@@ -864,11 +859,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "麻婆豆腐の素",
-        "amount": 1,
-        "unit": "箱"
+      "amount": 1,
+      "unit": "箱"
     }
   },
-            {
+  {
     "ingredientId": "ing_餃子",
     "name": "餃子",
     "category": "加工食品",
@@ -876,11 +871,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "餃子",
-        "amount": 1,
-        "unit": "箱"
+      "amount": 1,
+      "unit": "箱"
     }
   },
-              {
+  {
     "ingredientId": "ing_ビビンバの素",
     "name": "ビビンバの素",
     "category": "加工食品",
@@ -888,11 +883,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "ビビンバの素",
-        "amount": 1,
-        "unit": "パック"
+      "amount": 1,
+      "unit": "パック"
     }
   },
-                {
+  {
     "ingredientId": "ing_牛肉",
     "name": "牛肉",
     "category": "肉類",
@@ -900,11 +895,11 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "牛肉",
-        "amount": 100,
-        "unit": "g"
+      "amount": 100,
+      "unit": "g"
     }
   },
-                  {
+  {
     "ingredientId": "ing_ローストビーフ",
     "name": "ローストビーフ",
     "category": "肉類",
@@ -912,8 +907,68 @@
     "product": {
       "barcode": "20012340000230",
       "productName": "ローストビーフ",
-        "amount": 1,
-        "unit": "パック"
+      "amount": 1,
+      "unit": "パック"
+    }
+  },
+  {
+    "ingredientId": "ing_カレーライス",
+    "name": "カレーライス",
+    "category": "加工食品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "カレーライス",
+      "amount": 1,
+      "unit": "パック"
+    }
+  },
+    {
+    "ingredientId": "ing_らっきょ",
+    "name": "らっきょ",
+    "category": "加工食品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "らっきょ",
+      "amount": 1,
+      "unit": "パック"
+    }
+  },
+      {
+    "ingredientId": "ing_福神漬け",
+    "name": "福神漬け",
+    "category": "加工食品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "福神漬け",
+      "amount": 1,
+      "unit": "パック"
+    }
+  },
+        {
+    "ingredientId": "ing_パスタ",
+    "name": "パスタ",
+    "category": "加工食品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "パスタ",
+      "amount": 10,
+      "unit": "束"
+    }
+  },
+          {
+    "ingredientId": "ing_パスタソース",
+    "name": "パスタソース",
+    "category": "加工食品",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000230",
+      "productName": "パスタソース",
+      "amount": 2,
+      "unit": "パック"
     }
   }
 ]
