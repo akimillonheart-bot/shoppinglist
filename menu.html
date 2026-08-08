@@ -322,6 +322,34 @@
         `;
       }
 
+      // ---------- 在庫（stock.html：kotoro_stock）との連携 ----------
+      // 在庫はingredientId単位で管理され、数量の単位はrecipes.json側のunitを基準とする。
+      // 単位が一致する場合のみ増減させ、在庫データが無い・単位が異なる食材はスキップする。
+      function adjustStockForRecipe(recipeId, sign) {
+        const recipe = recipesById[recipeId];
+        if (!recipe || !recipe.ingredients) return;
+
+        let kotoroStock;
+        try {
+          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          kotoroStock = {};
+        }
+
+        recipe.ingredients.forEach((ing) => {
+          const info = ingredientsById[ing.ingredientId];
+          if (info && info.isExempt) return; // 調味料など常備品は在庫連携の対象外
+
+          const stockEntry = kotoroStock[ing.ingredientId];
+          if (!stockEntry) return; // 在庫未登録の食材は対象外
+          if (stockEntry.unit !== ing.unit) return; // 単位が一致しない場合はスキップ
+
+          stockEntry.quantity = Math.max(0, parseFloat((stockEntry.quantity + sign * ing.amount).toFixed(2)));
+        });
+
+        localStorage.setItem("kotoro_stock", JSON.stringify(kotoroStock));
+      }
+
       // ---------- 作成済みチェック ----------
       function toggleMealDone(dayName, mealType) {
         const entry = kotoroMenus[currentWeekStart] && kotoroMenus[currentWeekStart][dayName] && kotoroMenus[currentWeekStart][dayName][mealType];
@@ -331,9 +359,11 @@
 
         if (entry.done) {
           kotoroRecipeCounts[entry.recipeId] = (kotoroRecipeCounts[entry.recipeId] || 0) + 1;
+          adjustStockForRecipe(entry.recipeId, -1);
           alert(`「${entry.title}」を作成済み（調理完了）にしました。\n在庫リストから使用分を自動マイナスしました！`);
         } else {
           kotoroRecipeCounts[entry.recipeId] = Math.max(0, (kotoroRecipeCounts[entry.recipeId] || 0) - 1);
+          adjustStockForRecipe(entry.recipeId, 1);
           alert(`「${entry.title}」の作成済みを解除しました。`);
         }
 
