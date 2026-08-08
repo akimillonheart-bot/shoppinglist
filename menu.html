@@ -113,6 +113,7 @@
       let ingredientsById = {};
       let kotoroMenus = {};
       let kotoroRecipeCounts = {};
+      let kotoroStock = {};
       let currentWeekStart = "";
 
       // ---------- 日付ユーティリティ ----------
@@ -171,6 +172,13 @@
       function saveCounts() {
         localStorage.setItem("kotoro_recipe_counts", JSON.stringify(kotoroRecipeCounts));
       }
+      function loadStock() {
+        try {
+          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          kotoroStock = {};
+        }
+      }
 
       // ---------- 初期化 ----------
       window.addEventListener("DOMContentLoaded", async () => {
@@ -180,6 +188,7 @@
 
         loadMenus();
         loadCounts();
+        loadStock();
 
         try {
           const [recipesRes, ingredientsRes] = await Promise.all([fetch("recipes.json"), fetch("ingredients.json")]);
@@ -329,25 +338,26 @@
         const recipe = recipesById[recipeId];
         if (!recipe || !recipe.ingredients) return;
 
-        let kotoroStock;
+        let stockData;
         try {
-          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+          stockData = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
         } catch (e) {
-          kotoroStock = {};
+          stockData = {};
         }
 
         recipe.ingredients.forEach((ing) => {
           const info = ingredientsById[ing.ingredientId];
           if (info && info.isExempt) return; // 調味料など常備品は在庫連携の対象外
 
-          const stockEntry = kotoroStock[ing.ingredientId];
+          const stockEntry = stockData[ing.ingredientId];
           if (!stockEntry) return; // 在庫未登録の食材は対象外
           if (stockEntry.unit !== ing.unit) return; // 単位が一致しない場合はスキップ
 
           stockEntry.quantity = Math.max(0, parseFloat((stockEntry.quantity + sign * ing.amount).toFixed(2)));
         });
 
-        localStorage.setItem("kotoro_stock", JSON.stringify(kotoroStock));
+        localStorage.setItem("kotoro_stock", JSON.stringify(stockData));
+        kotoroStock = stockData; // 不足食材の再計算に使うグローバルの在庫情報も更新する
       }
 
       // ---------- 作成済みチェック ----------
@@ -370,6 +380,7 @@
         saveMenus();
         saveCounts();
         renderMenu();
+        updateShortageBanner();
       }
 
       // ---------- 自動献立（月・区分フィルター＋作成回数／推奨曜日によるスコアリング） ----------
@@ -426,7 +437,7 @@
         updateShortageBanner();
       }
 
-      // ---------- 不足食材（今週の献立で使う・常備品を除く食材）の集計 ----------
+      // ---------- 不足食材（今週の献立で使う食材のうち、常備品と在庫がすでにある食材を除く）の集計 ----------
       function computeNeededIngredients() {
         const weekData = kotoroMenus[currentWeekStart] || {};
         const ingredientMap = new Map();
@@ -439,6 +450,11 @@
             recipe.ingredients.forEach((ing) => {
               const info = ingredientsById[ing.ingredientId];
               if (info && info.isExempt) return; // 調味料など常備品は対象外
+
+              // すでに在庫が残っている食材（quantityが0より大きい）は不足食材から除外する
+              const stockEntry = kotoroStock[ing.ingredientId];
+              if (stockEntry && stockEntry.quantity > 0) return;
+
               if (!ingredientMap.has(ing.ingredientId)) {
                 ingredientMap.set(ing.ingredientId, info ? info.name : ing.ingredientId);
               }
@@ -479,14 +495,21 @@
         }
         const existingIds = new Set(shoppingList.map((i) => i.ingredientId));
 
+        let addedCount = 0;
         map.forEach((name, ingredientId) => {
           if (!existingIds.has(ingredientId)) {
             shoppingList.push({ ingredientId, name, checked: false });
+            addedCount++;
           }
         });
 
         localStorage.setItem("kotoro_shopping_list", JSON.stringify(shoppingList));
-        alert(`${map.size}点の食材を買い物リストへ一括登録しました！`);
+
+        if (addedCount > 0) {
+          alert(`${addedCount}点の食材を買い物リストへ一括登録しました！`);
+        } else {
+          alert("不足食材はすべて既に買い物リストへ登録済みです。");
+        }
         updateShortageBanner();
       }
 

@@ -27,32 +27,14 @@
 
       <!-- スクロール可能なメインコンテンツ -->
       <main id="stockRoot" class="flex-1 overflow-y-auto p-4 space-y-5 pb-28">
-        <!-- 冷蔵 -->
+        <!-- 在庫一覧（保管場所による分類なし） -->
         <section>
           <div class="flex items-center justify-between px-1 pt-1 mb-2">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider"><i class="fa-solid fa-snowflake text-sky-500 mr-1"></i>冷蔵 (<span id="refrigeratedCount">0</span>)</h2>
+            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider">
+              <i class="fa-solid fa-boxes-stacked text-emerald-500 mr-1"></i>在庫 (<span id="stockCount">0</span>)
+            </h2>
           </div>
-          <div id="refrigeratedList" class="space-y-3">
-            <div class="text-center py-6 text-gray-400 text-xs">読み込み中...</div>
-          </div>
-        </section>
-
-        <!-- 冷凍 -->
-        <section>
-          <div class="flex items-center justify-between px-1 pt-1 mb-2">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider"><i class="fa-solid fa-icicles text-blue-500 mr-1"></i>冷凍 (<span id="frozenCount">0</span>)</h2>
-          </div>
-          <div id="frozenList" class="space-y-3">
-            <div class="text-center py-6 text-gray-400 text-xs">読み込み中...</div>
-          </div>
-        </section>
-
-        <!-- 常温 -->
-        <section>
-          <div class="flex items-center justify-between px-1 pt-1 mb-2">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider"><i class="fa-solid fa-temperature-half text-amber-500 mr-1"></i>常温 (<span id="roomTempCount">0</span>)</h2>
-          </div>
-          <div id="roomTempList" class="space-y-3">
+          <div id="stockList" class="space-y-3">
             <div class="text-center py-6 text-gray-400 text-xs">読み込み中...</div>
           </div>
         </section>
@@ -154,14 +136,7 @@
             </div>
           </div>
 
-          <div>
-            <label class="text-xs font-bold text-gray-600 block mb-1">保管場所</label>
-            <select id="addItemStorage" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-              <option value="refrigerated">冷蔵</option>
-              <option value="frozen">冷凍</option>
-              <option value="roomTemp">常温</option>
-            </select>
-          </div>
+
 
           <div class="grid grid-cols-2 gap-3">
             <div>
@@ -281,12 +256,6 @@
         return "個";
       }
 
-      function categoryToDefaultStorage(category) {
-        if (["肉類", "魚介類", "乳製品", "卵", "加工食品", "野菜"].includes(category)) return "refrigerated";
-        if (["調味料", "穀類", "麺"].includes(category)) return "roomTemp";
-        return "refrigerated";
-      }
-
       function resolveIngredientIdByName(name) {
         const masterMatch = allIngredients.find((i) => i.name === name);
         if (masterMatch) return masterMatch.ingredientId;
@@ -394,27 +363,58 @@
         return `賞味期限: ${expiryDate}`;
       }
 
-      // ---------- 描画 ----------
+      // ---------- 描画（カテゴリ別グループ化・在庫数順ソート） ----------
+      // カテゴリの優先表示順（ここに無いカテゴリはあいうえお順で末尾に表示）
+      const CATEGORY_ORDER = ["肉類", "魚介類", "野菜", "野菜類", "乳製品", "卵", "調味料", "加工食品", "穀類", "麺", "その他"];
+
       function renderStock() {
-        const sections = { refrigerated: [], frozen: [], roomTemp: [] };
-        Object.entries(kotoroStock).forEach(([id, entry]) => {
-          const key = sections[entry.storage] ? entry.storage : "refrigerated";
-          sections[key].push([id, entry]);
-        });
+        const items = Object.entries(kotoroStock);
+        const container = document.getElementById("stockList");
+        document.getElementById("stockCount").textContent = items.length;
 
-        renderSection("refrigeratedList", "refrigeratedCount", sections.refrigerated);
-        renderSection("frozenList", "frozenCount", sections.frozen);
-        renderSection("roomTempList", "roomTempCount", sections.roomTemp);
-      }
-
-      function renderSection(containerId, countId, items) {
-        const container = document.getElementById(containerId);
-        document.getElementById(countId).textContent = items.length;
         if (items.length === 0) {
           container.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">登録されている食材はありません</div>`;
           return;
         }
-        container.innerHTML = items.map(([id, entry]) => buildStockCard(id, entry)).join("");
+
+        // カテゴリごとにグループ化
+        const grouped = {};
+        items.forEach(([id, entry]) => {
+          const info = getIngredientDisplay(id);
+          const cat = info.category || "その他";
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push([id, entry]);
+        });
+
+        // 各カテゴリ内は在庫数（quantity）の多い順にソート
+        Object.values(grouped).forEach((list) => {
+          list.sort((a, b) => b[1].quantity - a[1].quantity);
+        });
+
+        // カテゴリの並び順を決定（CATEGORY_ORDER優先、それ以外はあいうえお順で後ろへ）
+        const categories = Object.keys(grouped).sort((a, b) => {
+          const ia = CATEGORY_ORDER.indexOf(a);
+          const ib = CATEGORY_ORDER.indexOf(b);
+          if (ia === -1 && ib === -1) return a.localeCompare(b, "ja");
+          if (ia === -1) return 1;
+          if (ib === -1) return -1;
+          return ia - ib;
+        });
+
+        container.innerHTML = categories
+          .map((cat) => {
+            const cardsHtml = grouped[cat].map(([id, entry]) => buildStockCard(id, entry)).join("");
+            return `
+              <div class="space-y-2">
+                <h3 class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg flex items-center justify-between sticky top-0 z-10">
+                  <span><i class="fa-solid fa-tag mr-1"></i>${cat}</span>
+                  <span class="text-emerald-500">${grouped[cat].length}点</span>
+                </h3>
+                <div class="space-y-3">${cardsHtml}</div>
+              </div>
+            `;
+          })
+          .join("");
       }
 
       function buildStockCard(ingredientId, entry) {
@@ -468,13 +468,12 @@
         document.getElementById("addItemCategory").value = info ? info.category : "";
         document.getElementById("addItemUnit").value = ingredientId ? getDefaultUnitForIngredient(ingredientId) : "個";
         document.getElementById("addItemQuantity").value = 1;
-        document.getElementById("addItemStorage").value = info ? categoryToDefaultStorage(info.category) : "refrigerated";
         document.getElementById("addItemExpiry").value = "";
         document.getElementById("addItemPrice").value = "";
 
         const hint = document.getElementById("addModalHint");
         if (ingredientId) {
-          hint.textContent = "共通食材として登録済みの食材です。数量・保管場所などを入力してください。";
+          hint.textContent = "共通食材として登録済みの食材です。数量などを入力してください。";
           hint.classList.remove("hidden");
         } else if (barcode) {
           hint.textContent = `バーコード: ${barcode}${isInStoreCode(barcode) ? "（インストアコード：お店専用のバーコードです）" : ""} — 新しい食材として登録します。`;
@@ -495,7 +494,6 @@
 
         const nameInput = document.getElementById("addItemName").value.trim();
         const barcodeField = document.getElementById("addItemBarcode").value.trim();
-        const storage = document.getElementById("addItemStorage").value;
         const quantity = parseFloat(document.getElementById("addItemQuantity").value);
         const unit = document.getElementById("addItemUnit").value;
         const expiry = document.getElementById("addItemExpiry").value || null;
@@ -530,7 +528,6 @@
         addToStock(ingredientId, {
           quantity,
           unit,
-          storage,
           expiryDate: expiry,
           price,
           purchaseDate: formatDateISO(new Date()),
