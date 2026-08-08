@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KotoRo データリセット</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  </head>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen font-sans">
+    <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-3xl sm:shadow-2xl flex flex-col overflow-hidden relative border-x sm:border border-gray-300">
+      <!-- ヘッダー -->
+      <header class="bg-rose-600 text-white px-4 py-4 flex items-center gap-2 shadow-md z-10">
+        <i class="fa-solid fa-trash-can text-xl"></i>
+        <h1 class="font-bold text-base tracking-wider">KotoRo データリセット</h1>
+      </header>
+
+      <main class="flex-1 overflow-y-auto p-4 space-y-4">
+        <div class="bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl p-3 leading-relaxed">
+          <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+          このページは、このブラウザに保存されているKotoRoのデータ（買い物リスト・在庫・献立・レシピ作成回数・購入履歴など）を削除するためのものです。<br />
+          <strong>削除すると元に戻せません。</strong>必要であれば事前にバックアップ（後述）を取ってください。
+        </div>
+
+        <section>
+          <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">検出されたKotoRoのデータ</h2>
+          <div id="keyList" class="space-y-2">
+            <div class="text-center py-6 text-gray-400 text-xs">確認中...</div>
+          </div>
+        </section>
+
+        <section class="space-y-2">
+          <button id="backupBtn" onclick="downloadBackup()" class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold text-sm py-2.5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-download"></i> 削除前にバックアップ（JSON）をダウンロード
+          </button>
+          <button id="clearAllBtn" onclick="confirmClearAll()" class="w-full bg-rose-600 hover:bg-rose-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold text-sm py-3 rounded-xl shadow transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-trash-can"></i> KotoRoのデータを全て削除する
+          </button>
+        </section>
+
+        <p id="resultMsg" class="text-center text-xs text-emerald-700 font-bold hidden"></p>
+      </main>
+    </div>
+
+    <!-- 削除確認モーダル -->
+    <div id="confirm-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl">
+        <h3 class="font-bold text-base text-gray-800"><i class="fa-solid fa-triangle-exclamation text-rose-600 mr-1"></i> 本当に削除しますか？</h3>
+        <p class="text-xs text-gray-600 leading-relaxed">この操作は取り消せません。買い物リスト・在庫・献立・レシピ作成回数・購入履歴などのデータがすべて消去されます。</p>
+        <div class="flex gap-3">
+          <button onclick="closeConfirmModal()" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold text-sm py-2.5 rounded-xl transition-all">キャンセル</button>
+          <button onclick="executeClearAll()" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold text-sm py-2.5 rounded-xl transition-all">削除する</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const KOTORO_PREFIX = "kotoro_";
+
+      function getKotoroKeys() {
+        const keys = [];
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          if (key && key.startsWith(KOTORO_PREFIX)) keys.push(key);
+        }
+        return keys.sort();
+      }
+
+      function formatBytes(str) {
+        const bytes = new Blob([str || ""]).size;
+        if (bytes < 1024) return `${bytes} B`;
+        return `${(bytes / 1024).toFixed(1)} KB`;
+      }
+
+      function renderKeyList() {
+        const container = document.getElementById("keyList");
+        const keys = getKotoroKeys();
+
+        if (keys.length === 0) {
+          container.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">削除対象のデータは見つかりませんでした。</div>`;
+          document.getElementById("clearAllBtn").disabled = true;
+          document.getElementById("backupBtn").disabled = true;
+          return;
+        }
+
+        document.getElementById("clearAllBtn").disabled = false;
+        document.getElementById("backupBtn").disabled = false;
+
+        container.innerHTML = keys
+          .map((key) => {
+            const value = localStorage.getItem(key);
+            return `
+              <div class="bg-white rounded-xl border border-gray-200 p-3 flex items-center justify-between">
+                <div class="min-w-0">
+                  <div class="font-mono text-xs text-gray-800 truncate">${key}</div>
+                  <div class="text-[10px] text-gray-400">${formatBytes(value)}</div>
+                </div>
+                <button onclick="clearSingleKey('${key}')" class="text-rose-500 hover:underline text-[11px] font-bold shrink-0 ml-3">削除</button>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function clearSingleKey(key) {
+        if (!confirm(`「${key}」を削除しますか？`)) return;
+        localStorage.removeItem(key);
+        renderKeyList();
+        showResult(`「${key}」を削除しました。`);
+      }
+
+      function confirmClearAll() {
+        document.getElementById("confirm-modal").classList.remove("hidden");
+      }
+      function closeConfirmModal() {
+        document.getElementById("confirm-modal").classList.add("hidden");
+      }
+
+      function executeClearAll() {
+        const keys = getKotoroKeys();
+        keys.forEach((key) => localStorage.removeItem(key));
+        closeConfirmModal();
+        renderKeyList();
+        showResult(`KotoRoのデータ（${keys.length}件）をすべて削除しました。`);
+      }
+
+      function showResult(message) {
+        const el = document.getElementById("resultMsg");
+        el.textContent = message;
+        el.classList.remove("hidden");
+      }
+
+      function downloadBackup() {
+        const keys = getKotoroKeys();
+        const backup = {};
+        keys.forEach((key) => {
+          try {
+            backup[key] = JSON.parse(localStorage.getItem(key));
+          } catch (e) {
+            backup[key] = localStorage.getItem(key);
+          }
+        });
+        const blob = new Blob([JSON.stringify(backup, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const today = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `kotoro_backup_${today}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }
+
+      window.addEventListener("DOMContentLoaded", renderKeyList);
+    </script>
+  </body>
+</html>
