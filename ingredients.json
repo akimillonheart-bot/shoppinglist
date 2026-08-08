@@ -1,125 +1,431 @@
 [
   {
-    "ingredientId": "ing_soy_sauce",
-    "name": "醤油",
+    "ingredientId": "ing_しょうゆ",
+    "name": "しょうゆ",
     "category": "調味料",
     "isExempt": true,
     "product": [
       {
         "barcode": "4901515122531",
         "productName": "キッコーマン いつでも新鮮しょうゆ 400ml",
-        "capacity": "400ml"
+        "amount": 400,
+        "unit": "ml"
+      },
+      {
+        "barcode": "4901515122484",
+        "productName": "キッコーマン いつでも新鮮 しぼりたて生しょうゆ 450ml",
+        "amount": 450,
+        "unit": "ml"
       }
     ]
   },
   {
-    "ingredientId": "ing_pork_loin",
-    "name": "豚ロース肉",
-    "category": "肉類",
-    "isExempt": false,
+    "ingredientId": "ing_オイスターソース",
+    "name": "オイスターソース",
+    "category": "調味料",
+    "isExempt": true,
     "product": {
-      "barcode": "2001234000001",
-      "productName": "国産豚ロース薄切り",
-      "capacity": "200g"
+      "barcode": "20012340000231",
+      "productName": "オイスターソース 1000g",
+      "amount": 15,
+      "unit": "ml"
     }
   },
   {
-    "ingredientId": "ing_onion",
-    "name": "玉ねぎ",
-    "category": "野菜",
-    "isExempt": false,
+    "ingredientId": "ing_酒",
+    "name": "料理酒",
+    "category": "調味料",
+    "isExempt": true,
     "product": {
-      "barcode": "2001234000002",
-      "productName": "玉ねぎ（バラ売り／袋）",
-      "capacity": "1個"
+      "barcode": "20012340000232",
+      "productName": "料理酒 1000g",
+      "amount": 15,
+      "unit": "ml"
     }
   },
   {
-    "ingredientId": "ing_chicken_thigh",
-    "name": "鶏もも肉",
-    "category": "肉類",
-    "isExempt": false,
+    "ingredientId": "ing_砂糖",
+    "name": "砂糖",
+    "category": "調味料",
+    "isExempt": true,
     "product": {
-      "barcode": "2001234000003",
-      "productName": "国産鶏もも肉",
-      "capacity": "250g"
+      "barcode": "20012340000233",
+      "productName": "砂糖 1000g",
+      "amount": 5,
+      "unit": "g"
     }
   },
   {
-    "ingredientId": "ing_potato_starch",
+    "ingredientId": "ing_ごま油",
+    "name": "ごま油",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "2001234000017",
+      "productName": "ごま油",
+      "amount": 15,
+      "unit": "ml"
+    }
+  },
+  {
+    "ingredientId": "ing_おろしにんにく",
+    "name": "おろしにんにく",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000234",
+      "productName": "おろしにんにく 1000g",
+      "amount": 5,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_はちみつ",
+    "name": "はちみつ",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000234",
+      "productName": "はちみつ 1000g",
+      "amount": 5,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_七味唐辛子",
+    "name": "七味唐辛子",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "20012340000234",
+      "productName": "はちみつ 1000g",
+      "amount": 5,
+      "unit": "適宜"
+    }
+  },
+  {
+    "ingredientId": "ing_片栗粉",
     "name": "片栗粉",
     "category": "調味料",
     "isExempt": true,
     "product": {
-      "barcode": "4901001000001",
-      "productName": "片栗粉 300g",
-      "capacity": "300g"
+      "barcode": "20012340000235",
+      "productName": "片栗粉 1000g",
+      "amount": 5,
+      "unit": "g"
     }
   },
   {
-    "ingredientId": "ing_oil",
-    "name": "揚げ油",
+    "ingredientId": "ing_おろししょうが",
+    "name": "おろししょうが",
     "category": "調味料",
     "isExempt": true,
     "product": {
-      "barcode": "4901760000001",
-      "productName": "サラダ油 1000g",
-      "capacity": "1000g"
+      "barcode": "4908888000001",
+      "productName": "おろししょうが",
+      "amount": 5,
+      "unit": "g"
     }
   },
   {
-    "ingredientId": "ing_salmon",
-    "name": "生鮭",
-    "category": "魚介類",
+    "ingredientId": "ing_白いりごま",
+    "name": "白いりごま",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "白いりごま",
+      "amount": 0,
+      "unit": "適量"
+    }
+  },
+  {
+    "ingredientId": "ing_マヨネーズ",
+    "name": "マヨネーズ",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "マヨネーズ",
+      "amount": 15,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_塩",
+    "name": "塩",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "マヨネーズ",
+      "amount": 0,
+      "unit": "少々"
+    }
+  },
+  {
+    "ingredientId": "ing_みりん",
+    "name": "みりん",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "みりん",
+      "amount": 15,
+      "unit": "ml"
+    }
+  },
+  {
+    "ingredientId": "ing_こしょう",
+    "name": "こしょう",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "こしょう",
+      "amount": 0,
+      "unit": "少々"
+    }
+  },
+  {
+    "ingredientId": "ing_みそ",
+    "name": "みそ",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "みそ",
+      "amount": 5,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_白だし",
+    "name": "白だし",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "みそ",
+      "amount": 45,
+      "unit": "ml"
+    }
+  },
+  {
+    "ingredientId": "ing_白すりごま",
+    "name": "白すりごま",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "白すりごま",
+      "amount": 5,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_酢",
+    "name": "酢",
+    "category": "調味料",
+    "isExempt": true,
+    "product": {
+      "barcode": "4908888000001",
+      "productName": "酢",
+      "amount": 10,
+      "unit": "ml"
+    }
+  },
+  {
+    "ingredientId": "ing_豚こま肉",
+    "name": "豚こま肉",
+    "category": "肉類",
     "isExempt": false,
     "product": {
-      "barcode": "2001234000004",
-      "productName": "生鮭切り身",
-      "capacity": "2切"
+      "barcode": "20012340000236",
+      "productName": "豚こま肉",
+      "amount": 150,
+      "unit": "g"
     }
   },
   {
-    "ingredientId": "ing_butter",
-    "name": "バター",
-    "category": "乳製品",
-    "isExempt": false,
-    "product": {
-      "barcode": "4903050000001",
-      "productName": "北海道バター 200g",
-      "capacity": "200g"
-    }
-  },
-  {
-    "ingredientId": "ing_enoki",
-    "name": "えのき",
-    "category": "野菜",
-    "isExempt": false,
-    "product": {
-      "barcode": "2001234000005",
-      "productName": "えのき茸",
-      "capacity": "1株"
-    }
-  },
-  {
-    "ingredientId": "ing_beef_slice",
-    "name": "牛切り落とし肉",
+    "ingredientId": "ing_豚薄切り肉",
+    "name": "ing_豚薄切り肉",
     "category": "肉類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000006",
-      "productName": "牛切り落とし",
+      "productName": "豚薄切り肉",
       "capacity": "200g"
     }
   },
   {
-    "ingredientId": "ing_burdock",
-    "name": "ごぼう",
-    "category": "野菜",
+    "ingredientId": "ing_ピーマン",
+    "name": "ピーマン",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "20012340000237",
+      "productName": "ピーマン 200g",
+      "amount": 2,
+      "unit": "個"
+    }
+  },
+  {
+    "ingredientId": "ing_玉ねぎ",
+    "name": "玉ねぎ",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "20012340000237",
+      "productName": "玉ねぎ",
+      "amount": 0.5,
+      "unit": "個"
+    }
+  },
+  {
+    "ingredientId": "ing_豆苗",
+    "name": "豆苗",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000007",
-      "productName": "洗いがリごぼう",
-      "capacity": "1本"
+      "productName": "豆苗",
+      "amount": 1,
+      "unit": "袋"
+    }
+  },
+  {
+    "ingredientId": "ing_れんこん",
+    "name": "れんこん",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "れんこん",
+      "amount": 80,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_長いも",
+    "name": "長いも",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "長いも",
+      "amount": 50,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_キャベツ",
+    "name": "キャベツ",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "キャベツ",
+      "amount": 0.1,
+      "unit": "個"
+    }
+  },
+  {
+    "ingredientId": "ing_ごぼう",
+    "name": "ごぼう",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "ごぼう",
+      "amount": 0.5,
+      "unit": "本"
+    }
+  },
+  {
+    "ingredientId": "ing_なす",
+    "name": "なす",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "ごぼう",
+      "amount": 3,
+      "unit": "本"
+    }
+  },
+  {
+    "ingredientId": "ing_小ねぎ",
+    "name": "小ねぎ",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "小ねぎ",
+      "amount": 0,
+      "unit": "適量"
+    }
+  },
+  {
+    "ingredientId": "ing_きのこ類",
+    "name": "きのこ類",
+    "category": "きのこ類",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000007",
+      "productName": "きのこ類",
+      "amount": 50,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_春雨",
+    "name": "春雨",
+    "category": "春雨",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4937768096289",
+        "productName": "国産春雨 100g",
+        "amount": 100,
+        "unit": "g"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_にんじん",
+    "name": "にんじん",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000001",
+      "productName": "にんじん",
+      "amount": 0.5,
+      "unit": "本"
+    }
+  },
+  {
+    "ingredientId": "ing_ニラ",
+    "name": "ニラ",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000002",
+      "productName": "ニラ",
+      "amount": 0.5,
+      "unit": "束"
+    }
+  },
+  {
+    "ingredientId": "ing_もやし",
+    "name": "もやし",
+    "category": "野菜",
+    "isExempt": false,
+    "product": {
+      "barcode": "2001234000003",
+      "productName": "もやし",
+      "amount": 1,
+      "unit": "袋"
     }
   },
   {
@@ -134,36 +440,86 @@
     }
   },
   {
-    "ingredientId": "ing_tofu",
-    "name": "豆腐",
+    "ingredientId": "ing_白菜キムチ",
+    "name": "白菜キムチ",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4901111000001",
+      "productName": "白菜キムチ",
+      "amount": 90,
+      "unit": "g"
+    }
+  },
+  {
+    "ingredientId": "ing_スライスチーズ",
+    "name": "スライスチーズ",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4901111000001",
+      "productName": "スライスチーズ",
+      "amount": 2,
+      "unit": "枚"
+    }
+  },
+  {
+    "ingredientId": "ing_焼きのり",
+    "name": "焼きのり",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4901111000001",
+      "productName": "焼きのり",
+      "amount": 3,
+      "unit": "枚"
+    }
+  },
+  {
+    "ingredientId": "ing_ちくわ",
+    "name": "ちくわ",
     "category": "加工食品",
     "isExempt": false,
     "product": {
       "barcode": "4902222000001",
-      "productName": "絹ごし豆腐",
+      "productName": "ちくわ",
       "capacity": "300g"
     }
   },
   {
-    "ingredientId": "ing_egg",
+    "ingredientId": "ing_豆乳",
+    "name": "豆乳",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": {
+      "barcode": "4902222000001",
+      "productName": "豆乳",
+      "amount": 15,
+      "unit": "ml"
+    }
+  },
+  {
+    "ingredientId": "ing_卵",
     "name": "卵",
     "category": "卵",
     "isExempt": false,
     "product": {
       "barcode": "4903333000001",
       "productName": "新鮮たまご 10個入",
-      "capacity": "10個"
+      "amount": 2,
+      "unit": "個"
     }
   },
   {
-    "ingredientId": "ing_rice",
-    "name": "ご飯",
+    "ingredientId": "ing_小麦粉",
+    "name": "小麦粉",
     "category": "穀類",
     "isExempt": false,
     "product": {
       "barcode": "4904444000001",
-      "productName": "パックごはん 3食入",
-      "capacity": "3食"
+      "productName": "小麦粉",
+      "amount": 0,
+      "unit": "適量"
     }
   },
   {
@@ -178,14 +534,15 @@
     }
   },
   {
-    "ingredientId": "ing_pork_minced",
+    "ingredientId": "ing_豚ひき肉",
     "name": "豚ひき肉",
     "category": "肉類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000009",
       "productName": "国産豚ひき肉",
-      "capacity": "200g"
+      "amount": 100,
+      "unit": "g"
     }
   },
   {
@@ -266,17 +623,6 @@
     }
   },
   {
-    "ingredientId": "ing_miso",
-    "name": "味噌",
-    "category": "調味料",
-    "isExempt": true,
-    "product": {
-      "barcode": "4908888000001",
-      "productName": "だし入り味噌 750g",
-      "capacity": "750g"
-    }
-  },
-  {
     "ingredientId": "ing_pork_slice",
     "name": "豚薄切り肉",
     "category": "肉類",
@@ -317,17 +663,6 @@
     "product": {
       "barcode": "2001234000016",
       "productName": "鶏のから揚げデータ",
-      "capacity": "90g"
-    }
-  },
-  {
-    "ingredientId": "ing_salt",
-    "name": "塩",
-    "category": "調味料",
-    "isExempt": true,
-    "product": {
-      "barcode": "2001234000017",
-      "productName": "塩データ",
       "capacity": "90g"
     }
   },
