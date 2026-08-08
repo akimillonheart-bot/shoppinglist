@@ -1,0 +1,22 @@
+[
+  {
+    "shopId": "shop_001",
+    "name": "イオン"
+  },
+  {
+    "shopId": "shop_002",
+    "name": "西友"
+  },
+  {
+    "shopId": "shop_003",
+    "name": "ライフ"
+  },
+  {
+    "shopId": "shop_004",
+    "name": "業務スーパー"
+  },
+  {
+    "shopId": "shop_005",
+    "name": "まいばすけっと"
+  }
+]

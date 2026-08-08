@@ -1,1274 +1,774 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>台所帳 — 献立・在庫・買い物</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-:root{
-  --bg:#F6F3EC;
-  --surface:#FFFFFF;
-  --surface-2:#EFEAE0;
-  --ink:#2B2E28;
-  --ink-soft:#6B6A5E;
-  --line:#DEDACC;
-  --primary:#3F6B4F;
-  --primary-dark:#2A4B36;
-  --primary-soft:#DCE8DE;
-  --accent:#E3A61B;
-  --accent-soft:#FBEDCB;
-  --danger:#C1502E;
-  --danger-soft:#F5DED4;
-  --radius-s:8px;
-  --radius-m:14px;
-  --radius-l:22px;
-  --cat-vegetable:#4C8B5B;
-  --cat-meat_fish:#C1502E;
-  --cat-fresh_food:#2E8B8B;
-  --cat-processed_meat:#9C6B3E;
-  --cat-seasoning:#E3A61B;
-  --cat-other:#8B8879;
-  --loc-fridge:#2E7BB8;
-  --loc-freezer:#5B6FC7;
-  --loc-pantry:#B8862E;
-}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{
-  background:var(--bg);
-  color:var(--ink);
-  font-family:"Zen Kaku Gothic New", -apple-system, "Hiragino Sans", sans-serif;
-  -webkit-tap-highlight-color:transparent;
-  padding-bottom:calc(72px + env(safe-area-inset-bottom));
-  min-height:100vh;
-}
-h1,h2,h3,.brand{
-  font-family:"Zen Maru Gothic", "Zen Kaku Gothic New", sans-serif;
-}
-button{font-family:inherit;}
-/* ---------- header ---------- */
-header.appbar{
-  position:sticky; top:0; z-index:20;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px 10px;
-  background:var(--bg);
-  border-bottom:1px solid var(--line);
-}
-.brand-wrap{display:flex; flex-direction:column; gap:2px;}
-.brand-eyebrow{
-  font-size:11px; letter-spacing:.14em; color:var(--primary);
-  font-weight:700;
-}
-.brand{font-size:20px; font-weight:900; color:var(--ink); margin:0;}
-.gear-btn{
-  width:42px; height:42px; border-radius:50%;
-  border:1px solid var(--line); background:var(--surface);
-  display:flex; align-items:center; justify-content:center;
-  font-size:20px; cursor:pointer; color:var(--ink);
-  flex-shrink:0;
-}
-.gear-btn:active{background:var(--surface-2);}
-
-main{padding:14px 14px 24px; max-width:640px; margin:0 auto;}
-.tab-panel{display:none;}
-.tab-panel.active{display:block;}
-
-.section-title{
-  display:flex; align-items:baseline; justify-content:space-between;
-  margin:18px 0 8px;
-}
-.section-title h2{font-size:16px; margin:0; font-weight:700;}
-.section-title .hint{font-size:11px; color:var(--ink-soft);}
-
-/* ---------- cards / list items ---------- */
-.card{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:var(--radius-m);
-  padding:12px 14px;
-  margin-bottom:10px;
-}
-.empty-state{
-  text-align:center; color:var(--ink-soft); font-size:13px;
-  padding:26px 10px; border:1px dashed var(--line); border-radius:var(--radius-m);
-  background:var(--surface);
-}
-.chip{
-  display:inline-flex; align-items:center; gap:4px;
-  font-size:11px; padding:3px 9px; border-radius:99px;
-  font-weight:700; white-space:nowrap;
-}
-.dot{width:8px; height:8px; border-radius:50%; display:inline-block;}
-
-.shop-item{display:flex; gap:10px; align-items:flex-start;}
-.check-btn{
-  width:26px; height:26px; border-radius:50%; border:2px solid var(--primary);
-  flex-shrink:0; margin-top:2px; background:transparent; cursor:pointer;
-  display:flex; align-items:center; justify-content:center; color:var(--primary); font-size:14px;
-}
-.check-btn.checked{background:var(--primary); color:#fff;}
-.shop-item.done .item-name{text-decoration:line-through; color:var(--ink-soft);}
-.item-body{flex:1; min-width:0;}
-.item-top{display:flex; align-items:center; justify-content:space-between; gap:8px;}
-.item-name{font-weight:700; font-size:15px;}
-.item-qty{font-size:12px; color:var(--ink-soft); margin-top:2px;}
-.item-actions{display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; align-items:center;}
-.price-input{
-  width:88px; border:1px solid var(--line); border-radius:var(--radius-s);
-  padding:6px 8px; font-size:13px; background:var(--surface-2);
-}
-.avg-price{font-size:11px; color:var(--ink-soft);}
-.icon-btn{
-  border:1px solid var(--line); background:var(--surface); border-radius:var(--radius-s);
-  padding:6px 10px; font-size:12px; cursor:pointer; color:var(--ink);
-}
-.icon-btn:active{background:var(--surface-2);}
-.small-x{
-  border:none; background:transparent; color:var(--ink-soft); font-size:16px; cursor:pointer; padding:2px 6px;
-}
-
-/* category group headers */
-.cat-header{
-  display:flex; align-items:center; gap:8px; margin:14px 0 6px;
-  font-size:12px; font-weight:700; color:var(--ink-soft);
-}
-.cat-header .dot{width:10px; height:10px;}
-
-/* buttons */
-.btn{
-  border:none; border-radius:var(--radius-m); padding:12px 16px;
-  font-size:14px; font-weight:700; cursor:pointer; width:100%;
-}
-.btn-primary{background:var(--primary); color:#fff;}
-.btn-primary:active{background:var(--primary-dark);}
-.btn-accent{background:var(--accent); color:#fff;}
-.btn-outline{background:var(--surface); color:var(--ink); border:1px solid var(--line);}
-.btn-row{display:flex; gap:8px;}
-.btn-row .btn{width:auto; flex:1;}
-
-/* ---------- bottom nav ---------- */
-nav.bottom-nav{
-  position:fixed; left:0; right:0; bottom:0; z-index:30;
-  background:var(--surface);
-  border-top:1px solid var(--line);
-  display:flex;
-  padding-bottom:env(safe-area-inset-bottom);
-}
-nav.bottom-nav button{
-  flex:1; border:none; background:transparent; padding:9px 2px 8px;
-  display:flex; flex-direction:column; align-items:center; gap:3px;
-  color:var(--ink-soft); font-size:10.5px; cursor:pointer;
-}
-nav.bottom-nav button .nav-icon{font-size:19px;}
-nav.bottom-nav button.active{color:var(--primary); font-weight:700;}
-
-/* ---------- inventory ---------- */
-.inv-item{display:flex; align-items:center; gap:10px;}
-.inv-info{flex:1; min-width:0;}
-.inv-name{font-weight:700; font-size:14.5px;}
-.inv-meta{font-size:11.5px; color:var(--ink-soft); margin-top:2px;}
-.stepper{display:flex; align-items:center; gap:8px;}
-.stepper button{
-  width:30px; height:30px; border-radius:50%; border:1px solid var(--line);
-  background:var(--surface-2); font-size:16px; cursor:pointer; color:var(--ink);
-}
-.stepper .qty{min-width:40px; text-align:center; font-weight:700; font-size:14px;}
-.zero-badge{background:var(--danger-soft); color:var(--danger); font-weight:700;}
-.expiry-warn{color:var(--danger);}
-
-/* ---------- weekly menu ---------- */
-.week-grid{display:flex; flex-direction:column; gap:8px;}
-.day-card{
-  background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-m);
-  padding:10px 12px;
-}
-.day-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;}
-.day-label{font-weight:900; font-size:13px;}
-.day-label.sat{color:#2E7BB8;} .day-label.sun{color:var(--danger);}
-.meal-row{
-  display:flex; align-items:center; justify-content:space-between; gap:8px;
-  padding:7px 0; border-top:1px dashed var(--line);
-}
-.meal-row:first-of-type{border-top:none;}
-.meal-tag{font-size:11px; color:var(--ink-soft); width:40px; flex-shrink:0;}
-.meal-select{
-  flex:1; border:1px solid var(--line); border-radius:var(--radius-s);
-  padding:7px 8px; font-size:13px; background:var(--surface); color:var(--ink);
-}
-.cook-count{font-size:10.5px; color:var(--ink-soft);}
-
-/* ---------- recipes ---------- */
-.recipe-card h3{margin:0 0 2px; font-size:15px;}
-.recipe-meta{font-size:11.5px; color:var(--ink-soft); margin-bottom:8px;}
-.ing-list{list-style:none; margin:0; padding:0; font-size:13px;}
-.ing-list li{display:flex; justify-content:space-between; padding:3px 0; border-top:1px dashed var(--line);}
-.ing-list li:first-child{border-top:none;}
-.ing-jan{font-size:10px; color:var(--ink-soft);}
-.steps{margin:8px 0 0; padding-left:18px; font-size:13px; color:var(--ink-soft);}
-.day-pill{
-  display:inline-block; background:var(--primary-soft); color:var(--primary-dark);
-  font-size:10.5px; font-weight:700; padding:2px 8px; border-radius:99px;
-}
-
-/* ---------- overlay / modal ---------- */
-.overlay{
-  position:fixed; inset:0; z-index:100;
-  background:rgba(20,20,15,.55);
-  display:flex; align-items:flex-end; justify-content:center;
-}
-.overlay.hidden{display:none;}
-.overlay.center{align-items:center;}
-.sheet{
-  background:var(--surface); width:100%; max-width:640px;
-  border-radius:var(--radius-l) var(--radius-l) 0 0;
-  max-height:88vh; overflow-y:auto;
-  padding:16px 16px calc(20px + env(safe-area-inset-bottom));
-}
-.overlay.center .sheet{border-radius:var(--radius-l); max-height:80vh;}
-.sheet-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;}
-.sheet-head h2{margin:0; font-size:16px;}
-.close-x{border:none; background:var(--surface-2); width:32px; height:32px; border-radius:50%; font-size:16px; cursor:pointer; color:var(--ink);}
-
-.field{margin-bottom:12px;}
-.field label{display:block; font-size:12px; color:var(--ink-soft); margin-bottom:4px; font-weight:700;}
-.field input, .field select, .field textarea{
-  width:100%; border:1px solid var(--line); border-radius:var(--radius-s);
-  padding:10px 10px; font-size:14px; background:var(--surface); color:var(--ink);
-}
-.field textarea{resize:vertical; min-height:60px;}
-
-/* scanner overlay */
-#scanOverlay{background:#000; align-items:stretch;}
-.scan-top{
-  position:absolute; top:0; left:0; right:0; z-index:5;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:14px 14px; padding-top:calc(14px + env(safe-area-inset-top));
-}
-.scan-close{
-  width:38px; height:38px; border-radius:50%; background:rgba(0,0,0,.5); color:#fff;
-  border:1px solid rgba(255,255,255,.4); font-size:18px; cursor:pointer;
-}
-.scan-title{color:#fff; font-size:13px; background:rgba(0,0,0,.5); padding:6px 12px; border-radius:99px;}
-#qr-reader{width:100%; height:100%;}
-#qr-reader video{object-fit:cover; width:100%!important; height:100%!important;}
-
-.confirm-sheet{
-  position:absolute; left:0; right:0; bottom:0; z-index:10;
-  background:var(--surface); border-radius:var(--radius-l) var(--radius-l) 0 0;
-  padding:18px 16px calc(20px + env(safe-area-inset-bottom));
-}
-.confirm-sheet.hidden{display:none;}
-.pack-stepper{display:flex; align-items:center; justify-content:center; gap:18px; margin:14px 0;}
-.pack-stepper button{
-  width:46px; height:46px; border-radius:50%; border:none; background:var(--primary-soft);
-  color:var(--primary-dark); font-size:22px; cursor:pointer;
-}
-.pack-stepper .val{font-size:24px; font-weight:900; min-width:70px; text-align:center;}
-.conv-note{text-align:center; font-size:12px; color:var(--ink-soft); margin-bottom:4px;}
-
-.dict-row{display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-top:1px dashed var(--line);}
-.dict-row:first-child{border-top:none;}
-.dict-row .n{font-weight:700; font-size:13.5px;}
-.dict-row .j{font-size:11px; color:var(--ink-soft);}
-
-.toast{
-  position:fixed; left:50%; bottom:90px; transform:translateX(-50%);
-  background:var(--ink); color:#fff; padding:10px 18px; border-radius:99px;
-  font-size:13px; z-index:200; opacity:0; pointer-events:none; transition:opacity .2s;
-}
-.toast.show{opacity:1;}
-
-.search-box{
-  width:100%; border:1px solid var(--line); border-radius:var(--radius-s);
-  padding:9px 12px; font-size:14px; margin-bottom:10px; background:var(--surface);
-}
-</style>
-</head>
-<body>
-
-<header class="appbar">
-  <div class="brand-wrap">
-    <span class="brand-eyebrow">献立 × 在庫 × 買い物</span>
-    <h1 class="brand">台所帳</h1>
-  </div>
-  <button class="gear-btn" id="openSettings" aria-label="設定">⚙</button>
-</header>
-
-<main>
-
-  <!-- 買い物リスト -->
-  <section class="tab-panel active" id="tab-shoppingList">
-    <div class="section-title">
-      <h2>🛒 買い物リスト</h2>
-      <span class="hint" id="shopCountHint"></span>
-    </div>
-    <div id="shopListArea"></div>
-    <div class="btn-row" style="margin-top:14px;">
-      <button class="btn btn-outline" id="addManualShopBtn">＋ 手動で追加</button>
-      <button class="btn btn-accent" id="scanShopBtn">📷 スキャン</button>
-    </div>
-  </section>
-
-  <!-- 在庫管理 -->
-  <section class="tab-panel" id="tab-inventory">
-    <div class="section-title">
-      <h2>🧊 在庫管理</h2>
-    </div>
-    <div id="invArea"></div>
-    <div class="btn-row" style="margin-top:14px;">
-      <button class="btn btn-outline" id="addManualInvBtn">＋ 手動で追加</button>
-      <button class="btn btn-accent" id="scanInvBtn">📷 スキャン</button>
-    </div>
-  </section>
-
-  <!-- 週間献立 -->
-  <section class="tab-panel" id="tab-weeklyMenu">
-    <div class="section-title">
-      <h2>📅 週間献立（土曜始まり）</h2>
-    </div>
-    <div class="week-grid" id="weekArea"></div>
-    <div class="btn-row" style="margin-top:14px;">
-      <button class="btn btn-outline" id="autoAssignBtn">🔁 自動で割り当て</button>
-      <button class="btn btn-primary" id="confirmMenuBtn">✅ 献立を確定</button>
-    </div>
-  </section>
-
-  <!-- レシピ管理 -->
-  <section class="tab-panel" id="tab-recipes">
-    <div class="section-title">
-      <h2>📖 レシピ管理</h2>
-      <span class="hint">recipes.json を参照（編集はPCから）</span>
-    </div>
-    <div id="recipeArea"></div>
-  </section>
-
-</main>
-
-<nav class="bottom-nav">
-  <button data-tab="shoppingList" class="active"><span class="nav-icon">🛒</span>買い物リスト</button>
-  <button data-tab="inventory"><span class="nav-icon">🧊</span>在庫管理</button>
-  <button data-tab="weeklyMenu"><span class="nav-icon">📅</span>週間献立</button>
-  <button data-tab="recipes"><span class="nav-icon">📖</span>レシピ管理</button>
-</nav>
-
-<!-- 設定モーダル -->
-<div class="overlay hidden" id="settingsModal">
-  <div class="sheet">
-    <div class="sheet-head">
-      <h2>⚙ 設定・商品情報管理</h2>
-      <button class="close-x" data-close="settingsModal">✕</button>
-    </div>
-
-    <div class="field">
-      <label>My商品辞書を検索（商品名 / JANコード）</label>
-      <input type="text" class="search-box" id="dictSearch" placeholder="例：卵、4901234567899">
-    </div>
-    <div id="dictList"></div>
-
-    <div class="section-title"><h2 style="font-size:14px;">データのバックアップ</h2></div>
-    <div class="btn-row">
-      <button class="btn btn-outline" id="exportBtn">⬇ エクスポート</button>
-      <button class="btn btn-outline" id="importBtn">⬆ インポート</button>
-    </div>
-    <input type="file" id="importFile" accept="application/json" style="display:none;">
-    <p class="hint" style="font-size:11px; color:var(--ink-soft); margin-top:8px;">
-      在庫・買い物リスト・献立履歴・My商品辞書はこの端末のブラウザ内（LocalStorage）に保存されています。機種変更などの前にエクスポートしてください。
-    </p>
-  </div>
-</div>
-
-<!-- 商品辞書編集モーダル -->
-<div class="overlay hidden center" id="dictEditModal">
-  <div class="sheet">
-    <div class="sheet-head">
-      <h2 id="dictEditTitle">商品情報の編集</h2>
-      <button class="close-x" data-close="dictEditModal">✕</button>
-    </div>
-    <form id="dictEditForm">
-      <div class="field"><label>表示名</label><input type="text" id="de_name" required></div>
-      <div class="field"><label>JANコード</label><input type="text" id="de_jan" required></div>
-      <div class="field"><label>カテゴリ</label>
-        <select id="de_category"></select>
-      </div>
-      <div class="field"><label>保管場所（初期値）</label>
-        <select id="de_location">
-          <option value="fridge">冷蔵</option>
-          <option value="freezer">冷凍</option>
-          <option value="pantry">常温</option>
-        </select>
-      </div>
-      <div class="field"><label>パッケージ単位名（例：パック、箱、袋）</label><input type="text" id="de_packageUnit" value="パック"></div>
-      <div class="field"><label>管理単位名（例：個、本、g）</label><input type="text" id="de_stockUnit" value="個" required></div>
-      <div class="field"><label>1パッケージあたりの個数（省略時は1）</label><input type="number" id="de_itemsPerPackage" value="1" min="1" step="1"></div>
-      <div class="btn-row">
-        <button type="button" class="btn btn-outline" id="deleteDictBtn">削除</button>
-        <button type="submit" class="btn btn-primary">保存</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- 手動追加：買い物リスト -->
-<div class="overlay hidden center" id="manualShopModal">
-  <div class="sheet">
-    <div class="sheet-head"><h2>買い物リストに手動追加</h2><button class="close-x" data-close="manualShopModal">✕</button></div>
-    <form id="manualShopForm">
-      <div class="field"><label>商品名</label><input type="text" id="ms_name" required></div>
-      <div class="field"><label>カテゴリ</label><select id="ms_category"></select></div>
-      <div class="field"><label>数量</label><input type="number" id="ms_qty" value="1" min="1" step="1"></div>
-      <div class="field"><label>単位</label><input type="text" id="ms_unit" value="個"></div>
-      <button type="submit" class="btn btn-primary">追加する</button>
-    </form>
-  </div>
-</div>
-
-<!-- 手動追加：在庫 -->
-<div class="overlay hidden center" id="manualInvModal">
-  <div class="sheet">
-    <div class="sheet-head"><h2>在庫に手動追加</h2><button class="close-x" data-close="manualInvModal">✕</button></div>
-    <form id="manualInvForm">
-      <div class="field"><label>商品名</label><input type="text" id="mi_name" required></div>
-      <div class="field"><label>数量</label><input type="number" id="mi_qty" value="1" min="0" step="1"></div>
-      <div class="field"><label>単位</label>
-        <select id="mi_unit">
-          <option>個</option><option>パック</option><option>束</option><option>g</option>
-          <option>kg</option><option>ml</option><option>l</option><option>本</option><option>袋</option>
-        </select>
-      </div>
-      <div class="field"><label>保管場所</label>
-        <select id="mi_location">
-          <option value="fridge">冷蔵</option><option value="freezer">冷凍</option><option value="pantry">常温</option>
-        </select>
-      </div>
-      <div class="field"><label>賞味期限（任意）</label><input type="date" id="mi_expiry"></div>
-      <div class="field"><label>在庫がこの数以下で買い物リストに自動登録</label><input type="number" id="mi_threshold" value="0" min="0" step="1"></div>
-      <button type="submit" class="btn btn-primary">追加する</button>
-    </form>
-  </div>
-</div>
-
-<!-- バーコードスキャン オーバーレイ -->
-<div class="overlay hidden" id="scanOverlay">
-  <div class="scan-top">
-    <span class="scan-title" id="scanModeLabel">スキャン</span>
-    <button class="scan-close" id="closeScan">✕</button>
-  </div>
-  <div id="qr-reader"></div>
-
-  <div class="confirm-sheet hidden" id="scanConfirmSheet">
-    <div class="sheet-head"><h2 id="scanProductName">商品名</h2></div>
-    <p class="conv-note" id="scanConvNote"></p>
-    <div class="pack-stepper">
-      <button type="button" id="packMinus">－</button>
-      <div class="val" id="packVal">1</div>
-      <button type="button" id="packPlus">＋</button>
-    </div>
-    <p class="conv-note" id="scanCalcNote"></p>
-    <div class="btn-row">
-      <button class="btn btn-outline" id="scanCancelBtn">キャンセル</button>
-      <button class="btn btn-primary" id="scanConfirmBtn">登録する</button>
-    </div>
-  </div>
-
-  <!-- 未登録商品の手動登録フォーム（スキャン内） -->
-  <div class="confirm-sheet hidden" id="scanNewProductSheet">
-    <div class="sheet-head"><h2>新しい商品を登録</h2></div>
-    <div class="field"><label>JANコード</label><input type="text" id="np_jan" readonly></div>
-    <div class="field"><label>商品名</label><input type="text" id="np_name" required></div>
-    <div class="field"><label>カテゴリ</label><select id="np_category"></select></div>
-    <div class="field"><label>保管場所</label>
-      <select id="np_location"><option value="fridge">冷蔵</option><option value="freezer">冷凍</option><option value="pantry">常温</option></select>
-    </div>
-    <div class="field"><label>パッケージ単位名</label><input type="text" id="np_packageUnit" value="パック"></div>
-    <div class="field"><label>管理単位名</label><input type="text" id="np_stockUnit" value="個"></div>
-    <div class="field"><label>1パッケージあたりの個数（省略時は1）</label><input type="number" id="np_itemsPerPackage" value="1" min="1"></div>
-    <button type="button" class="btn btn-primary" id="np_registerBtn">登録してスキャンを続ける</button>
-  </div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<script>
-/* =========================================================
-   台所帳 - スマート献立・在庫・買い物管理アプリ
-   要件定義書 v1.3 準拠（単独利用 / ログイン無し / GitHub Pages 想定）
-   ========================================================= */
-
-const STORAGE_KEY = "smartKitchenApp";
-const RECIPES_URL = "recipes.json";
-
-const DAYS = ["sat","sun","mon","tue","wed","thu","fri"];
-const DAY_LABEL = {sat:"土",sun:"日",mon:"月",tue:"火",wed:"水",thu:"木",fri:"金"};
-const LOCATIONS = [
-  {id:"fridge", label:"冷蔵", color:"var(--loc-fridge)"},
-  {id:"freezer", label:"冷凍", color:"var(--loc-freezer)"},
-  {id:"pantry", label:"常温", color:"var(--loc-pantry)"}
-];
-const CATEGORIES = [
-  {id:"vegetable", label:"野菜", color:"var(--cat-vegetable)"},
-  {id:"meat_fish", label:"肉・魚", color:"var(--cat-meat_fish)"},
-  {id:"fresh_food", label:"卵・乳製品等", color:"var(--cat-fresh_food)"},
-  {id:"processed_meat", label:"加工肉", color:"var(--cat-processed_meat)"},
-  {id:"seasoning", label:"調味料", color:"var(--cat-seasoning)"},
-  {id:"other", label:"その他", color:"var(--cat-other)"}
-];
-const catMeta = id => CATEGORIES.find(c=>c.id===id) || CATEGORIES[CATEGORIES.length-1];
-const locMeta = id => LOCATIONS.find(l=>l.id===id) || LOCATIONS[0];
-
-function defaultState(){
-  return {
-    settings:{activeTab:"shoppingList"},
-    weeklyMenu:{sat:{lunch:"",dinner:""},sun:{lunch:"",dinner:""},mon:{lunch:"",dinner:""},
-      tue:{lunch:"",dinner:""},wed:{lunch:"",dinner:""},thu:{lunch:"",dinner:""},fri:{lunch:"",dinner:""}},
-    recipeStats:{},
-    inventory:[],
-    shoppingList:[],
-    priceHistory:{},
-    myDictionary:{
-      "4901234567890":{name:"香薫ウインナー",category:"processed_meat",defaultLocation:"fridge",packageUnit:"袋",stockUnit:"本",itemsPerPackage:6},
-      "4901234567899":{name:"卵",category:"fresh_food",defaultLocation:"fridge",packageUnit:"パック",stockUnit:"個",itemsPerPackage:10}
-    }
-  };
-}
-
-let state = loadState();
-let recipes = [];
-
-function loadState(){
-  try{
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if(!raw) return defaultState();
-    const parsed = JSON.parse(raw);
-    // 欠けているキーはデフォルトで補完(バージョンアップ耐性)
-    return Object.assign(defaultState(), parsed);
-  }catch(e){
-    console.error("state load failed", e);
-    return defaultState();
-  }
-}
-function saveState(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-}
-function uid(prefix){
-  return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
-}
-function todayISO(){
-  return new Date().toISOString().slice(0,10);
-}
-function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(toast._h);
-  toast._h = setTimeout(()=>t.classList.remove("show"), 1800);
-}
-function optionsHTML(list, valueKey, labelKey){
-  return list.map(o=>`<option value="${o[valueKey]}">${o[labelKey]}</option>`).join("");
-}
-
-/* ---------------- タブ切替 ---------------- */
-document.querySelectorAll(".bottom-nav button").forEach(btn=>{
-  btn.addEventListener("click", ()=> switchTab(btn.dataset.tab));
-});
-function switchTab(tab){
-  state.settings.activeTab = tab;
-  saveState();
-  document.querySelectorAll(".tab-panel").forEach(p=>p.classList.remove("active"));
-  document.getElementById("tab-"+tab).classList.add("active");
-  document.querySelectorAll(".bottom-nav button").forEach(b=>b.classList.toggle("active", b.dataset.tab===tab));
-  if(tab==="weeklyMenu") renderWeeklyMenu();
-  if(tab==="recipes") renderRecipes();
-  if(tab==="inventory") renderInventory();
-  if(tab==="shoppingList") renderShoppingList();
-}
-
-/* ---------------- モーダル共通 ---------------- */
-document.querySelectorAll("[data-close]").forEach(btn=>{
-  btn.addEventListener("click", ()=> closeModal(btn.dataset.close));
-});
-function openModal(id){ document.getElementById(id).classList.remove("hidden"); }
-function closeModal(id){ document.getElementById(id).classList.add("hidden"); }
-
-/* =========================================================
-   買い物リスト
-   ========================================================= */
-function renderShoppingList(){
-  const area = document.getElementById("shopListArea");
-  const list = state.shoppingList;
-  document.getElementById("shopCountHint").textContent = list.length ? `${list.filter(i=>!i.checked).length}件 未購入` : "";
-
-  if(list.length===0){
-    area.innerHTML = `<div class="empty-state">買い物リストは空です。<br>在庫が切れたアイテムや献立の不足材料が<br>ここに自動で並びます。</div>`;
-    return;
-  }
-
-  // カテゴリ別グループ表示（売り場順並び替え）
-  const grouped = {};
-  list.forEach(item=>{
-    const c = item.category || "other";
-    (grouped[c] = grouped[c] || []).push(item);
-  });
-
-  let html = "";
-  CATEGORIES.forEach(cat=>{
-    const items = grouped[cat.id];
-    if(!items || items.length===0) return;
-    html += `<div class="cat-header"><span class="dot" style="background:${cat.color}"></span>${cat.label}</div>`;
-    items.forEach(item=>{
-      const avg = getAveragePrice(item.janCode || item.name);
-      html += `
-      <div class="card shop-item ${item.checked?"done":""}" data-id="${item.id}">
-        <button class="check-btn ${item.checked?"checked":""}" data-action="toggleShop" data-id="${item.id}">${item.checked?"✓":""}</button>
-        <div class="item-body">
-          <div class="item-top">
-            <span class="item-name">${escapeHTML(item.name)}</span>
-            <button class="small-x" data-action="removeShop" data-id="${item.id}">✕</button>
-          </div>
-          <div class="item-qty">${item.quantityCount || 1}${escapeHTML(item.unit||"個")}${item.amountNote ? "（"+escapeHTML(item.amountNote)+"）" : ""} ${item.addedType==="AUTO"?"<span class='chip' style='background:var(--primary-soft);color:var(--primary-dark)'>自動追加</span>":""}</div>
-          <div class="item-actions">
-            <input type="number" class="price-input" placeholder="金額(税抜)" value="${item.priceExcludingTax ?? ""}" data-action="setPrice" data-id="${item.id}">
-            <span class="avg-price">${avg ? "平均 ¥"+avg : ""}</span>
-          </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>買い物リスト（バーコード購入登録・在庫連携対応）</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+  </head>
+  <body class="bg-gray-100 flex justify-center items-center min-h-screen font-sans">
+    <!-- スマホフレームの外枠 -->
+    <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-3xl sm:shadow-2xl flex flex-col overflow-hidden relative border-x sm:border border-gray-300">
+      <!-- ヘッダー -->
+      <header class="bg-emerald-600 text-white px-4 py-4 flex items-center justify-between shadow-md z-10">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-basket-shopping text-xl"></i>
+          <h1 class="font-bold text-base tracking-wider">買い物リスト</h1>
         </div>
-      </div>`;
-    });
-  });
-  area.innerHTML = html;
-}
+        <button onclick="openAddToListModal()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-1 transition-all"><i class="fa-solid fa-plus"></i> 追加</button>
+      </header>
 
-function getAveragePrice(key){
-  const arr = state.priceHistory[key];
-  if(!arr || arr.length===0) return null;
-  return Math.round(arr.reduce((a,b)=>a+b,0)/arr.length);
-}
+      <!-- 現在のお店選択バー -->
+      <div class="bg-white px-4 py-2.5 border-b border-gray-200 shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-store text-emerald-600 text-sm shrink-0"></i>
+        <span class="text-xs font-bold text-gray-600 shrink-0">今のお店:</span>
+        <select id="currentShopSelect" onchange="onShopSelectChange()" class="flex-1 bg-gray-50 border border-gray-300 text-gray-800 text-xs rounded-lg px-2 py-1.5 focus:ring-emerald-500 focus:border-emerald-500"></select>
+        <input type="text" id="currentShopOther" placeholder="お店の名前" oninput="saveCurrentShopOther()" class="hidden flex-1 bg-gray-50 border border-gray-300 text-gray-800 text-xs rounded-lg px-2 py-1.5 focus:ring-emerald-500 focus:border-emerald-500" />
+      </div>
 
-document.getElementById("shopListArea").addEventListener("click", e=>{
-  const btn = e.target.closest("[data-action]");
-  if(!btn) return;
-  const id = btn.dataset.id;
-  if(btn.dataset.action==="toggleShop") toggleShopItem(id);
-  if(btn.dataset.action==="removeShop") removeShopItem(id);
-});
-document.getElementById("shopListArea").addEventListener("change", e=>{
-  const el = e.target.closest("[data-action='setPrice']");
-  if(!el) return;
-  const item = state.shoppingList.find(i=>i.id===el.dataset.id);
-  if(!item) return;
-  const val = parseFloat(el.value);
-  item.priceExcludingTax = isNaN(val) ? null : val;
-  if(!isNaN(val)){
-    const key = item.janCode || item.name;
-    state.priceHistory[key] = state.priceHistory[key] || [];
-    state.priceHistory[key].push(val);
-  }
-  saveState();
-});
+      <!-- スクロール可能なメインコンテンツ -->
+      <main class="flex-1 overflow-y-auto p-4 space-y-3 pb-24">
+        <div class="flex items-center justify-between px-1 mb-1">
+          <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider">買うもの</h2>
+          <span class="text-[11px] text-gray-400">スキャンして購入登録できます</span>
+        </div>
 
-function toggleShopItem(id){
-  const item = state.shoppingList.find(i=>i.id===id);
-  if(!item) return;
-  item.checked = !item.checked;
-  if(item.checked){
-    // 購入完了 → 在庫へ単位換算して加算
-    addToInventoryFromPurchase(item);
-    toast(`「${item.name}」を購入済みにして在庫へ反映しました`);
-  }
-  saveState();
-  renderShoppingList();
-  renderInventory();
-}
-function removeShopItem(id){
-  state.shoppingList = state.shoppingList.filter(i=>i.id!==id);
-  saveState();
-  renderShoppingList();
-}
-function addToInventoryFromPurchase(item){
-  const addItems = item.calculatedItems || item.quantityCount || 1;
-  let inv = state.inventory.find(i=> (item.janCode && i.janCode===item.janCode) || (!item.janCode && i.name===item.name));
-  const dict = item.janCode ? state.myDictionary[item.janCode] : null;
-  if(inv){
-    inv.quantity += addItems;
-  }else{
-    inv = {
-      id: uid("inv"),
-      name: item.name,
-      location: dict?.defaultLocation || "pantry",
-      quantity: addItems,
-      unit: dict?.stockUnit || item.unit || "個",
-      janCode: item.janCode || "",
-      minThreshold: 0
-    };
-    state.inventory.push(inv);
-  }
-}
+        <div id="listContainer" class="space-y-3">
+          <div class="text-center py-10 text-gray-400 text-sm">読み込み中...</div>
+        </div>
+      </main>
 
-/* 買い物リストへの追加（重複は名寄せして数量集約） */
-function addToShoppingList({name, janCode, category, addQty, unit, amountNote, addedType}){
-  const key = janCode || name;
-  let existing = state.shoppingList.find(i => (janCode && i.janCode===janCode) || (!janCode && !i.janCode && i.name===name));
-  if(existing){
-    existing.quantityCount = (existing.quantityCount||0) + addQty;
-    existing.calculatedItems = (existing.calculatedItems||existing.quantityCount);
-    if(amountNote) existing.amountNote = amountNote;
-  }else{
-    state.shoppingList.push({
-      id: uid("shop"),
-      janCode: janCode || "",
-      name, category: category || "other",
-      quantityCount: addQty,
-      unit: unit || "個",
-      calculatedItems: addQty,
-      amountNote: amountNote || "",
-      priceExcludingTax: null,
-      averagePrice: getAveragePrice(key),
-      checked:false,
-      addedType: addedType || "MANUAL"
-    });
-  }
-  saveState();
-}
-
-document.getElementById("addManualShopBtn").addEventListener("click", ()=>{
-  document.getElementById("ms_category").innerHTML = optionsHTML(CATEGORIES,"id","label");
-  document.getElementById("manualShopForm").reset();
-  openModal("manualShopModal");
-});
-document.getElementById("manualShopForm").addEventListener("submit", e=>{
-  e.preventDefault();
-  addToShoppingList({
-    name: document.getElementById("ms_name").value.trim(),
-    category: document.getElementById("ms_category").value,
-    addQty: parseInt(document.getElementById("ms_qty").value)||1,
-    unit: document.getElementById("ms_unit").value.trim()||"個",
-    addedType:"MANUAL"
-  });
-  closeModal("manualShopModal");
-  renderShoppingList();
-  toast("買い物リストに追加しました");
-});
-
-/* =========================================================
-   在庫管理
-   ========================================================= */
-function renderInventory(){
-  const area = document.getElementById("invArea");
-  if(state.inventory.length===0){
-    area.innerHTML = `<div class="empty-state">在庫はまだ登録されていません。<br>スキャンまたは手動で追加してください。</div>`;
-    return;
-  }
-  let html = "";
-  LOCATIONS.forEach(loc=>{
-    const items = state.inventory.filter(i=>i.location===loc.id);
-    if(items.length===0) return;
-    html += `<div class="cat-header"><span class="dot" style="background:${loc.color}"></span>${loc.label}</div>`;
-    items.forEach(item=>{
-      const dict = item.janCode ? state.myDictionary[item.janCode] : null;
-      const expiryWarn = item.expiry && (new Date(item.expiry) - new Date()) < 3*86400000;
-      html += `
-      <div class="card inv-item" data-id="${item.id}">
-        <div class="inv-info">
-          <div class="inv-name">${escapeHTML(item.name)} ${item.quantity<=(item.minThreshold||0) ? "<span class='chip zero-badge'>要購入</span>":""}</div>
-          <div class="inv-meta">
-            ${dict?`${dict.packageUnit} ${item.unit==="個"||dict.stockUnit===item.unit? Math.floor(item.quantity/(dict.itemsPerPackage||1)) : ""}${dict.packageUnit&&dict.itemsPerPackage>1?" 相当　":""}`:""}
-            ${item.expiry ? `<span class="${expiryWarn?"expiry-warn":""}">期限 ${item.expiry}</span>` : ""}
+      <!-- ボトムナビゲーションバー（5つのタブ：買い物がアクティブ） -->
+      <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 flex justify-around items-center text-gray-400 z-20 shadow-lg">
+        <button class="flex flex-col items-center text-emerald-600 focus:outline-none font-bold">
+          <i class="fa-solid fa-basket-shopping text-base"></i>
+          <span class="text-[10px] mt-1">買い物</span>
+        </button>
+        <button onclick="location.href='stock.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-boxes-stacked text-base"></i>
+          <span class="text-[10px] mt-1">在庫</span>
+        </button>
+        <!-- バーコード（中央・強調）：スキャンして購入登録 -->
+        <button onclick="openScanModal()" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none -mt-4">
+          <div class="bg-emerald-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md border-4 border-slate-50 hover:bg-emerald-700 transition-all">
+            <i class="fa-solid fa-barcode text-lg"></i>
           </div>
-        </div>
-        <div class="stepper">
-          <button data-action="dec" data-id="${item.id}">－</button>
-          <span class="qty">${item.quantity}${escapeHTML(item.unit)}</span>
-          <button data-action="inc" data-id="${item.id}">＋</button>
-        </div>
-      </div>`;
-    });
-  });
-  area.innerHTML = html;
-}
-document.getElementById("invArea").addEventListener("click", e=>{
-  const btn = e.target.closest("[data-action]");
-  if(!btn) return;
-  const item = state.inventory.find(i=>i.id===btn.dataset.id);
-  if(!item) return;
-  if(btn.dataset.action==="inc") item.quantity++;
-  if(btn.dataset.action==="dec") item.quantity = Math.max(0, item.quantity-1);
-  checkAutoAddToShopping(item);
-  saveState();
-  renderInventory();
-});
-
-function checkAutoAddToShopping(item){
-  if(item.quantity <= (item.minThreshold||0)){
-    const dict = item.janCode ? state.myDictionary[item.janCode] : null;
-    const perPack = dict?.itemsPerPackage || 1;
-    addToShoppingList({
-      name:item.name, janCode:item.janCode, category: dict?.category || "other",
-      addQty: 1, unit: dict?.packageUnit || item.unit,
-      amountNote: dict && perPack>1 ? `1${dict.packageUnit}(${perPack}${dict.stockUnit}入り)` : "",
-      addedType:"AUTO"
-    });
-    toast(`「${item.name}」の在庫が少ないため買い物リストに追加しました`);
-  }
-}
-
-document.getElementById("addManualInvBtn").addEventListener("click", ()=>{
-  document.getElementById("manualInvForm").reset();
-  openModal("manualInvModal");
-});
-document.getElementById("manualInvForm").addEventListener("submit", e=>{
-  e.preventDefault();
-  const item = {
-    id: uid("inv"),
-    name: document.getElementById("mi_name").value.trim(),
-    quantity: parseInt(document.getElementById("mi_qty").value)||0,
-    unit: document.getElementById("mi_unit").value,
-    location: document.getElementById("mi_location").value,
-    janCode: "",
-    minThreshold: parseInt(document.getElementById("mi_threshold").value)||0,
-    expiry: document.getElementById("mi_expiry").value || null
-  };
-  state.inventory.push(item);
-  checkAutoAddToShopping(item);
-  saveState();
-  closeModal("manualInvModal");
-  renderInventory();
-  toast("在庫に追加しました");
-});
-
-/* =========================================================
-   週間献立（土曜始まり）
-   ========================================================= */
-function renderWeeklyMenu(){
-  const area = document.getElementById("weekArea");
-  let html = "";
-  DAYS.forEach(day=>{
-    const menu = state.weeklyMenu[day];
-    html += `<div class="day-card">
-      <div class="day-head"><span class="day-label ${day}">${DAY_LABEL[day]}曜日</span></div>
-      ${["dinner","lunch"].map(meal=>{
-        const rid = menu[meal];
-        const r = recipes.find(x=>x.id===rid);
-        const stat = rid ? (state.recipeStats[rid]||{cookingCount:0}) : null;
-        return `<div class="meal-row">
-          <span class="meal-tag">${meal==="dinner"?"夕食":"昼食"}</span>
-          <select class="meal-select" data-day="${day}" data-meal="${meal}">
-            <option value="">（未設定）</option>
-            ${recipes.map(rc=>`<option value="${rc.id}" ${rc.id===rid?"selected":""}>${escapeHTML(rc.title)}</option>`).join("")}
-          </select>
-          ${stat?`<span class="cook-count">×${stat.cookingCount}</span>`:""}
-        </div>`;
-      }).join("")}
-    </div>`;
-  });
-  area.innerHTML = html;
-  area.querySelectorAll(".meal-select").forEach(sel=>{
-    sel.addEventListener("change", ()=>{
-      state.weeklyMenu[sel.dataset.day][sel.dataset.meal] = sel.value;
-      saveState();
-      renderWeeklyMenu();
-    });
-  });
-}
-
-document.getElementById("autoAssignBtn").addEventListener("click", ()=>{
-  autoAssignMenu();
-  renderWeeklyMenu();
-  toast("作成回数が少ないレシピを優先して割り当てました");
-});
-function autoAssignMenu(){
-  const usedThisWeek = new Set();
-  DAYS.forEach(day=>{
-    const candidates = recipes.filter(r=>r.assignedDay===day)
-      .sort((a,b)=> (state.recipeStats[a.id]?.cookingCount||0) - (state.recipeStats[b.id]?.cookingCount||0));
-    const slots = ["dinner","lunch"];
-    let slotIdx = 0;
-    candidates.forEach(rc=>{
-      if(usedThisWeek.has(rc.id)) return;
-      if(slotIdx >= slots.length) return;
-      state.weeklyMenu[day][slots[slotIdx]] = rc.id;
-      usedThisWeek.add(rc.id);
-      slotIdx++;
-    });
-  });
-  saveState();
-}
-
-document.getElementById("confirmMenuBtn").addEventListener("click", ()=>{
-  confirmMenuAndBuildShoppingList();
-  toast("献立を確定し、不足分を買い物リストに反映しました");
-  switchTab("shoppingList");
-});
-function confirmMenuAndBuildShoppingList(){
-  // 必要材料を集計
-  const required = {}; // key: janCode or name -> {qty, name, janCode, unit}
-  DAYS.forEach(day=>{
-    ["dinner","lunch"].forEach(meal=>{
-      const rid = state.weeklyMenu[day][meal];
-      if(!rid) return;
-      const r = recipes.find(x=>x.id===rid);
-      if(!r) return;
-      // 作成回数カウントアップ
-      state.recipeStats[rid] = state.recipeStats[rid] || {cookingCount:0, lastCooked:null};
-      state.recipeStats[rid].cookingCount++;
-      state.recipeStats[rid].lastCooked = todayISO();
-
-      (r.ingredients||[]).forEach(ing=>{
-        const numMatch = String(ing.amount||"").match(/[\d.]+/);
-        const qty = numMatch ? parseFloat(numMatch[0]) : 1;
-        const key = ing.janCode || ing.name;
-        if(!required[key]) required[key] = {name:ing.name, janCode:ing.janCode||"", qty:0};
-        required[key].qty += qty;
-      });
-    });
-  });
-
-  Object.values(required).forEach(req=>{
-    const inv = state.inventory.find(i => (req.janCode && i.janCode===req.janCode) || (!req.janCode && i.name===req.name));
-    const currentQty = inv ? inv.quantity : 0;
-    const shortage = req.qty - currentQty;
-    if(shortage <= 0) return;
-
-    const dict = req.janCode ? state.myDictionary[req.janCode] : null;
-    if(dict && dict.itemsPerPackage > 1){
-      const packs = Math.ceil(shortage / dict.itemsPerPackage);
-      addToShoppingList({
-        name:req.name, janCode:req.janCode, category:dict.category,
-        addQty: packs, unit: dict.packageUnit,
-        amountNote: `${packs}${dict.packageUnit}(${dict.itemsPerPackage}${dict.stockUnit}入り) ※不足${Math.ceil(shortage)}${dict.stockUnit}分`,
-        addedType:"AUTO"
-      });
-    }else{
-      addToShoppingList({
-        name:req.name, janCode:req.janCode, category:dict?.category,
-        addQty: Math.ceil(shortage), unit: dict?.stockUnit || "個",
-        addedType:"AUTO"
-      });
-    }
-  });
-  saveState();
-}
-
-/* =========================================================
-   レシピ管理（recipes.json 参照専用）
-   ========================================================= */
-async function loadRecipes(){
-  try{
-    const res = await fetch(RECIPES_URL + "?t=" + Date.now(), {cache:"no-store"});
-    if(!res.ok) throw new Error("recipes.json 読込失敗");
-    recipes = await res.json();
-  }catch(e){
-    console.error(e);
-    recipes = [];
-  }
-  renderRecipes();
-  renderWeeklyMenu();
-}
-function renderRecipes(){
-  const area = document.getElementById("recipeArea");
-  if(recipes.length===0){
-    area.innerHTML = `<div class="empty-state">recipes.json を読み込めませんでした。<br>PCから GitHub リポジトリへアップロードしてください。</div>`;
-    return;
-  }
-  area.innerHTML = recipes.map(r=>`
-    <div class="card recipe-card">
-      <h3>${escapeHTML(r.title)}</h3>
-      <div class="recipe-meta">
-        ${r.servings||1}人前
-        ${r.assignedDay ? `<span class="day-pill">${DAY_LABEL[r.assignedDay]}曜日</span>` : ""}
-      </div>
-      <ul class="ing-list">
-        ${(r.ingredients||[]).map(i=>`<li><span>${escapeHTML(i.name)}${i.janCode?`<div class="ing-jan">JAN:${escapeHTML(i.janCode)}</div>`:""}</span><span>${escapeHTML(i.amount||"")}</span></li>`).join("")}
-      </ul>
-      ${(r.instructions&&r.instructions.length) ? `<ol class="steps">${r.instructions.map(s=>`<li>${escapeHTML(s)}</li>`).join("")}</ol>` : ""}
+          <span class="text-[10px] mt-0.5 font-bold text-gray-600">スキャン</span>
+        </button>
+        <button onclick="location.href='menu.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-calendar-days text-base"></i>
+          <span class="text-[10px] mt-1">献立</span>
+        </button>
+        <button onclick="location.href='recipes.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+          <i class="fa-solid fa-utensils text-base"></i>
+          <span class="text-[10px] mt-1">レシピ</span>
+        </button>
+      </nav>
     </div>
-  `).join("");
-}
 
-/* =========================================================
-   設定 / My商品辞書
-   ========================================================= */
-document.getElementById("openSettings").addEventListener("click", ()=>{
-  renderDictList();
-  openModal("settingsModal");
-});
-document.getElementById("dictSearch").addEventListener("input", renderDictList);
-function renderDictList(){
-  const q = (document.getElementById("dictSearch").value||"").trim().toLowerCase();
-  const entries = Object.entries(state.myDictionary).filter(([jan, d])=>{
-    return !q || d.name.toLowerCase().includes(q) || jan.includes(q);
-  });
-  const listEl = document.getElementById("dictList");
-  if(entries.length===0){
-    listEl.innerHTML = `<div class="empty-state">該当する商品がありません</div>`;
-    return;
-  }
-  listEl.innerHTML = entries.map(([jan,d])=>`
-    <div class="dict-row" data-jan="${jan}">
-      <div>
-        <div class="n">${escapeHTML(d.name)}</div>
-        <div class="j">JAN:${jan} ／ 1${escapeHTML(d.packageUnit||"パック")} = ${d.itemsPerPackage||1}${escapeHTML(d.stockUnit||"個")}</div>
+    <!-- リストに追加モーダル -->
+    <div id="add-list-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-3 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h3 class="font-bold text-base text-gray-800">買い物リストに追加</h3>
+          <button onclick="closeAddToListModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
+        <form onsubmit="submitAddToList(event)" class="space-y-3">
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">食材名</label>
+            <input type="text" id="listItemName" list="ingredientNameList" required
+              class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：キャベツ" />
+            <datalist id="ingredientNameList"></datalist>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">カテゴリ（新規食材の場合）</label>
+            <select id="listItemCategory" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="">選択してください</option>
+              <option value="肉類">肉類</option>
+              <option value="魚介類">魚介類</option>
+              <option value="野菜">野菜</option>
+              <option value="乳製品">乳製品</option>
+              <option value="卵">卵</option>
+              <option value="調味料">調味料</option>
+              <option value="加工食品">加工食品</option>
+              <option value="穀類">穀類</option>
+              <option value="麺">麺</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2.5 rounded-xl shadow transition-all">リストに追加する</button>
+        </form>
       </div>
-      <button class="icon-btn" data-action="editDict" data-jan="${jan}">編集</button>
-    </div>`).join("");
-}
-document.getElementById("dictList").addEventListener("click", e=>{
-  const btn = e.target.closest("[data-action='editDict']");
-  if(!btn) return;
-  openDictEditor(btn.dataset.jan);
-});
-function openDictEditor(jan){
-  document.getElementById("de_category").innerHTML = optionsHTML(CATEGORIES,"id","label");
-  const d = state.myDictionary[jan];
-  document.getElementById("dictEditTitle").textContent = "商品情報の編集";
-  document.getElementById("de_name").value = d.name;
-  document.getElementById("de_jan").value = jan;
-  document.getElementById("de_jan").readOnly = true;
-  document.getElementById("de_category").value = d.category || "other";
-  document.getElementById("de_location").value = d.defaultLocation || "fridge";
-  document.getElementById("de_packageUnit").value = d.packageUnit || "パック";
-  document.getElementById("de_stockUnit").value = d.stockUnit || "個";
-  document.getElementById("de_itemsPerPackage").value = d.itemsPerPackage || 1;
-  document.getElementById("dictEditForm").dataset.mode = "edit";
-  document.getElementById("dictEditForm").dataset.originalJan = jan;
-  openModal("dictEditModal");
-}
-document.getElementById("dictEditForm").addEventListener("submit", e=>{
-  e.preventDefault();
-  const jan = document.getElementById("de_jan").value.trim();
-  state.myDictionary[jan] = {
-    name: document.getElementById("de_name").value.trim(),
-    category: document.getElementById("de_category").value,
-    defaultLocation: document.getElementById("de_location").value,
-    packageUnit: document.getElementById("de_packageUnit").value.trim(),
-    stockUnit: document.getElementById("de_stockUnit").value.trim(),
-    itemsPerPackage: parseInt(document.getElementById("de_itemsPerPackage").value)||1
-  };
-  saveState();
-  closeModal("dictEditModal");
-  renderDictList();
-  toast("商品情報を保存しました");
-});
-document.getElementById("deleteDictBtn").addEventListener("click", ()=>{
-  const jan = document.getElementById("dictEditForm").dataset.originalJan;
-  if(jan && confirm("この商品情報を削除しますか？")){
-    delete state.myDictionary[jan];
-    saveState();
-    closeModal("dictEditModal");
-    renderDictList();
-  }
-});
+    </div>
 
-/* バックアップ */
-document.getElementById("exportBtn").addEventListener("click", ()=>{
-  const blob = new Blob([JSON.stringify(state, null, 2)], {type:"application/json"});
-  const a = document.createElement("a");
-  a.href = URL.createObjectURL(blob);
-  a.download = `daidokoro-backup-${todayISO()}.json`;
-  a.click();
-});
-document.getElementById("importBtn").addEventListener("click", ()=> document.getElementById("importFile").click());
-document.getElementById("importFile").addEventListener("change", e=>{
-  const file = e.target.files[0];
-  if(!file) return;
-  const reader = new FileReader();
-  reader.onload = ()=>{
-    try{
-      const imported = JSON.parse(reader.result);
-      state = Object.assign(defaultState(), imported);
-      saveState();
-      renderAll();
-      toast("データを復元しました");
-      closeModal("settingsModal");
-    }catch(err){
-      alert("読み込みに失敗しました。ファイル形式を確認してください。");
-    }
-  };
-  reader.readAsText(file);
-});
+    <!-- 購入登録モーダル（スキャン後／リストの「購入登録」ボタンから開く） -->
+    <div id="purchase-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-3 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h3 class="font-bold text-base text-gray-800">購入を記録する</h3>
+          <button onclick="closePurchaseModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+        </div>
 
-/* =========================================================
-   バーコードスキャン（オーバーレイ / html5-qrcode）
-   =========================================================
-   Step1: My商品辞書検索 → Step2: Open Food Facts API → Step3: 手動登録
-*/
-let scanner = null;
-let scanMode = "shopping"; // shopping | inventory
-let pendingScan = null; // {jan, name, category, location, unitName, itemsPerPackage}
+        <div id="purchaseModalHint" class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 hidden"></div>
 
-document.getElementById("scanShopBtn").addEventListener("click", ()=> startScan("shopping"));
-document.getElementById("scanInvBtn").addEventListener("click", ()=> startScan("inventory"));
-document.getElementById("closeScan").addEventListener("click", stopScan);
-document.getElementById("scanCancelBtn").addEventListener("click", ()=>{
-  document.getElementById("scanConfirmSheet").classList.add("hidden");
-  resumeScanner();
-});
+        <form onsubmit="submitPurchase(event)" class="space-y-3">
+          <input type="hidden" id="purchaseResolvedId" value="" />
+          <input type="hidden" id="purchaseBarcode" value="" />
 
-function startScan(mode){
-  scanMode = mode;
-  document.getElementById("scanModeLabel").textContent = mode==="shopping" ? "スキャン（購入登録）" : "スキャン（在庫登録）";
-  document.getElementById("scanConfirmSheet").classList.add("hidden");
-  document.getElementById("scanNewProductSheet").classList.add("hidden");
-  openModal("scanOverlay");
-  if(typeof Html5Qrcode === "undefined"){
-    toast("カメラライブラリの読み込みに失敗しました（通信環境を確認してください）");
-    return;
-  }
-  scanner = new Html5Qrcode("qr-reader");
-  Html5Qrcode.getCameras().then(()=>{
-    scanner.start(
-      {facingMode:"environment"},
-      {fps:10, qrbox:{width:250,height:150}},
-      onScanSuccess,
-      ()=>{}
-    ).catch(err=>{
-      console.error(err);
-      toast("カメラを起動できませんでした");
-    });
-  }).catch(()=> toast("カメラへのアクセスが許可されていません"));
-}
-function stopScan(){
-  closeModal("scanOverlay");
-  if(scanner){
-    scanner.stop().then(()=>scanner.clear()).catch(()=>{});
-    scanner = null;
-  }
-}
-async function onScanSuccess(decodedText){
-  if(!scanner) return;
-  scanner.pause();
-  const jan = decodedText.trim();
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">食材名</label>
+            <input type="text" id="purchaseItemName" list="ingredientNameList" required
+              class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          </div>
 
-  // Step1: My商品辞書
-  let dict = state.myDictionary[jan];
+          <div id="purchaseCategoryWrap">
+            <label class="text-xs font-bold text-gray-600 block mb-1">カテゴリ（新規食材の場合）</label>
+            <select id="purchaseItemCategory" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="">選択してください</option>
+              <option value="肉類">肉類</option>
+              <option value="魚介類">魚介類</option>
+              <option value="野菜">野菜</option>
+              <option value="乳製品">乳製品</option>
+              <option value="卵">卵</option>
+              <option value="調味料">調味料</option>
+              <option value="加工食品">加工食品</option>
+              <option value="穀類">穀類</option>
+              <option value="麺">麺</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
 
-  // Step2: Open Food Facts API（辞書未登録の場合）
-  if(!dict){
-    try{
-      const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${jan}.json`);
-      const data = await res.json();
-      if(data && data.status===1 && data.product){
-        showNewProductForm(jan, data.product.product_name || "");
-        return;
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="text-xs font-bold text-gray-600 block mb-1">購入数量</label>
+              <input type="number" id="purchaseQuantity" step="0.1" min="0.1" value="1" required
+                class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+            </div>
+            <div>
+              <label class="text-xs font-bold text-gray-600 block mb-1">単位</label>
+              <select id="purchaseUnit" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="g">g</option>
+                <option value="kg">kg</option>
+                <option value="ml">ml</option>
+                <option value="l">l</option>
+                <option value="個">個</option>
+                <option value="本">本</option>
+                <option value="枚">枚</option>
+                <option value="丁">丁</option>
+                <option value="束">束</option>
+                <option value="パック">パック</option>
+                <option value="袋">袋</option>
+                <option value="切れ">切れ</option>
+                <option value="片">片</option>
+                <option value="かけ">かけ</option>
+                <option value="缶">缶</option>
+                <option value="玉">玉</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">金額（税抜き・合計）</label>
+            <input type="number" id="purchasePrice" min="0" required
+              class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="円" />
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">お店</label>
+            <select id="purchaseShop" onchange="onPurchaseShopChange()" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"></select>
+            <input type="text" id="purchaseShopOther" placeholder="お店の名前" class="hidden mt-2 w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">保管場所</label>
+            <select id="purchaseStorage" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+              <option value="refrigerated">冷蔵</option>
+              <option value="frozen">冷凍</option>
+              <option value="roomTemp">常温</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-xs font-bold text-gray-600 block mb-1">賞味期限（任意）</label>
+            <input type="date" id="purchaseExpiry" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+          </div>
+
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2.5 rounded-xl shadow transition-all">購入を記録する（在庫にも反映）</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- バーコードスキャンモーダル -->
+    <div id="scan-modal" class="hidden fixed inset-0 bg-black z-50 flex flex-col">
+      <div class="flex justify-between items-center px-4 py-3 bg-black/60 text-white">
+        <span class="font-bold text-sm"><i class="fa-solid fa-barcode mr-1"></i> バーコードをスキャン</span>
+        <button onclick="closeScanModal()" class="text-white hover:text-emerald-300"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+      <div class="flex-1 flex items-center justify-center p-4">
+        <div id="qr-reader" class="w-full max-w-sm"></div>
+      </div>
+      <p class="text-white/70 text-[11px] text-center pb-6 px-6">JANコードまたはインストアコード（20〜29で始まるコード）を枠内に収めてください。</p>
+    </div>
+
+    <script>
+      // ---------- データ保持 ----------
+      let allIngredients = [];
+      let ingredientsById = {};
+      let allRecipes = [];
+      let allShops = [];
+      let kotoroShoppingList = [];
+      let kotoroStock = {};
+      let kotoroCustomIngredients = {};
+      let kotoroPurchaseHistory = {};
+      let currentShopId = "";
+      let html5QrCode = null;
+
+      // ---------- localStorage 読み書き ----------
+      function loadShoppingList() {
+        try {
+          kotoroShoppingList = JSON.parse(localStorage.getItem("kotoro_shopping_list")) || [];
+        } catch (e) {
+          kotoroShoppingList = [];
+        }
       }
-    }catch(e){ console.error("OpenFoodFacts fetch error", e); }
-    // Step3: 手動登録
-    showNewProductForm(jan, "");
-    return;
-  }
+      function saveShoppingList() {
+        localStorage.setItem("kotoro_shopping_list", JSON.stringify(kotoroShoppingList));
+      }
+      function loadStock() {
+        try {
+          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          kotoroStock = {};
+        }
+      }
+      function saveStock() {
+        localStorage.setItem("kotoro_stock", JSON.stringify(kotoroStock));
+      }
+      function loadCustomIngredients() {
+        try {
+          kotoroCustomIngredients = JSON.parse(localStorage.getItem("kotoro_custom_ingredients")) || {};
+        } catch (e) {
+          kotoroCustomIngredients = {};
+        }
+      }
+      function saveCustomIngredients() {
+        localStorage.setItem("kotoro_custom_ingredients", JSON.stringify(kotoroCustomIngredients));
+      }
+      function loadPurchaseHistory() {
+        try {
+          kotoroPurchaseHistory = JSON.parse(localStorage.getItem("kotoro_purchase_history")) || {};
+        } catch (e) {
+          kotoroPurchaseHistory = {};
+        }
+      }
+      function savePurchaseHistory() {
+        localStorage.setItem("kotoro_purchase_history", JSON.stringify(kotoroPurchaseHistory));
+      }
+      function loadCurrentShop() {
+        currentShopId = localStorage.getItem("kotoro_current_shop") || "";
+      }
+      function saveCurrentShop(value) {
+        currentShopId = value;
+        localStorage.setItem("kotoro_current_shop", value);
+      }
 
-  pendingScan = {jan, name:dict.name, category:dict.category, location:dict.defaultLocation,
-    unitName:dict.packageUnit, stockUnit:dict.stockUnit, itemsPerPackage: dict.itemsPerPackage||1};
-  showScanConfirm();
-}
+      // ---------- 初期化 ----------
+      window.addEventListener("DOMContentLoaded", async () => {
+        loadShoppingList();
+        loadStock();
+        loadCustomIngredients();
+        loadPurchaseHistory();
+        loadCurrentShop();
 
-function showNewProductForm(jan, guessedName){
-  document.getElementById("np_category").innerHTML = optionsHTML(CATEGORIES,"id","label");
-  document.getElementById("np_jan").value = jan;
-  document.getElementById("np_name").value = guessedName;
-  document.getElementById("scanNewProductSheet").classList.remove("hidden");
-}
-document.getElementById("np_registerBtn").addEventListener("click", ()=>{
-  const jan = document.getElementById("np_jan").value;
-  const dict = {
-    name: document.getElementById("np_name").value.trim() || "名称未設定商品",
-    category: document.getElementById("np_category").value,
-    defaultLocation: document.getElementById("np_location").value,
-    packageUnit: document.getElementById("np_packageUnit").value.trim() || "パック",
-    stockUnit: document.getElementById("np_stockUnit").value.trim() || "個",
-    itemsPerPackage: parseInt(document.getElementById("np_itemsPerPackage").value)||1
-  };
-  state.myDictionary[jan] = dict;
-  saveState();
-  document.getElementById("scanNewProductSheet").classList.add("hidden");
-  pendingScan = {jan, name:dict.name, category:dict.category, location:dict.defaultLocation,
-    unitName:dict.packageUnit, stockUnit:dict.stockUnit, itemsPerPackage: dict.itemsPerPackage};
-  showScanConfirm();
-});
+        try {
+          const [ingRes, recRes, shopRes] = await Promise.all([fetch("ingredients.json"), fetch("recipes.json"), fetch("shop.json")]);
+          if (!ingRes.ok) throw new Error("ingredients.jsonの読み込みに失敗しました");
+          if (!recRes.ok) throw new Error("recipes.jsonの読み込みに失敗しました");
+          if (!shopRes.ok) throw new Error("shop.jsonの読み込みに失敗しました");
+          allIngredients = await ingRes.json();
+          allRecipes = await recRes.json();
+          allShops = await shopRes.json();
 
-let packCount = 1;
-function showScanConfirm(){
-  packCount = 1;
-  document.getElementById("scanProductName").textContent = pendingScan.name;
-  document.getElementById("packVal").textContent = packCount;
-  const perPack = pendingScan.itemsPerPackage;
-  document.getElementById("scanConvNote").textContent =
-    perPack>1 ? `今回 購入・入庫した ${pendingScan.unitName} 数を指定してください` : `今回の数量を指定してください`;
-  updateScanCalcNote();
-  document.getElementById("scanConfirmSheet").classList.remove("hidden");
-}
-function updateScanCalcNote(){
-  const perPack = pendingScan.itemsPerPackage;
-  const total = packCount * perPack;
-  document.getElementById("scanCalcNote").textContent =
-    perPack>1 ? `${packCount}${pendingScan.unitName} ＝ ${total}${pendingScan.stockUnit}として登録されます`
-               : `${total}${pendingScan.stockUnit}として登録されます`;
-}
-document.getElementById("packPlus").addEventListener("click", ()=>{ packCount++; document.getElementById("packVal").textContent=packCount; updateScanCalcNote(); });
-document.getElementById("packMinus").addEventListener("click", ()=>{ packCount=Math.max(1,packCount-1); document.getElementById("packVal").textContent=packCount; updateScanCalcNote(); });
+          ingredientsById = {};
+          allIngredients.forEach((i) => (ingredientsById[i.ingredientId] = i));
 
-document.getElementById("scanConfirmBtn").addEventListener("click", ()=>{
-  const total = packCount * pendingScan.itemsPerPackage;
-  if(scanMode==="inventory"){
-    let inv = state.inventory.find(i=>i.janCode===pendingScan.jan);
-    if(inv){
-      inv.quantity += total;
-    }else{
-      state.inventory.push({
-        id: uid("inv"), name: pendingScan.name, location: pendingScan.location,
-        quantity: total, unit: pendingScan.stockUnit, janCode: pendingScan.jan, minThreshold: 0
+          buildNameDatalist();
+          buildShopSelect(document.getElementById("currentShopSelect"));
+          buildShopSelect(document.getElementById("purchaseShop"));
+          applyCurrentShopToTopBar();
+
+          renderList();
+        } catch (error) {
+          console.error(error);
+          document.getElementById("listContainer").innerHTML = `
+            <div class="text-center py-8 text-red-500 text-xs">
+              データの読み込みに失敗しました。<br>（ingredients.json・recipes.json・shop.jsonのパスをご確認ください）
+            </div>
+          `;
+        }
       });
-    }
-    saveState();
-    renderInventory();
-    toast(`「${pendingScan.name}」を在庫に ${total}${pendingScan.stockUnit} 追加しました`);
-  }else{
-    // 買い物リスト：該当項目を完了処理し、在庫へ反映
-    let item = state.shoppingList.find(i=>i.janCode===pendingScan.jan && !i.checked);
-    if(item){
-      item.checked = true;
-      item.calculatedItems = total;
-    }else{
-      item = {
-        id: uid("shop"), janCode: pendingScan.jan, name: pendingScan.name,
-        category: pendingScan.category, quantityCount: packCount, unit: pendingScan.unitName,
-        calculatedItems: total, amountNote: `${packCount}${pendingScan.unitName}(${pendingScan.itemsPerPackage}${pendingScan.stockUnit}入り)`,
-        priceExcludingTax:null, averagePrice:getAveragePrice(pendingScan.jan), checked:true, addedType:"MANUAL"
-      };
-      state.shoppingList.push(item);
-    }
-    addToInventoryFromPurchase(item);
-    saveState();
-    renderShoppingList();
-    renderInventory();
-    toast(`「${pendingScan.name}」を購入完了・在庫へ反映しました`);
-  }
-  document.getElementById("scanConfirmSheet").classList.add("hidden");
-  resumeScanner();
-});
 
-function resumeScanner(){
-  document.getElementById("scanConfirmSheet").classList.add("hidden");
-  document.getElementById("scanNewProductSheet").classList.add("hidden");
-  if(scanner){ try{ scanner.resume(); }catch(e){} }
-}
+      function buildNameDatalist() {
+        const list = document.getElementById("ingredientNameList");
+        const names = new Set();
+        allIngredients.forEach((i) => names.add(i.name));
+        Object.values(kotoroCustomIngredients).forEach((c) => names.add(c.name));
+        list.innerHTML = Array.from(names)
+          .map((n) => `<option value="${n}"></option>`)
+          .join("");
+      }
 
-/* =========================================================
-   ユーティリティ / 初期化
-   ========================================================= */
-function escapeHTML(str){
-  return String(str).replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
-}
-function renderAll(){
-  renderShoppingList();
-  renderInventory();
-  renderWeeklyMenu();
-  renderRecipes();
-}
+      function buildShopSelect(selectEl) {
+        let html = allShops.map((s) => `<option value="${s.shopId}">${s.name}</option>`).join("");
+        html += `<option value="other">その他（自由入力）</option>`;
+        selectEl.innerHTML = html;
+      }
 
-switchTab(state.settings.activeTab || "shoppingList");
-renderAll();
-loadRecipes();
-</script>
-</body>
+      function applyCurrentShopToTopBar() {
+        const select = document.getElementById("currentShopSelect");
+        const otherInput = document.getElementById("currentShopOther");
+        const isKnownShop = allShops.some((s) => s.shopId === currentShopId);
+        if (currentShopId && isKnownShop) {
+          select.value = currentShopId;
+          otherInput.classList.add("hidden");
+        } else if (currentShopId) {
+          // 自由入力で保存されたお店名の場合
+          select.value = "other";
+          otherInput.value = currentShopId;
+          otherInput.classList.remove("hidden");
+        }
+      }
+
+      function onShopSelectChange() {
+        const select = document.getElementById("currentShopSelect");
+        const otherInput = document.getElementById("currentShopOther");
+        if (select.value === "other") {
+          otherInput.classList.remove("hidden");
+          otherInput.focus();
+          saveCurrentShop(otherInput.value || "");
+        } else {
+          otherInput.classList.add("hidden");
+          saveCurrentShop(select.value);
+        }
+      }
+
+      function saveCurrentShopOther() {
+        const otherInput = document.getElementById("currentShopOther");
+        saveCurrentShop(otherInput.value || "");
+      }
+
+      function getShopName(shopIdOrName) {
+        const found = allShops.find((s) => s.shopId === shopIdOrName);
+        return found ? found.name : shopIdOrName || "不明なお店";
+      }
+
+      // ---------- 食材情報のヘルパー（stock.htmlと共通ロジック） ----------
+      function getIngredientDisplay(ingredientId) {
+        if (ingredientsById[ingredientId]) {
+          const i = ingredientsById[ingredientId];
+          return { name: i.name, category: i.category, isExempt: !!i.isExempt, isCustom: false };
+        }
+        if (kotoroCustomIngredients[ingredientId]) {
+          const c = kotoroCustomIngredients[ingredientId];
+          return { name: c.name, category: c.category || "その他", isExempt: false, isCustom: true };
+        }
+        return { name: ingredientId, category: "その他", isExempt: false, isCustom: true };
+      }
+
+      function getDefaultUnitForIngredient(ingredientId) {
+        for (const r of allRecipes) {
+          const found = (r.ingredients || []).find((i) => i.ingredientId === ingredientId);
+          if (found) return found.unit;
+        }
+        return "個";
+      }
+
+      function categoryToDefaultStorage(category) {
+        if (["肉類", "魚介類", "乳製品", "卵", "加工食品", "野菜"].includes(category)) return "refrigerated";
+        if (["調味料", "穀類", "麺"].includes(category)) return "roomTemp";
+        return "refrigerated";
+      }
+
+      function resolveIngredientIdByName(name) {
+        const masterMatch = allIngredients.find((i) => i.name === name);
+        if (masterMatch) return masterMatch.ingredientId;
+        const customMatch = Object.entries(kotoroCustomIngredients).find(([, v]) => v.name === name);
+        if (customMatch) return customMatch[0];
+        return null;
+      }
+
+      // ---------- インストアコード（20〜29始まり） ----------
+      function isInStoreCode(barcode) {
+        if (!barcode || barcode.length < 2) return false;
+        const prefix = parseInt(barcode.substring(0, 2), 10);
+        return prefix >= 20 && prefix <= 29;
+      }
+      function generateInStoreCode() {
+        const prefix = 20 + Math.floor(Math.random() * 10);
+        const suffix = (Date.now() % 100000000000).toString().padStart(11, "0");
+        return `${prefix}${suffix}`;
+      }
+
+      // ---------- バーコードから食材を特定 ----------
+      function findMasterIngredientByBarcode(barcode) {
+        for (const ing of allIngredients) {
+          const products = Array.isArray(ing.product) ? ing.product : [ing.product];
+          if (products.some((p) => p && p.barcode === barcode)) {
+            return ing.ingredientId;
+          }
+        }
+        return null;
+      }
+      function findCustomIngredientByBarcode(barcode) {
+        const match = Object.entries(kotoroCustomIngredients).find(([, v]) => v.barcode === barcode);
+        return match ? match[0] : null;
+      }
+
+      // ---------- 在庫データの追加／更新（stock.htmlと同じロジック） ----------
+      function addToStock(ingredientId, payload) {
+        const existing = kotoroStock[ingredientId];
+        if (existing) {
+          existing.quantity = parseFloat((existing.quantity + payload.quantity).toFixed(2));
+          existing.unit = payload.unit;
+          existing.storage = payload.storage;
+          if (payload.expiryDate) existing.expiryDate = payload.expiryDate;
+          existing.lastPrice = payload.price;
+          existing.lastPurchaseDate = payload.purchaseDate;
+          if (payload.barcode) existing.barcode = payload.barcode;
+        } else {
+          kotoroStock[ingredientId] = {
+            quantity: payload.quantity,
+            unit: payload.unit,
+            storage: payload.storage,
+            expiryDate: payload.expiryDate || null,
+            lastPrice: payload.price,
+            lastPurchaseDate: payload.purchaseDate,
+            barcode: payload.barcode || null,
+          };
+        }
+        saveStock();
+      }
+
+      // ---------- 購入履歴（直近5件）の追加と統計 ----------
+      function addPurchaseRecord(ingredientId, record) {
+        if (!kotoroPurchaseHistory[ingredientId]) kotoroPurchaseHistory[ingredientId] = [];
+        kotoroPurchaseHistory[ingredientId].unshift(record); // 新しい順
+        kotoroPurchaseHistory[ingredientId] = kotoroPurchaseHistory[ingredientId].slice(0, 5); // 直近5件のみ保持
+        savePurchaseHistory();
+      }
+
+      function computeStats(ingredientId) {
+        const records = kotoroPurchaseHistory[ingredientId];
+        if (!records || records.length === 0) return null;
+
+        const unitPrices = records.map((r) => r.unitPrice);
+        const totalPrices = records.map((r) => r.price);
+
+        const cheapestUnitPrice = Math.min(...unitPrices); // 最安値：単位あたり単価ベース
+        const avgTotalPrice = totalPrices.reduce((a, b) => a + b, 0) / totalPrices.length;
+        const avgUnitPrice = unitPrices.reduce((a, b) => a + b, 0) / unitPrices.length;
+
+        return { cheapestUnitPrice, avgTotalPrice, avgUnitPrice, unit: records[0].unit, count: records.length };
+      }
+
+      // ---------- リストの描画 ----------
+      function renderList() {
+        const container = document.getElementById("listContainer");
+        if (kotoroShoppingList.length === 0) {
+          container.innerHTML = `<div class="text-center py-10 text-gray-400 text-xs">買い物リストは空です。「＋ 追加」またはスキャンで登録できます。</div>`;
+          return;
+        }
+        // 未購入を先に、購入済みは取り消し線表示で後ろに
+        const sorted = [...kotoroShoppingList].sort((a, b) => Number(a.checked) - Number(b.checked));
+        container.innerHTML = sorted.map((item) => buildListItemCard(item)).join("");
+      }
+
+      function buildListItemCard(item) {
+        const info = getIngredientDisplay(item.ingredientId);
+        const stats = computeStats(item.ingredientId);
+        const stockEntry = kotoroStock[item.ingredientId];
+        const badgeClass = info.isCustom ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800";
+        const badgeText = info.isCustom ? "手動 / インストア" : "共通食材";
+
+        let statsHtml = "";
+        if (stats) {
+          statsHtml = `
+            <div class="text-[10px] text-gray-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
+              <span class="text-emerald-700 font-bold">最安 ${stats.cheapestUnitPrice.toFixed(2)}円/${stats.unit}</span>
+              <span>平均 ${Math.round(stats.avgTotalPrice)}円</span>
+              <span>平均単価 ${stats.avgUnitPrice.toFixed(2)}円/${stats.unit}</span>
+            </div>
+          `;
+        }
+
+        const stockHtml = stockEntry ? `<span class="text-[10px] text-gray-400">在庫: ${stockEntry.quantity}${stockEntry.unit}</span>` : "";
+
+        return `
+          <div class="bg-white rounded-2xl shadow-sm border ${item.checked ? "border-gray-200 opacity-60" : "border-emerald-200"} p-3.5 transition-all">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" ${item.checked ? "checked" : ""} onclick="toggleChecked('${item.ingredientId}')" class="mt-1 h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer shrink-0" />
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="font-bold text-sm ${item.checked ? "line-through text-gray-400" : "text-gray-800"}">${info.name}</span>
+                  <span class="${badgeClass} text-[10px] font-bold px-1.5 py-0.5 rounded-full">${badgeText}</span>
+                </div>
+                ${statsHtml}
+                <div class="flex items-center justify-between mt-2">
+                  ${stockHtml}
+                  <button onclick="openPurchaseModal({ingredientId: '${item.ingredientId}'})" class="ml-auto bg-white text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-300 font-bold text-[11px] px-2.5 py-1 rounded-lg transition-all shadow-sm">購入登録</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function toggleChecked(ingredientId) {
+        const item = kotoroShoppingList.find((i) => i.ingredientId === ingredientId);
+        if (!item) return;
+        item.checked = !item.checked;
+        saveShoppingList();
+        renderList();
+      }
+
+      // ---------- リストに追加モーダル ----------
+      function openAddToListModal() {
+        document.getElementById("listItemName").value = "";
+        document.getElementById("listItemCategory").value = "";
+        document.getElementById("add-list-modal").classList.remove("hidden");
+      }
+      function closeAddToListModal() {
+        document.getElementById("add-list-modal").classList.add("hidden");
+      }
+      function submitAddToList(event) {
+        event.preventDefault();
+        const name = document.getElementById("listItemName").value.trim();
+        const category = document.getElementById("listItemCategory").value;
+        if (!name) return;
+
+        let ingredientId = resolveIngredientIdByName(name);
+        if (!ingredientId) {
+          const barcode = generateInStoreCode();
+          ingredientId = "local_" + barcode;
+          kotoroCustomIngredients[ingredientId] = { name, category: category || "その他", barcode };
+          saveCustomIngredients();
+          buildNameDatalist();
+        }
+
+        if (!kotoroShoppingList.some((i) => i.ingredientId === ingredientId)) {
+          kotoroShoppingList.push({ ingredientId, name, checked: false });
+          saveShoppingList();
+        }
+
+        closeAddToListModal();
+        renderList();
+      }
+
+      // ---------- 購入登録モーダル ----------
+      function openPurchaseModal(options = {}) {
+        const { ingredientId = null, barcode = "" } = options;
+        const info = ingredientId ? getIngredientDisplay(ingredientId) : null;
+
+        document.getElementById("purchaseResolvedId").value = ingredientId || "";
+        document.getElementById("purchaseBarcode").value = barcode || "";
+        document.getElementById("purchaseItemName").value = info ? info.name : "";
+        document.getElementById("purchaseItemName").readOnly = !!ingredientId;
+        document.getElementById("purchaseCategoryWrap").classList.toggle("hidden", !!ingredientId);
+        document.getElementById("purchaseItemCategory").value = info ? info.category : "";
+        document.getElementById("purchaseQuantity").value = 1;
+        document.getElementById("purchaseUnit").value = ingredientId ? getDefaultUnitForIngredient(ingredientId) : "個";
+        document.getElementById("purchasePrice").value = "";
+        const existingStock = ingredientId ? kotoroStock[ingredientId] : null;
+        document.getElementById("purchaseStorage").value = existingStock ? existingStock.storage : info ? categoryToDefaultStorage(info.category) : "refrigerated";
+        document.getElementById("purchaseExpiry").value = "";
+
+        // お店は現在選択中のお店を初期値にする
+        const shopSelect = document.getElementById("purchaseShop");
+        const shopOther = document.getElementById("purchaseShopOther");
+        const isKnownShop = allShops.some((s) => s.shopId === currentShopId);
+        if (currentShopId && isKnownShop) {
+          shopSelect.value = currentShopId;
+          shopOther.classList.add("hidden");
+        } else if (currentShopId) {
+          shopSelect.value = "other";
+          shopOther.value = currentShopId;
+          shopOther.classList.remove("hidden");
+        } else {
+          shopSelect.value = allShops[0] ? allShops[0].shopId : "other";
+          shopOther.classList.add("hidden");
+        }
+
+        const hint = document.getElementById("purchaseModalHint");
+        if (barcode && isInStoreCode(barcode) && !ingredientId) {
+          hint.textContent = `インストアコード（${barcode}）：お店専用のバーコードです。食材名などを入力してください。`;
+          hint.classList.remove("hidden");
+        } else if (barcode && !ingredientId) {
+          hint.textContent = `バーコード: ${barcode} — 新しい食材として登録されます。`;
+          hint.classList.remove("hidden");
+        } else {
+          hint.classList.add("hidden");
+        }
+
+        document.getElementById("purchase-modal").classList.remove("hidden");
+      }
+
+      function closePurchaseModal() {
+        document.getElementById("purchase-modal").classList.add("hidden");
+      }
+
+      function onPurchaseShopChange() {
+        const select = document.getElementById("purchaseShop");
+        const otherInput = document.getElementById("purchaseShopOther");
+        otherInput.classList.toggle("hidden", select.value !== "other");
+      }
+
+      function submitPurchase(event) {
+        event.preventDefault();
+
+        const nameInput = document.getElementById("purchaseItemName").value.trim();
+        const barcodeField = document.getElementById("purchaseBarcode").value.trim();
+        const category = document.getElementById("purchaseItemCategory").value;
+        const quantity = parseFloat(document.getElementById("purchaseQuantity").value);
+        const unit = document.getElementById("purchaseUnit").value;
+        const price = parseInt(document.getElementById("purchasePrice").value, 10);
+        const storage = document.getElementById("purchaseStorage").value;
+        const expiry = document.getElementById("purchaseExpiry").value || null;
+
+        if (!nameInput || isNaN(quantity) || quantity <= 0 || isNaN(price) || price < 0) {
+          alert("食材名・数量・金額を正しく入力してください。");
+          return;
+        }
+
+        const shopSelect = document.getElementById("purchaseShop");
+        const shopOther = document.getElementById("purchaseShopOther");
+        let shopId = shopSelect.value;
+        let shopName;
+        if (shopId === "other") {
+          shopName = shopOther.value.trim() || "不明なお店";
+          shopId = shopName; // その場限りのお店名をIDとして扱う
+        } else {
+          shopName = getShopName(shopId);
+        }
+        saveCurrentShop(shopId);
+
+        let ingredientId = document.getElementById("purchaseResolvedId").value || resolveIngredientIdByName(nameInput);
+        let barcode = barcodeField || null;
+
+        if (!ingredientId) {
+          if (!barcode || !isInStoreCode(barcode)) {
+            barcode = barcode && isInStoreCode(barcode) ? barcode : generateInStoreCode();
+          }
+          ingredientId = "local_" + barcode;
+          kotoroCustomIngredients[ingredientId] = { name: nameInput, category: category || "その他", barcode };
+          saveCustomIngredients();
+          buildNameDatalist();
+        }
+
+        const purchaseDate = formatDateISO(new Date());
+        const unitPrice = parseFloat((price / quantity).toFixed(4));
+
+        // 1. 購入履歴（直近5件）に追加
+        addPurchaseRecord(ingredientId, { price, quantity, unit, unitPrice, shopId, shopName, date: purchaseDate });
+
+        // 2. 在庫に反映
+        addToStock(ingredientId, { quantity, unit, storage, expiryDate: expiry, price, purchaseDate, barcode });
+
+        // 3. 買い物リスト上の対応アイテムがあればチェックを付ける
+        const listItem = kotoroShoppingList.find((i) => i.ingredientId === ingredientId);
+        if (listItem) {
+          listItem.checked = true;
+          saveShoppingList();
+        }
+
+        closePurchaseModal();
+        renderList();
+        alert(`「${nameInput}」の購入を記録しました！\n在庫にも反映しました。`);
+      }
+
+      function formatDateISO(d) {
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        return `${y}-${m}-${day}`;
+      }
+
+      // ---------- バーコードスキャン（html5-qrcode） ----------
+      function openScanModal() {
+        document.getElementById("scan-modal").classList.remove("hidden");
+        html5QrCode = new Html5Qrcode("qr-reader");
+        html5QrCode
+          .start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: 250 },
+            (decodedText) => onScanSuccess(decodedText),
+            () => {
+              /* 1フレームごとの読み取り失敗は無視 */
+            }
+          )
+          .catch((err) => {
+            alert("カメラを起動できませんでした。カメラの使用を許可してください。\n" + err);
+            closeScanModal();
+          });
+      }
+
+      function closeScanModal() {
+        if (html5QrCode) {
+          html5QrCode
+            .stop()
+            .then(() => html5QrCode.clear())
+            .catch(() => {})
+            .finally(() => {
+              html5QrCode = null;
+            });
+        }
+        document.getElementById("scan-modal").classList.add("hidden");
+      }
+
+      function onScanSuccess(decodedText) {
+        closeScanModal();
+        handleScannedBarcode(decodedText);
+      }
+
+      async function handleScannedBarcode(barcode) {
+        // 1. 共通食材マスタ（ingredients.json）と突合
+        let ingredientId = findMasterIngredientByBarcode(barcode);
+        if (ingredientId) {
+          openPurchaseModal({ ingredientId, barcode });
+          return;
+        }
+
+        // 2. 過去に登録したカスタム食材（インストアコード等）と突合
+        ingredientId = findCustomIngredientByBarcode(barcode);
+        if (ingredientId) {
+          openPurchaseModal({ ingredientId, barcode });
+          return;
+        }
+
+        // 3. インストアコード（20〜29始まり）の場合は手動入力を案内
+        if (isInStoreCode(barcode)) {
+          openPurchaseModal({ barcode });
+          return;
+        }
+
+        // 4. Open Food Facts API で商品情報を検索
+        try {
+          const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
+          const data = await res.json();
+          if (data && data.status === 1 && data.product) {
+            const name = data.product.product_name_ja || data.product.product_name || "";
+            openPurchaseModal({ barcode });
+            document.getElementById("purchaseItemName").value = name;
+            return;
+          }
+        } catch (e) {
+          console.error("Open Food Facts APIの呼び出しに失敗しました", e);
+        }
+
+        // 5. 該当なし：手動入力にフォールバック
+        openPurchaseModal({ barcode });
+      }
+    </script>
+  </body>
 </html>
