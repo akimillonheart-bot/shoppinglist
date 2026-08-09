@@ -29,6 +29,19 @@
           </div>
         </section>
 
+        <section>
+          <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">食材マスタへの反映（ingredients.json用）</h2>
+          <div class="bg-sky-50 border border-sky-200 text-sky-800 text-xs rounded-xl p-3 leading-relaxed mb-2">
+            <i class="fa-solid fa-circle-info mr-1"></i>
+            バーコードスキャンなどで新規登録された食材（<code>kotoro_custom_ingredients</code>）は、このブラウザの中にだけ一時保存されています。下のボタンで<code>ingredients.json</code>に追記できる形式で書き出し、ローカルのファイルにマージしてサーバへ再アップロードしてください。<br />
+            <strong>ingredientIdはそのまま（<code>local_</code>で始まるID）で追加してください。</strong>IDを変更すると、このブラウザに保存済みの在庫・買い物リスト・購入履歴と紐付かなくなります。
+          </div>
+          <div id="customIngredientSummary" class="text-[11px] text-gray-500 mb-2">確認中...</div>
+          <button id="exportIngredientsBtn" onclick="downloadIngredientsExport()" class="w-full bg-white hover:bg-gray-50 text-sky-700 border border-sky-300 font-bold text-sm py-2.5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-file-export"></i> 未登録食材をingredients.json形式でダウンロード
+          </button>
+        </section>
+
         <section class="space-y-2">
           <button id="backupBtn" onclick="downloadBackup()" class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold text-sm py-2.5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
             <i class="fa-solid fa-download"></i> 削除前にバックアップ（JSON）をダウンロード
@@ -106,6 +119,7 @@
         if (!confirm(`「${key}」を削除しますか？`)) return;
         localStorage.removeItem(key);
         renderKeyList();
+        renderCustomIngredientSummary();
         showResult(`「${key}」を削除しました。`);
       }
 
@@ -121,6 +135,7 @@
         keys.forEach((key) => localStorage.removeItem(key));
         closeConfirmModal();
         renderKeyList();
+        renderCustomIngredientSummary();
         showResult(`KotoRoのデータ（${keys.length}件）をすべて削除しました。`);
       }
 
@@ -152,7 +167,93 @@
         URL.revokeObjectURL(url);
       }
 
-      window.addEventListener("DOMContentLoaded", renderKeyList);
+      // ---------- 未登録食材（kotoro_custom_ingredients）をingredients.json用に書き出す ----------
+      function isInStoreCode(barcode) {
+        if (!barcode || barcode.length < 2) return false;
+        const prefix = parseInt(barcode.substring(0, 2), 10);
+        return prefix >= 20 && prefix <= 29;
+      }
+
+      function loadCustomIngredientsForExport() {
+        try {
+          return JSON.parse(localStorage.getItem("kotoro_custom_ingredients")) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function loadStockForExport() {
+        try {
+          return JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function renderCustomIngredientSummary() {
+        const customIngredients = loadCustomIngredientsForExport();
+        const ids = Object.keys(customIngredients);
+        const summaryEl = document.getElementById("customIngredientSummary");
+        const btn = document.getElementById("exportIngredientsBtn");
+
+        if (ids.length === 0) {
+          summaryEl.textContent = "未登録の食材はありません。";
+          btn.disabled = true;
+          btn.classList.add("opacity-50", "cursor-not-allowed");
+          return;
+        }
+
+        const realBarcodeCount = ids.filter((id) => !isInStoreCode(customIngredients[id].barcode)).length;
+        summaryEl.textContent = `${ids.length}件の未登録食材があります（うち実際のバーコード付き: ${realBarcodeCount}件、インストアコード/手入力: ${ids.length - realBarcodeCount}件）。`;
+        btn.disabled = false;
+        btn.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+
+      function downloadIngredientsExport() {
+        const customIngredients = loadCustomIngredientsForExport();
+        const stock = loadStockForExport();
+        const ids = Object.keys(customIngredients);
+
+        if (ids.length === 0) {
+          alert("エクスポートする未登録食材がありません。");
+          return;
+        }
+
+        const exportArray = ids.map((id) => {
+          const c = customIngredients[id];
+          const stockEntry = stock[id];
+          return {
+            ingredientId: id, // ※このIDのまま ingredients.json に追加してください（在庫・買い物リスト等との紐付けを維持するため）
+            name: c.name,
+            category: c.category || "その他",
+            isExempt: false,
+            product: {
+              barcode: c.barcode || null,
+              productName: c.name,
+              amount: stockEntry ? stockEntry.quantity || 1 : 1,
+              unit: stockEntry ? stockEntry.unit || "個" : "個",
+            },
+          };
+        });
+
+        const blob = new Blob([JSON.stringify(exportArray, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const today = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `kotoro_new_ingredients_${today}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showResult(`${ids.length}件をエクスポートしました。ingredients.jsonにマージしてサーバへアップロードしてください。`);
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        renderKeyList();
+        renderCustomIngredientSummary();
+      });
     </script>
   </body>
 </html>
