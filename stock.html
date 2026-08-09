@@ -197,6 +197,22 @@
         localStorage.setItem("kotoro_custom_ingredients", JSON.stringify(kotoroCustomIngredients));
       }
 
+      // ---------- 在庫が0になった食材を自動で買い物リストへ追加 ----------
+      function addToShoppingListIfMissing(ingredientId) {
+        let shoppingList = [];
+        try {
+          shoppingList = JSON.parse(localStorage.getItem("kotoro_shopping_list")) || [];
+        } catch (e) {
+          shoppingList = [];
+        }
+        const exists = shoppingList.some((i) => i.ingredientId === ingredientId);
+        if (!exists) {
+          const info = getIngredientDisplay(ingredientId);
+          shoppingList.push({ ingredientId, name: info.name, checked: false });
+          localStorage.setItem("kotoro_shopping_list", JSON.stringify(shoppingList));
+        }
+      }
+
       // ---------- 初期化 ----------
       window.addEventListener("DOMContentLoaded", async () => {
         loadStock();
@@ -327,6 +343,9 @@
         if (!entry) return;
         entry.quantity = Math.max(0, parseFloat((entry.quantity + delta).toFixed(2)));
         saveStock();
+        if (entry.quantity === 0) {
+          addToShoppingListIfMissing(ingredientId);
+        }
         renderStock();
       }
 
@@ -336,6 +355,9 @@
         const v = parseFloat(value);
         entry.quantity = isNaN(v) ? entry.quantity : Math.max(0, v);
         saveStock();
+        if (entry.quantity === 0) {
+          addToShoppingListIfMissing(ingredientId);
+        }
         renderStock();
       }
 
