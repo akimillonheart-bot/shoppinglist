@@ -501,7 +501,7 @@
         const price = priceRaw ? parseInt(priceRaw, 10) : null;
         const category = document.getElementById("addItemCategory").value;
 
-        if (!nameInput || isNaN(quantity) || quantity <= 0) {
+        if (!nameInput || isNaN(quantity) || quantity < 0) {
           alert("食材名と数量を正しく入力してください。");
           return;
         }
@@ -535,6 +535,11 @@
           purchaseDate: formatDateISO(new Date()),
           barcode,
         });
+
+        // 登録後の在庫数量が0の場合は、買い物リストへ自動的に追加する
+        if (kotoroStock[ingredientId] && kotoroStock[ingredientId].quantity === 0) {
+          addToShoppingListIfMissing(ingredientId);
+        }
 
         closeAddModal();
         renderStock();
