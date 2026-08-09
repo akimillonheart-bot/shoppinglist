@@ -473,6 +473,19 @@
         savePurchaseHistory();
       }
 
+      // ingredients.json の product（配列の場合は複数規格）から、実際に購入したバーコードに
+      // 一致する規格（amount・unit）を取得する。一致しない場合は先頭の規格にフォールバックする。
+      function getProductVariant(ingredientId, barcode) {
+        const info = ingredientsById[ingredientId];
+        if (!info || !info.product) return null;
+        const products = Array.isArray(info.product) ? info.product : [info.product];
+        if (barcode) {
+          const match = products.find((p) => p && p.barcode === barcode);
+          if (match) return match;
+        }
+        return products[0] || null;
+      }
+
       function computeStats(ingredientId) {
         const records = kotoroPurchaseHistory[ingredientId];
         if (!records || records.length === 0) return null;
@@ -480,11 +493,28 @@
         const unitPrices = records.map((r) => r.unitPrice);
         const totalPrices = records.map((r) => r.price);
 
-        const cheapestUnitPrice = Math.min(...unitPrices); // 最安値：単位あたり単価ベース
+        // 購入記録1件ごとに、そのとき実際に買ったバーコード（規格）に対応するamountで
+        // パッケージ換算価格を計算する（同じ食材でも規格違いのバーコードが混在する場合に対応）
+        const packagePrices = records.map((r) => {
+          const variant = getProductVariant(ingredientId, r.barcode);
+          const amount = variant && typeof variant.amount === "number" && variant.amount > 0 ? variant.amount : 1;
+          return { price: r.unitPrice * amount, amount };
+        });
+        const cheapestPackage = packagePrices.reduce((min, p) => (p.price < min.price ? p : min), packagePrices[0]);
+
+        const cheapestUnitPrice = Math.min(...unitPrices); // 単位（g・個など）あたりの単価ベース
         const avgTotalPrice = totalPrices.reduce((a, b) => a + b, 0) / totalPrices.length;
         const avgUnitPrice = unitPrices.reduce((a, b) => a + b, 0) / unitPrices.length;
 
-        return { cheapestUnitPrice, avgTotalPrice, avgUnitPrice, unit: records[0].unit, count: records.length };
+        return {
+          cheapestUnitPrice,
+          cheapestPackagePrice: cheapestPackage.price,
+          packageAmount: cheapestPackage.amount,
+          avgTotalPrice,
+          avgUnitPrice,
+          unit: records[0].unit,
+          count: records.length,
+        };
       }
 
       // ---------- リストの描画 ----------
@@ -508,11 +538,12 @@
 
         let statsHtml = "";
         if (stats) {
+          const packageNote = stats.packageAmount > 1 ? `（${stats.packageAmount}${stats.unit}あたり）` : "";
           statsHtml = `
             <div class="text-[10px] text-gray-500 mt-1 flex flex-wrap gap-x-2 gap-y-0.5">
-              <span class="text-emerald-700 font-bold">最安 ${stats.cheapestUnitPrice.toFixed(2)}円/${stats.unit}</span>
+              <span class="text-emerald-700 font-bold">最安 ${Math.round(stats.cheapestPackagePrice)}円${packageNote}</span>
               <span>平均 ${Math.round(stats.avgTotalPrice)}円</span>
-              <span>平均単価 ${stats.avgUnitPrice.toFixed(2)}円/${stats.unit}</span>
+              <span>単価 ${stats.avgUnitPrice.toFixed(2)}円/${stats.unit}</span>
             </div>
           `;
         }
@@ -691,7 +722,7 @@
         const unitPrice = parseFloat((price / quantity).toFixed(4));
 
         // 1. 購入履歴（直近5件）に追加
-        addPurchaseRecord(ingredientId, { price, quantity, unit, unitPrice, shopId, shopName, date: purchaseDate });
+        addPurchaseRecord(ingredientId, { price, quantity, unit, unitPrice, shopId, shopName, date: purchaseDate, barcode });
 
         // 2. 在庫に反映
         addToStock(ingredientId, { quantity, unit, storage, expiryDate: expiry, price, purchaseDate, barcode });
