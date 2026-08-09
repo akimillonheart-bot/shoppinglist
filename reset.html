@@ -42,6 +42,19 @@
           </button>
         </section>
 
+        <section>
+          <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">未登録バーコードの対応表（バーコード×商品名）</h2>
+          <div class="bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl p-3 leading-relaxed mb-2">
+            <i class="fa-solid fa-circle-info mr-1"></i>
+            スキャンしたバーコードが<code>ingredients.json</code>にまだ無い場合（新規食材・既存食材どちらの場合も）、「バーコード番号」と「商品名」の対応をここに記録しています。<br />
+            すでに<code>ingredients.json</code>にある食材（例：牛乳）に紐付いた場合も一覧に含まれるので、<code>product.barcode</code>への追記など、手動でのJSON修正にお使いください。
+          </div>
+          <div id="pendingBarcodeSummary" class="text-[11px] text-gray-500 mb-2">確認中...</div>
+          <button id="exportPendingBarcodeBtn" onclick="downloadPendingBarcodeExport()" class="w-full bg-white hover:bg-gray-50 text-emerald-700 border border-emerald-300 font-bold text-sm py-2.5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
+            <i class="fa-solid fa-barcode"></i> バーコード×商品名の対応表をダウンロード
+          </button>
+        </section>
+
         <section class="space-y-2">
           <button id="backupBtn" onclick="downloadBackup()" class="w-full bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 font-bold text-sm py-2.5 rounded-xl shadow-sm transition-all flex items-center justify-center gap-2">
             <i class="fa-solid fa-download"></i> 削除前にバックアップ（JSON）をダウンロード
@@ -120,6 +133,7 @@
         localStorage.removeItem(key);
         renderKeyList();
         renderCustomIngredientSummary();
+        renderPendingBarcodeSummary();
         showResult(`「${key}」を削除しました。`);
       }
 
@@ -136,6 +150,7 @@
         closeConfirmModal();
         renderKeyList();
         renderCustomIngredientSummary();
+        renderPendingBarcodeSummary();
         showResult(`KotoRoのデータ（${keys.length}件）をすべて削除しました。`);
       }
 
@@ -250,9 +265,66 @@
         showResult(`${ids.length}件をエクスポートしました。ingredients.jsonにマージしてサーバへアップロードしてください。`);
       }
 
+      // ---------- バーコード×商品名の対応表（kotoro_pending_barcode_links）のエクスポート ----------
+      function loadPendingBarcodeLinksForExport() {
+        try {
+          return JSON.parse(localStorage.getItem("kotoro_pending_barcode_links")) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function renderPendingBarcodeSummary() {
+        const pending = loadPendingBarcodeLinksForExport();
+        const barcodes = Object.keys(pending);
+        const summaryEl = document.getElementById("pendingBarcodeSummary");
+        const btn = document.getElementById("exportPendingBarcodeBtn");
+
+        if (barcodes.length === 0) {
+          summaryEl.textContent = "未登録のバーコードはありません。";
+          btn.disabled = true;
+          btn.classList.add("opacity-50", "cursor-not-allowed");
+          return;
+        }
+
+        summaryEl.textContent = `${barcodes.length}件のバーコードがingredients.json未登録です。`;
+        btn.disabled = false;
+        btn.classList.remove("opacity-50", "cursor-not-allowed");
+      }
+
+      function downloadPendingBarcodeExport() {
+        const pending = loadPendingBarcodeLinksForExport();
+        const barcodes = Object.keys(pending);
+
+        if (barcodes.length === 0) {
+          alert("エクスポートするバーコードがありません。");
+          return;
+        }
+
+        const exportArray = barcodes.map((barcode) => ({
+          barcode,
+          name: pending[barcode].name,
+          ingredientId: pending[barcode].ingredientId, // 参考情報：紐付いた食材ID（新規 local_〜 または既存 ing_〜）
+        }));
+
+        const blob = new Blob([JSON.stringify(exportArray, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        const today = new Date().toISOString().slice(0, 10);
+        a.href = url;
+        a.download = `kotoro_barcode_name_map_${today}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        showResult(`${barcodes.length}件のバーコード対応表をエクスポートしました。`);
+      }
+
       window.addEventListener("DOMContentLoaded", () => {
         renderKeyList();
         renderCustomIngredientSummary();
+        renderPendingBarcodeSummary();
       });
     </script>
   </body>

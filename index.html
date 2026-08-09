@@ -299,9 +299,6 @@
           buildShopSelect(document.getElementById("purchaseShop"));
           applyCurrentShopToTopBar();
 
-          // 開き直したタイミングで、すでに在庫があるもの（購入済みで在庫反映済み）はリストから外す
-          pruneFulfilledItems();
-
           renderList();
         } catch (error) {
           console.error(error);
@@ -312,22 +309,6 @@
           `;
         }
       });
-
-      // ---------- 開き直し時のリスト整理 ----------
-      // 在庫（kotoro_stock）の数量が0より大きい（＝在庫がある）食材は、
-      // すでに買い物として満たされたとみなしリストから取り除く。
-      // 在庫が0、または在庫データ自体が無い食材のみをリストに残す。
-      function pruneFulfilledItems() {
-        const before = kotoroShoppingList.length;
-        kotoroShoppingList = kotoroShoppingList.filter((item) => {
-          const stockEntry = kotoroStock[item.ingredientId];
-          const quantity = stockEntry ? stockEntry.quantity : 0;
-          return quantity <= 0;
-        });
-        if (kotoroShoppingList.length !== before) {
-          saveShoppingList();
-        }
-      }
 
       function buildNameDatalist() {
         const list = document.getElementById("ingredientNameList");
@@ -445,6 +426,20 @@
         return match ? match[0] : null;
       }
 
+      // ---------- ingredients.json未登録バーコードの記録（reset.htmlからエクスポートしてマージする用） ----------
+      function recordPendingBarcodeLink(barcode, ingredientId, name) {
+        if (!barcode) return;
+        if (findMasterIngredientByBarcode(barcode)) return; // すでにingredients.jsonにあるバーコードは記録不要
+        let pending = {};
+        try {
+          pending = JSON.parse(localStorage.getItem("kotoro_pending_barcode_links")) || {};
+        } catch (e) {
+          pending = {};
+        }
+        pending[barcode] = { ingredientId, name };
+        localStorage.setItem("kotoro_pending_barcode_links", JSON.stringify(pending));
+      }
+
       // ---------- 在庫データの追加／更新（stock.htmlと同じロジック） ----------
       function addToStock(ingredientId, payload) {
         const existing = kotoroStock[ingredientId];
@@ -527,7 +522,7 @@
         return `
           <div class="bg-white rounded-2xl shadow-sm border ${item.checked ? "border-gray-200 opacity-60" : "border-emerald-200"} p-3.5 transition-all">
             <div class="flex items-start gap-3">
-              <input type="checkbox" ${item.checked ? "checked" : ""} onclick="handleCheckboxClick(event, '${item.ingredientId}')" class="mt-1 h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer shrink-0" />
+              <input type="checkbox" ${item.checked ? "checked" : ""} onclick="toggleChecked('${item.ingredientId}')" class="mt-1 h-5 w-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer shrink-0" />
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
                   <span class="font-bold text-sm ${item.checked ? "line-through text-gray-400" : "text-gray-800"}">${info.name}</span>
@@ -544,22 +539,12 @@
         `;
       }
 
-      function handleCheckboxClick(event, ingredientId) {
-        const checkboxEl = event.target;
+      function toggleChecked(ingredientId) {
         const item = kotoroShoppingList.find((i) => i.ingredientId === ingredientId);
         if (!item) return;
-
-        if (checkboxEl.checked) {
-          // チェックを入れる（＝購入する）場合は購入登録画面で数量・金額・お店を入力してもらう
-          // チェック状態の確定は購入登録の完了時（submitPurchase内）に行う
-          checkboxEl.checked = false;
-          openPurchaseModal({ ingredientId });
-        } else {
-          // チェックを外す場合はそのまま解除する（在庫・購入履歴には影響しない）
-          item.checked = false;
-          saveShoppingList();
-          renderList();
-        }
+        item.checked = !item.checked;
+        saveShoppingList();
+        renderList();
       }
 
       // ---------- リストに追加モーダル ----------
@@ -686,14 +671,21 @@
         let barcode = barcodeField || null;
 
         if (!ingredientId) {
-          if (!barcode || !isInStoreCode(barcode)) {
-            barcode = barcode && isInStoreCode(barcode) ? barcode : generateInStoreCode();
+          // バーコードが無い場合のみインストアコードを新規発行する。
+          // 実際にスキャンされたJANコード等が渡された場合はそのまま保持し、
+          // 次回同じ商品をスキャンした時にfindCustomIngredientByBarcode()で再認識できるようにする。
+          if (!barcode) {
+            barcode = generateInStoreCode();
           }
           ingredientId = "local_" + barcode;
           kotoroCustomIngredients[ingredientId] = { name: nameInput, category: category || "その他", barcode };
           saveCustomIngredients();
           buildNameDatalist();
         }
+
+        // ingredients.json未登録のバーコードは、新規食材か既存食材への追加かに関わらず
+        // 「ingredients.jsonへの反映待ち」として記録しておく（reset.htmlからエクスポート可能）
+        recordPendingBarcodeLink(barcode, ingredientId, nameInput);
 
         const purchaseDate = formatDateISO(new Date());
         const unitPrice = parseFloat((price / quantity).toFixed(4));

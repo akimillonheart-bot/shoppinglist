@@ -311,6 +311,20 @@
         return match ? match[0] : null;
       }
 
+      // ---------- ingredients.json未登録バーコードの記録（reset.htmlからエクスポートしてマージする用） ----------
+      function recordPendingBarcodeLink(barcode, ingredientId, name) {
+        if (!barcode) return;
+        if (findMasterIngredientByBarcode(barcode)) return; // すでにingredients.jsonにあるバーコードは記録不要
+        let pending = {};
+        try {
+          pending = JSON.parse(localStorage.getItem("kotoro_pending_barcode_links")) || {};
+        } catch (e) {
+          pending = {};
+        }
+        pending[barcode] = { ingredientId, name };
+        localStorage.setItem("kotoro_pending_barcode_links", JSON.stringify(pending));
+      }
+
       // ---------- 在庫データの追加／更新 ----------
       function addToStock(ingredientId, payload) {
         const existing = kotoroStock[ingredientId];
@@ -548,6 +562,10 @@
           saveCustomIngredients();
           buildNameDatalist();
         }
+
+        // ingredients.json未登録のバーコードは、新規食材か既存食材への追加かに関わらず
+        // 「ingredients.jsonへの反映待ち」として記録しておく（reset.htmlからエクスポート可能）
+        recordPendingBarcodeLink(barcode, ingredientId, nameInput);
 
         addToStock(ingredientId, {
           quantity,
