@@ -336,7 +336,7 @@
       // 単位が一致する場合のみ増減させ、在庫データが無い・単位が異なる食材はスキップする。
       function adjustStockForRecipe(recipeId, sign) {
         const recipe = recipesById[recipeId];
-        if (!recipe || !recipe.ingredients) return;
+        if (!recipe || !recipe.ingredients) return [];
 
         let stockData;
         try {
@@ -344,6 +344,8 @@
         } catch (e) {
           stockData = {};
         }
+
+        const zeroedIds = []; // 消費によって在庫が0になった食材
 
         recipe.ingredients.forEach((ing) => {
           const info = ingredientsById[ing.ingredientId];
@@ -354,10 +356,39 @@
           if (stockEntry.unit !== ing.unit) return; // 単位が一致しない場合はスキップ
 
           stockEntry.quantity = Math.max(0, parseFloat((stockEntry.quantity + sign * ing.amount).toFixed(2)));
+
+          if (sign < 0 && stockEntry.quantity === 0) {
+            zeroedIds.push(ing.ingredientId);
+          }
         });
 
         localStorage.setItem("kotoro_stock", JSON.stringify(stockData));
         kotoroStock = stockData; // 不足食材の再計算に使うグローバルの在庫情報も更新する
+
+        if (zeroedIds.length > 0) {
+          addMissingToShoppingList(zeroedIds);
+        }
+
+        return zeroedIds;
+      }
+
+      // 在庫が0になった食材を買い物リストへ自動追加する
+      function addMissingToShoppingList(ingredientIds) {
+        let shoppingList = [];
+        try {
+          shoppingList = JSON.parse(localStorage.getItem("kotoro_shopping_list")) || [];
+        } catch (e) {
+          shoppingList = [];
+        }
+        const existingIds = new Set(shoppingList.map((i) => i.ingredientId));
+        ingredientIds.forEach((id) => {
+          if (!existingIds.has(id)) {
+            const info = ingredientsById[id];
+            shoppingList.push({ ingredientId: id, name: info ? info.name : id, checked: false });
+            existingIds.add(id);
+          }
+        });
+        localStorage.setItem("kotoro_shopping_list", JSON.stringify(shoppingList));
       }
 
       // ---------- 作成済みチェック ----------
@@ -369,8 +400,9 @@
 
         if (entry.done) {
           kotoroRecipeCounts[entry.recipeId] = (kotoroRecipeCounts[entry.recipeId] || 0) + 1;
-          adjustStockForRecipe(entry.recipeId, -1);
-          alert(`「${entry.title}」を作成済み（調理完了）にしました。\n在庫リストから使用分を自動マイナスしました！`);
+          const zeroedIds = adjustStockForRecipe(entry.recipeId, -1);
+          const zeroedNote = zeroedIds.length > 0 ? "\n在庫が0になった食材を買い物リストへ自動追加しました。" : "";
+          alert(`「${entry.title}」を作成済み（調理完了）にしました。\n在庫リストから使用分を自動マイナスしました！${zeroedNote}`);
         } else {
           kotoroRecipeCounts[entry.recipeId] = Math.max(0, (kotoroRecipeCounts[entry.recipeId] || 0) - 1);
           adjustStockForRecipe(entry.recipeId, 1);
@@ -438,6 +470,7 @@
       }
 
       // ---------- 不足食材（今週の献立で使う食材のうち、常備品と在庫がすでにある食材を除く）の集計 ----------
+      // ingredientId -> { name, unit, category } のMapを返す
       function computeNeededIngredients() {
         const weekData = kotoroMenus[currentWeekStart] || {};
         const ingredientMap = new Map();
@@ -456,13 +489,28 @@
               if (stockEntry && stockEntry.quantity > 0) return;
 
               if (!ingredientMap.has(ing.ingredientId)) {
-                ingredientMap.set(ing.ingredientId, info ? info.name : ing.ingredientId);
+                ingredientMap.set(ing.ingredientId, {
+                  name: info ? info.name : ing.ingredientId,
+                  unit: ing.unit,
+                  category: info ? info.category : "その他",
+                });
               }
             });
           });
         });
 
         return ingredientMap;
+      }
+
+      // カテゴリから保管場所のデフォルトを推定（stock.html・index.htmlと同じロジック）
+      function categoryToDefaultStorage(category) {
+        if (["肉類", "魚介類", "乳製品", "卵", "加工食品", "野菜"].includes(category)) return "refrigerated";
+        if (["調味料", "穀類", "麺"].includes(category)) return "roomTemp";
+        return "refrigerated";
+      }
+
+      function saveStock() {
+        localStorage.setItem("kotoro_stock", JSON.stringify(kotoroStock));
       }
 
       function updateShortageBanner() {
@@ -496,17 +544,34 @@
         const existingIds = new Set(shoppingList.map((i) => i.ingredientId));
 
         let addedCount = 0;
-        map.forEach((name, ingredientId) => {
+        let stockChanged = false;
+        map.forEach((info, ingredientId) => {
           if (!existingIds.has(ingredientId)) {
-            shoppingList.push({ ingredientId, name, checked: false });
+            shoppingList.push({ ingredientId, name: info.name, checked: false });
             addedCount++;
+          }
+
+          // 在庫に一度も登録されたことがない食材は、数量0で在庫に仮登録する
+          // （stock.html側で「不足している」ことが分かるように表示するため）
+          if (!kotoroStock[ingredientId]) {
+            kotoroStock[ingredientId] = {
+              quantity: 0,
+              unit: info.unit || "個",
+              storage: categoryToDefaultStorage(info.category),
+              expiryDate: null,
+              lastPrice: null,
+              lastPurchaseDate: null,
+              barcode: null,
+            };
+            stockChanged = true;
           }
         });
 
         localStorage.setItem("kotoro_shopping_list", JSON.stringify(shoppingList));
+        if (stockChanged) saveStock();
 
         if (addedCount > 0) {
-          alert(`${addedCount}点の食材を買い物リストへ一括登録しました！`);
+          alert(`${addedCount}点の食材を買い物リストへ一括登録しました！\n在庫画面にも不足食材として表示されます。`);
         } else {
           alert("不足食材はすべて既に買い物リストへ登録済みです。");
         }

@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>在庫一覧画面（バーコードスキャン・手動追加対応）</title>
+    <title>今週の献立画面（3食・全日表示対応）</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
   </head>
   <body class="bg-gray-100 flex justify-center items-center min-h-screen font-sans">
     <!-- スマホフレームの外枠 -->
@@ -14,11 +13,11 @@
       <!-- ヘッダー -->
       <header class="bg-emerald-600 text-white px-4 py-4 flex items-center justify-between shadow-md z-10">
         <div class="flex items-center gap-2">
-          <i class="fa-solid fa-boxes-stacked text-xl"></i>
-          <h1 class="font-bold text-base tracking-wider">在庫一覧</h1>
+          <i class="fa-solid fa-calendar-days text-xl"></i>
+          <h1 class="font-bold text-base tracking-wider">今週の献立</h1>
         </div>
         <div class="flex items-center gap-3">
-          <button onclick="openAddModal()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs px-2.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition-all"><i class="fa-solid fa-plus"></i> 追加</button>
+          <button onclick="autoGenerateMenu()" class="bg-emerald-700 hover:bg-emerald-800 text-white text-xs px-2.5 py-1.5 rounded-full font-bold flex items-center gap-1 transition-all"><i class="fa-solid fa-wand-magic-sparkles"></i> 自動献立</button>
           <button class="text-white hover:text-emerald-200 focus:outline-none p-1 transition-colors">
             <i class="fa-solid fa-gear text-xl"></i>
           </button>
@@ -26,39 +25,54 @@
       </header>
 
       <!-- スクロール可能なメインコンテンツ -->
-      <main id="stockRoot" class="flex-1 overflow-y-auto p-4 space-y-5 pb-28">
-        <!-- 在庫一覧（保管場所による分類なし） -->
-        <section>
-          <div class="flex items-center justify-between px-1 pt-1 mb-2">
-            <h2 class="text-xs font-bold text-gray-500 uppercase tracking-wider">
-              <i class="fa-solid fa-boxes-stacked text-emerald-500 mr-1"></i>在庫 (<span id="stockCount">0</span>)
-            </h2>
+      <main class="flex-1 overflow-y-auto p-4 space-y-3 pb-28">
+        <!-- 週の切り替え・日付バー（土曜始まり） -->
+        <div class="flex items-center justify-between bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-gray-200">
+          <button onclick="changeWeek(-1)" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-chevron-left text-xs"></i></button>
+          <span id="weekLabel" class="text-xs font-bold text-gray-700">読み込み中...</span>
+          <button onclick="changeWeek(1)" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-chevron-right text-xs"></i></button>
+        </div>
+
+        <!-- 一括追加ボタン付きアクションバナー -->
+        <div class="bg-emerald-600 text-white rounded-2xl p-4 shadow-md flex flex-col gap-2.5">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="bg-emerald-700 w-8 h-8 rounded-full flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-cart-shopping text-xs"></i>
+              </div>
+              <div>
+                <span class="font-bold text-xs block">今週の不足食材</span>
+                <span id="shortageText" class="text-[11px] text-emerald-100">確認中...</span>
+              </div>
+            </div>
+            <span class="bg-white/20 text-white text-[10px] font-bold px-2.5 py-1 rounded-full">土曜始まり</span>
           </div>
-          <div id="stockList" class="space-y-3">
-            <div class="text-center py-6 text-gray-400 text-xs">読み込み中...</div>
-          </div>
-        </section>
+          <button id="addAllMissingBtn" onclick="addAllMissingToCart()" disabled class="w-full bg-white text-emerald-700 hover:bg-emerald-50 disabled:opacity-50 disabled:cursor-not-allowed font-bold text-xs py-2.5 px-3 rounded-xl shadow transition-all flex items-center justify-center gap-2"><i class="fa-solid fa-circle-plus"></i> 不足している食材を買い物リストへ一括登録する</button>
+        </div>
+
+        <!-- 献立リスト表示エリア -->
+        <div id="menu-list-container" class="space-y-3">
+          <div class="text-center py-10 text-gray-400 text-sm">読み込み中...</div>
+        </div>
       </main>
 
-      <!-- ボトムナビゲーションバー（5つのタブ：在庫がアクティブ） -->
+      <!-- 下部ナビゲーションバー -->
       <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-2 py-2 flex justify-around items-center text-gray-400 z-20 shadow-lg">
         <button onclick="location.href='index.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
           <i class="fa-solid fa-basket-shopping text-base"></i>
           <span class="text-[10px] mt-1">買い物</span>
         </button>
-        <!-- 在庫タブ（アクティブ） -->
-        <button class="flex flex-col items-center text-emerald-600 focus:outline-none font-bold">
+        <button onclick="location.href='stock.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
           <i class="fa-solid fa-boxes-stacked text-base"></i>
           <span class="text-[10px] mt-1">在庫</span>
         </button>
-        <!-- バーコード（中央・強調）：カメラでスキャンして在庫に追加 -->
-        <button onclick="openScanModal()" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none -mt-4">
+        <button class="flex flex-col items-center hover:text-emerald-600 focus:outline-none -mt-4">
           <div class="bg-emerald-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md border-4 border-slate-50 hover:bg-emerald-700 transition-all">
             <i class="fa-solid fa-barcode text-lg"></i>
           </div>
           <span class="text-[10px] mt-0.5 font-bold text-gray-600">スキャン</span>
         </button>
-        <button onclick="location.href='menu.html'" class="flex flex-col items-center hover:text-emerald-600 focus:outline-none">
+        <button class="flex flex-col items-center text-emerald-600 focus:outline-none font-bold">
           <i class="fa-solid fa-calendar-days text-base"></i>
           <span class="text-[10px] mt-1">献立</span>
         </button>
@@ -69,475 +83,40 @@
       </nav>
     </div>
 
-    <!-- 手動追加／スキャン後確認モーダル -->
-    <div id="add-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-3 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+    <!-- レシピ詳細ポップアップ（モーダル） -->
+    <div id="recipe-modal" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div class="bg-white w-full max-w-sm rounded-2xl p-5 space-y-4 shadow-2xl relative max-h-[85vh] overflow-y-auto">
         <div class="flex justify-between items-center border-b pb-3">
-          <h3 class="font-bold text-base text-gray-800">在庫に追加</h3>
-          <button onclick="closeAddModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+          <h3 id="modal-title" class="font-bold text-base text-gray-800">レシピ名</h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
-
-        <div id="addModalHint" class="text-[11px] text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2"></div>
-
-        <form onsubmit="submitManualAdd(event)" class="space-y-3">
-          <input type="hidden" id="addItemResolvedId" value="" />
-          <input type="hidden" id="addItemBarcode" value="" />
-
-          <div>
-            <label class="text-xs font-bold text-gray-600 block mb-1">食材名</label>
-            <input type="text" id="addItemName" list="ingredientNameList" required
-              class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="例：キャベツ" />
-            <datalist id="ingredientNameList"></datalist>
-          </div>
-
-          <div>
-            <label class="text-xs font-bold text-gray-600 block mb-1">カテゴリ（新規食材の場合）</label>
-            <select id="addItemCategory" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-              <option value="">選択してください</option>
-              <option value="肉類">肉類</option>
-              <option value="魚介類">魚介類</option>
-              <option value="野菜">野菜</option>
-              <option value="乳製品">乳製品</option>
-              <option value="卵">卵</option>
-              <option value="調味料">調味料</option>
-              <option value="加工食品">加工食品</option>
-              <option value="穀類">穀類</option>
-              <option value="麺">麺</option>
-              <option value="その他">その他</option>
-            </select>
-          </div>
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs font-bold text-gray-600 block mb-1">数量</label>
-              <input type="number" id="addItemQuantity" step="0.1" min="0" value="1" required
-                class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-            </div>
-            <div>
-              <label class="text-xs font-bold text-gray-600 block mb-1">単位</label>
-              <select id="addItemUnit" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
-                <option value="g">g</option>
-                <option value="kg">kg</option>
-                <option value="ml">ml</option>
-                <option value="l">l</option>
-                <option value="個">個</option>
-                <option value="本">本</option>
-                <option value="枚">枚</option>
-                <option value="丁">丁</option>
-                <option value="束">束</option>
-                <option value="パック">パック</option>
-                <option value="袋">袋</option>
-                <option value="切れ">切れ</option>
-                <option value="片">片</option>
-                <option value="かけ">かけ</option>
-                <option value="缶">缶</option>
-                <option value="玉">玉</option>
-              </select>
-            </div>
-          </div>
-
-
-
-          <div class="grid grid-cols-2 gap-3">
-            <div>
-              <label class="text-xs font-bold text-gray-600 block mb-1">賞味期限（任意）</label>
-              <input type="date" id="addItemExpiry" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-            </div>
-            <div>
-              <label class="text-xs font-bold text-gray-600 block mb-1">購入価格（税抜・任意）</label>
-              <input type="number" id="addItemPrice" min="0" class="w-full text-sm border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500" placeholder="円" />
-            </div>
-          </div>
-
-          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2.5 rounded-xl shadow transition-all">在庫に追加する</button>
-        </form>
+        <div>
+          <h4 class="text-xs font-bold text-emerald-700 mb-1">材料</h4>
+          <ul id="modal-ingredients" class="text-xs text-gray-600 space-y-1 bg-gray-50 p-3 rounded-xl"></ul>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-emerald-700 mb-1">調理手順</h4>
+          <ol id="modal-steps" class="text-xs text-gray-600 space-y-1.5 list-decimal list-inside bg-gray-50 p-3 rounded-xl"></ol>
+        </div>
+        <button onclick="closeModal()" class="w-full bg-emerald-600 text-white font-bold text-xs py-2.5 rounded-xl hover:bg-emerald-700 transition-all">閉じる</button>
       </div>
-    </div>
-
-    <!-- バーコードスキャンモーダル -->
-    <div id="scan-modal" class="hidden fixed inset-0 bg-black z-50 flex flex-col">
-      <div class="flex justify-between items-center px-4 py-3 bg-black/60 text-white">
-        <span class="font-bold text-sm"><i class="fa-solid fa-barcode mr-1"></i> バーコードをスキャン</span>
-        <button onclick="closeScanModal()" class="text-white hover:text-emerald-300"><i class="fa-solid fa-xmark text-xl"></i></button>
-      </div>
-      <div class="flex-1 flex items-center justify-center p-4">
-        <div id="qr-reader" class="w-full max-w-sm"></div>
-      </div>
-      <p class="text-white/70 text-[11px] text-center pb-6 px-6">JANコードまたはインストアコード（20〜29で始まるコード）を枠内に収めてください。</p>
     </div>
 
     <script>
-      // ---------- データ保持 ----------
-      let allIngredients = [];
-      let ingredientsById = {};
+      // 曜日の定義（土曜始まり／recipes.htmlと共通）
+      const daysOfWeek = ["土曜日", "日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日"];
+      const weekdayKanji = ["日", "月", "火", "水", "木", "金", "土"];
+      const mealLabels = { breakfast: "朝食", lunch: "昼食", dinner: "夕食" };
+
       let allRecipes = [];
+      let recipesById = {};
+      let ingredientsById = {};
+      let kotoroMenus = {};
+      let kotoroRecipeCounts = {};
       let kotoroStock = {};
-      let kotoroCustomIngredients = {};
-      let html5QrCode = null;
+      let currentWeekStart = "";
 
-      // ---------- localStorage 読み書き ----------
-      function loadStock() {
-        try {
-          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
-        } catch (e) {
-          kotoroStock = {};
-        }
-      }
-      function saveStock() {
-        localStorage.setItem("kotoro_stock", JSON.stringify(kotoroStock));
-      }
-      function loadCustomIngredients() {
-        try {
-          kotoroCustomIngredients = JSON.parse(localStorage.getItem("kotoro_custom_ingredients")) || {};
-        } catch (e) {
-          kotoroCustomIngredients = {};
-        }
-      }
-      function saveCustomIngredients() {
-        localStorage.setItem("kotoro_custom_ingredients", JSON.stringify(kotoroCustomIngredients));
-      }
-
-      // ---------- 初期化 ----------
-      window.addEventListener("DOMContentLoaded", async () => {
-        loadStock();
-        loadCustomIngredients();
-
-        try {
-          const [ingRes, recRes] = await Promise.all([fetch("ingredients.json"), fetch("recipes.json")]);
-          if (!ingRes.ok) throw new Error("ingredients.jsonの読み込みに失敗しました");
-          if (!recRes.ok) throw new Error("recipes.jsonの読み込みに失敗しました");
-          allIngredients = await ingRes.json();
-          allRecipes = await recRes.json();
-
-          ingredientsById = {};
-          allIngredients.forEach((i) => (ingredientsById[i.ingredientId] = i));
-
-          buildNameDatalist();
-          renderStock();
-        } catch (error) {
-          console.error(error);
-          document.getElementById("stockRoot").innerHTML = `
-            <div class="text-center py-8 text-red-500 text-xs">
-              食材データの読み込みに失敗しました。<br>（ingredients.json・recipes.jsonのパスをご確認ください）
-            </div>
-          `;
-        }
-      });
-
-      function buildNameDatalist() {
-        const list = document.getElementById("ingredientNameList");
-        const names = new Set();
-        allIngredients.forEach((i) => names.add(i.name));
-        Object.values(kotoroCustomIngredients).forEach((c) => names.add(c.name));
-        list.innerHTML = Array.from(names)
-          .map((n) => `<option value="${n}"></option>`)
-          .join("");
-      }
-
-      // ---------- 食材情報のヘルパー ----------
-      function getIngredientDisplay(ingredientId) {
-        if (ingredientsById[ingredientId]) {
-          const i = ingredientsById[ingredientId];
-          return { name: i.name, category: i.category, isExempt: !!i.isExempt, isCustom: false };
-        }
-        if (kotoroCustomIngredients[ingredientId]) {
-          const c = kotoroCustomIngredients[ingredientId];
-          return { name: c.name, category: c.category || "その他", isExempt: false, isCustom: true };
-        }
-        return { name: ingredientId, category: "その他", isExempt: false, isCustom: true };
-      }
-
-      // recipes.json 内でそのingredientIdが使われている単位を採用する（要件：unitはrecipes.json基準で管理）
-      function getDefaultUnitForIngredient(ingredientId) {
-        for (const r of allRecipes) {
-          const found = (r.ingredients || []).find((i) => i.ingredientId === ingredientId);
-          if (found) return found.unit;
-        }
-        return "個";
-      }
-
-      function resolveIngredientIdByName(name) {
-        const masterMatch = allIngredients.find((i) => i.name === name);
-        if (masterMatch) return masterMatch.ingredientId;
-        const customMatch = Object.entries(kotoroCustomIngredients).find(([, v]) => v.name === name);
-        if (customMatch) return customMatch[0];
-        return null;
-      }
-
-      // ---------- インストアコード（20〜29始まり）関連 ----------
-      // インストアコード：スーパーの生鮮食品（お肉や魚）や手作りのお惣菜で使われる、
-      // そのお店の中だけで通用するバーコード。「20〜29」で始まる。
-      function isInStoreCode(barcode) {
-        if (!barcode || barcode.length < 2) return false;
-        const prefix = parseInt(barcode.substring(0, 2), 10);
-        return prefix >= 20 && prefix <= 29;
-      }
-
-      function generateInStoreCode() {
-        const prefix = 20 + Math.floor(Math.random() * 10); // 20〜29
-        const suffix = (Date.now() % 100000000000).toString().padStart(11, "0");
-        return `${prefix}${suffix}`;
-      }
-
-      // ---------- バーコードから食材を特定 ----------
-      function findMasterIngredientByBarcode(barcode) {
-        for (const ing of allIngredients) {
-          const products = Array.isArray(ing.product) ? ing.product : [ing.product];
-          if (products.some((p) => p && p.barcode === barcode)) {
-            return ing.ingredientId;
-          }
-        }
-        return null;
-      }
-
-      function findCustomIngredientByBarcode(barcode) {
-        const match = Object.entries(kotoroCustomIngredients).find(([, v]) => v.barcode === barcode);
-        return match ? match[0] : null;
-      }
-
-      // ---------- 在庫データの追加／更新 ----------
-      function addToStock(ingredientId, payload) {
-        const existing = kotoroStock[ingredientId];
-        if (existing) {
-          existing.quantity = parseFloat((existing.quantity + payload.quantity).toFixed(2));
-          existing.unit = payload.unit;
-          existing.storage = payload.storage;
-          if (payload.expiryDate) existing.expiryDate = payload.expiryDate;
-          if (payload.price != null && payload.price !== "") {
-            existing.lastPrice = payload.price;
-            existing.lastPurchaseDate = payload.purchaseDate;
-          }
-          if (payload.barcode) existing.barcode = payload.barcode;
-        } else {
-          kotoroStock[ingredientId] = {
-            quantity: payload.quantity,
-            unit: payload.unit,
-            storage: payload.storage,
-            expiryDate: payload.expiryDate || null,
-            lastPrice: payload.price != null && payload.price !== "" ? payload.price : null,
-            lastPurchaseDate: payload.purchaseDate || null,
-            barcode: payload.barcode || null,
-          };
-        }
-        saveStock();
-      }
-
-      function adjustQuantity(ingredientId, delta) {
-        const entry = kotoroStock[ingredientId];
-        if (!entry) return;
-        entry.quantity = Math.max(0, parseFloat((entry.quantity + delta).toFixed(2)));
-        saveStock();
-        renderStock();
-      }
-
-      function setQuantity(ingredientId, value) {
-        const entry = kotoroStock[ingredientId];
-        if (!entry) return;
-        const v = parseFloat(value);
-        entry.quantity = isNaN(v) ? entry.quantity : Math.max(0, v);
-        saveStock();
-        renderStock();
-      }
-
-      function deleteStockItem(ingredientId) {
-        if (!confirm("この食材を在庫から削除しますか？")) return;
-        delete kotoroStock[ingredientId];
-        saveStock();
-        renderStock();
-      }
-
-      function stepForUnit(unit) {
-        if (unit === "g" || unit === "ml") return 10;
-        if (unit === "kg" || unit === "l") return 0.1;
-        return 1;
-      }
-
-      function getExpiryBadge(expiryDate) {
-        if (!expiryDate) return "賞味期限: 未登録";
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const exp = new Date(expiryDate + "T00:00:00");
-        const diffDays = Math.round((exp - today) / 86400000);
-        if (diffDays < 0) return `賞味期限切れ（${expiryDate}）`;
-        if (diffDays <= 3) return `賞味期限: ${expiryDate}（あと${diffDays}日）`;
-        return `賞味期限: ${expiryDate}`;
-      }
-
-      // ---------- 描画（カテゴリ別グループ化・在庫数順ソート） ----------
-      // カテゴリの優先表示順（ここに無いカテゴリはあいうえお順で末尾に表示）
-      const CATEGORY_ORDER = ["肉類", "魚介類", "野菜", "野菜類", "乳製品", "卵", "調味料", "加工食品", "穀類", "麺", "その他"];
-
-      function renderStock() {
-        const items = Object.entries(kotoroStock);
-        const container = document.getElementById("stockList");
-        document.getElementById("stockCount").textContent = items.length;
-
-        if (items.length === 0) {
-          container.innerHTML = `<div class="text-center py-6 text-gray-400 text-xs">登録されている食材はありません</div>`;
-          return;
-        }
-
-        // カテゴリごとにグループ化
-        const grouped = {};
-        items.forEach(([id, entry]) => {
-          const info = getIngredientDisplay(id);
-          const cat = info.category || "その他";
-          if (!grouped[cat]) grouped[cat] = [];
-          grouped[cat].push([id, entry]);
-        });
-
-        // 各カテゴリ内は在庫数（quantity）の多い順にソート
-        Object.values(grouped).forEach((list) => {
-          list.sort((a, b) => b[1].quantity - a[1].quantity);
-        });
-
-        // カテゴリの並び順を決定（CATEGORY_ORDER優先、それ以外はあいうえお順で後ろへ）
-        const categories = Object.keys(grouped).sort((a, b) => {
-          const ia = CATEGORY_ORDER.indexOf(a);
-          const ib = CATEGORY_ORDER.indexOf(b);
-          if (ia === -1 && ib === -1) return a.localeCompare(b, "ja");
-          if (ia === -1) return 1;
-          if (ib === -1) return -1;
-          return ia - ib;
-        });
-
-        container.innerHTML = categories
-          .map((cat) => {
-            const cardsHtml = grouped[cat].map(([id, entry]) => buildStockCard(id, entry)).join("");
-            return `
-              <div class="space-y-2">
-                <h3 class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg flex items-center justify-between sticky top-0 z-10">
-                  <span><i class="fa-solid fa-tag mr-1"></i>${cat}</span>
-                  <span class="text-emerald-500">${grouped[cat].length}点</span>
-                </h3>
-                <div class="space-y-3">${cardsHtml}</div>
-              </div>
-            `;
-          })
-          .join("");
-      }
-
-      function buildStockCard(ingredientId, entry) {
-        const info = getIngredientDisplay(ingredientId);
-        const step = stepForUnit(entry.unit);
-        const badgeClass = info.isCustom ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800";
-        const badgeText = info.isCustom ? "手動 / インストア" : "共通食材";
-
-        return `
-          <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-200 space-y-3 transition-all hover:border-emerald-300">
-            <div class="flex justify-between items-start">
-              <div>
-                <div class="flex items-center gap-1.5 flex-wrap">
-                  <span class="${badgeClass} text-[10px] font-bold px-1.5 py-0.5 rounded-full">${badgeText}</span>
-                  ${entry.barcode ? `<span class="text-[10px] text-gray-400 font-mono">${entry.barcode}</span>` : ""}
-                </div>
-                <h3 class="font-bold text-sm text-gray-800 mt-1">${info.name}</h3>
-              </div>
-            </div>
-
-            <div class="flex items-center justify-between bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-              <span class="text-xs font-semibold text-gray-600">在庫数 (${entry.unit})</span>
-              <div class="flex items-center gap-2">
-                <button onclick="adjustQuantity('${ingredientId}', -${step})" class="w-8 h-8 rounded-lg bg-white border border-gray-300 text-gray-600 hover:bg-gray-100 flex items-center justify-center font-bold shadow-sm transition-all">
-                  <i class="fa-solid fa-minus text-xs"></i>
-                </button>
-                <input type="number" step="${step}" value="${entry.quantity}" onchange="setQuantity('${ingredientId}', this.value)" class="w-14 text-center text-sm font-bold bg-white border border-gray-300 rounded-lg py-1 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                <button onclick="adjustQuantity('${ingredientId}', ${step})" class="w-8 h-8 rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 flex items-center justify-center font-bold shadow-sm transition-all">
-                  <i class="fa-solid fa-plus text-xs"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="flex justify-between items-center text-[11px] text-gray-400 pt-1">
-              <span>${getExpiryBadge(entry.expiryDate)}${entry.lastPrice != null ? `／購入: ${entry.lastPrice}円` : ""}</span>
-              <button onclick="deleteStockItem('${ingredientId}')" class="text-rose-500 hover:underline">削除</button>
-            </div>
-          </div>
-        `;
-      }
-
-      // ---------- 手動追加／確認モーダル ----------
-      function openAddModal(options = {}) {
-        const { ingredientId = null, barcode = "", prefillName = "" } = options;
-        const info = ingredientId ? getIngredientDisplay(ingredientId) : null;
-
-        document.getElementById("addItemResolvedId").value = ingredientId || "";
-        document.getElementById("addItemBarcode").value = barcode || "";
-        document.getElementById("addItemName").value = info ? info.name : prefillName;
-        document.getElementById("addItemName").readOnly = !!ingredientId;
-        document.getElementById("addItemCategory").value = info ? info.category : "";
-        document.getElementById("addItemUnit").value = ingredientId ? getDefaultUnitForIngredient(ingredientId) : "個";
-        document.getElementById("addItemQuantity").value = 1;
-        document.getElementById("addItemExpiry").value = "";
-        document.getElementById("addItemPrice").value = "";
-
-        const hint = document.getElementById("addModalHint");
-        if (ingredientId) {
-          hint.textContent = "共通食材として登録済みの食材です。数量などを入力してください。";
-          hint.classList.remove("hidden");
-        } else if (barcode) {
-          hint.textContent = `バーコード: ${barcode}${isInStoreCode(barcode) ? "（インストアコード：お店専用のバーコードです）" : ""} — 新しい食材として登録します。`;
-          hint.classList.remove("hidden");
-        } else {
-          hint.classList.add("hidden");
-        }
-
-        document.getElementById("add-modal").classList.remove("hidden");
-      }
-
-      function closeAddModal() {
-        document.getElementById("add-modal").classList.add("hidden");
-      }
-
-      function submitManualAdd(event) {
-        event.preventDefault();
-
-        const nameInput = document.getElementById("addItemName").value.trim();
-        const barcodeField = document.getElementById("addItemBarcode").value.trim();
-        const quantity = parseFloat(document.getElementById("addItemQuantity").value);
-        const unit = document.getElementById("addItemUnit").value;
-        const expiry = document.getElementById("addItemExpiry").value || null;
-        const priceRaw = document.getElementById("addItemPrice").value;
-        const price = priceRaw ? parseInt(priceRaw, 10) : null;
-        const category = document.getElementById("addItemCategory").value;
-
-        if (!nameInput || isNaN(quantity) || quantity <= 0) {
-          alert("食材名と数量を正しく入力してください。");
-          return;
-        }
-
-        let ingredientId = document.getElementById("addItemResolvedId").value || resolveIngredientIdByName(nameInput);
-        let barcode = barcodeField || null;
-
-        if (!ingredientId) {
-          // マスタにも登録済みカスタム食材にも存在しない → 新規食材として登録
-          // バーコードが無い、または手動入力の場合はインストアコードを採番する
-          if (!barcode || !isInStoreCode(barcode)) {
-            barcode = barcode && isInStoreCode(barcode) ? barcode : generateInStoreCode();
-          }
-          ingredientId = "local_" + barcode;
-          kotoroCustomIngredients[ingredientId] = {
-            name: nameInput,
-            category: category || "その他",
-            barcode: barcode,
-          };
-          saveCustomIngredients();
-          buildNameDatalist();
-        }
-
-        addToStock(ingredientId, {
-          quantity,
-          unit,
-          expiryDate: expiry,
-          price,
-          purchaseDate: formatDateISO(new Date()),
-          barcode,
-        });
-
-        closeAddModal();
-        renderStock();
-      }
-
+      // ---------- 日付ユーティリティ ----------
       function formatDateISO(d) {
         const y = d.getFullYear();
         const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -545,85 +124,423 @@
         return `${y}-${m}-${day}`;
       }
 
-      // ---------- バーコードスキャン（html5-qrcode） ----------
-      function openScanModal() {
-        document.getElementById("scan-modal").classList.remove("hidden");
-        html5QrCode = new Html5Qrcode("qr-reader");
-        html5QrCode
-          .start(
-            { facingMode: "environment" },
-            { fps: 10, qrbox: 250 },
-            (decodedText) => onScanSuccess(decodedText),
-            () => {
-              /* 1フレームごとの読み取り失敗は無視 */
-            }
-          )
-          .catch((err) => {
-            alert("カメラを起動できませんでした。カメラの使用を許可してください。\n" + err);
-            closeScanModal();
+      // 指定日が属する週の開始日（土曜日）を求める
+      function getWeekStartDate(baseDate) {
+        const d = new Date(baseDate);
+        d.setHours(0, 0, 0, 0);
+        const day = d.getDay(); // 0:日 ... 6:土
+        const diff = (day + 1) % 7; // 直近の土曜日までの日数
+        d.setDate(d.getDate() - diff);
+        return d;
+      }
+
+      // weekStart（YYYY-MM-DD）から7日分の日付情報を作る
+      function buildWeekDays(weekStartStr) {
+        const startDate = new Date(weekStartStr + "T00:00:00");
+        const days = [];
+        for (let i = 0; i < 7; i++) {
+          const d = new Date(startDate);
+          d.setDate(d.getDate() + i);
+          days.push({
+            dayName: daysOfWeek[i],
+            date: d,
+            isoDate: formatDateISO(d),
+            dateStr: `${d.getMonth() + 1}月${d.getDate()}日(${weekdayKanji[d.getDay()]})`,
           });
+        }
+        return days;
       }
 
-      function closeScanModal() {
-        if (html5QrCode) {
-          html5QrCode
-            .stop()
-            .then(() => html5QrCode.clear())
-            .catch(() => {})
-            .finally(() => {
-              html5QrCode = null;
-            });
-        }
-        document.getElementById("scan-modal").classList.add("hidden");
-      }
-
-      function onScanSuccess(decodedText) {
-        closeScanModal();
-        handleScannedBarcode(decodedText);
-      }
-
-      async function handleScannedBarcode(barcode) {
-        // 1. 共通食材マスタ（ingredients.json）と突合
-        let ingredientId = findMasterIngredientByBarcode(barcode);
-        if (ingredientId) {
-          openAddModal({ ingredientId, barcode });
-          return;
-        }
-
-        // 2. 過去に登録したカスタム食材（インストアコード等）と突合
-        ingredientId = findCustomIngredientByBarcode(barcode);
-        if (ingredientId) {
-          openAddModal({ ingredientId, barcode });
-          return;
-        }
-
-        // 3. インストアコード（20〜29始まり）の場合は手動入力を案内
-        if (isInStoreCode(barcode)) {
-          alert(
-            `インストアコード（${barcode}）を検出しました。\n` +
-              "スーパーの生鮮食品（お肉や魚）や手作りのお惣菜で使われる、そのお店の中だけで通用するバーコードです。\n" +
-              "食材名などを入力して登録してください。"
-          );
-          openAddModal({ barcode });
-          return;
-        }
-
-        // 4. Open Food Facts API で商品情報を検索
+      // ---------- localStorage 読み書き ----------
+      function loadMenus() {
         try {
-          const res = await fetch(`https://world.openfoodfacts.org/api/v2/product/${barcode}.json`);
-          const data = await res.json();
-          if (data && data.status === 1 && data.product) {
-            const name = data.product.product_name_ja || data.product.product_name || "";
-            openAddModal({ barcode, prefillName: name });
-            return;
-          }
+          kotoroMenus = JSON.parse(localStorage.getItem("kotoro_menus")) || {};
         } catch (e) {
-          console.error("Open Food Facts APIの呼び出しに失敗しました", e);
+          kotoroMenus = {};
+        }
+      }
+      function saveMenus() {
+        localStorage.setItem("kotoro_menus", JSON.stringify(kotoroMenus));
+      }
+      function loadCounts() {
+        try {
+          kotoroRecipeCounts = JSON.parse(localStorage.getItem("kotoro_recipe_counts")) || {};
+        } catch (e) {
+          kotoroRecipeCounts = {};
+        }
+      }
+      function saveCounts() {
+        localStorage.setItem("kotoro_recipe_counts", JSON.stringify(kotoroRecipeCounts));
+      }
+      function loadStock() {
+        try {
+          kotoroStock = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          kotoroStock = {};
+        }
+      }
+
+      // ---------- 初期化 ----------
+      window.addEventListener("DOMContentLoaded", async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryWeekStart = urlParams.get("weekStart");
+        currentWeekStart = queryWeekStart || formatDateISO(getWeekStartDate(new Date()));
+
+        loadMenus();
+        loadCounts();
+        loadStock();
+
+        try {
+          const [recipesRes, ingredientsRes] = await Promise.all([fetch("recipes.json"), fetch("ingredients.json")]);
+          if (!recipesRes.ok) throw new Error("recipes.jsonの読み込みに失敗しました");
+          if (!ingredientsRes.ok) throw new Error("ingredients.jsonの読み込みに失敗しました");
+          allRecipes = await recipesRes.json();
+          const allIngredients = await ingredientsRes.json();
+
+          recipesById = {};
+          allRecipes.forEach((r) => (recipesById[r.recipeId] = r));
+
+          ingredientsById = {};
+          allIngredients.forEach((i) => (ingredientsById[i.ingredientId] = i));
+
+          renderAll();
+        } catch (error) {
+          console.error(error);
+          document.getElementById("menu-list-container").innerHTML = `
+            <div class="text-center py-8 text-red-500 text-xs">
+              レシピ／食材データの読み込みに失敗しました。<br>（recipes.json・ingredients.jsonのパスをご確認ください）
+            </div>
+          `;
+        }
+      });
+
+      function renderAll() {
+        updateUrl();
+        renderWeekLabel();
+        renderMenu();
+        updateShortageBanner();
+      }
+
+      function updateUrl() {
+        const url = new URL(window.location.href);
+        url.searchParams.set("weekStart", currentWeekStart);
+        window.history.replaceState({}, "", url);
+      }
+
+      // ---------- 週の表示・切り替え ----------
+      function renderWeekLabel() {
+        const days = buildWeekDays(currentWeekStart);
+        document.getElementById("weekLabel").textContent = `${days[0].dateStr} 〜 ${days[6].dateStr}`;
+      }
+
+      function changeWeek(direction) {
+        const d = new Date(currentWeekStart + "T00:00:00");
+        d.setDate(d.getDate() + direction * 7);
+        currentWeekStart = formatDateISO(d);
+        renderAll();
+      }
+
+      // ---------- recipes.html へのリンク生成 ----------
+      function buildRecipesUrl(day, mealType) {
+        const params = new URLSearchParams({
+          weekStart: currentWeekStart,
+          month: day.date.getMonth() + 1,
+          recommendedDay: day.dayName,
+          meals: mealType,
+        });
+        return `recipes.html?${params.toString()}`;
+      }
+
+      // ---------- 献立の描画 ----------
+      function renderMenu() {
+        const container = document.getElementById("menu-list-container");
+        container.innerHTML = "";
+
+        const days = buildWeekDays(currentWeekStart);
+        const todayIso = formatDateISO(new Date());
+        const todayIdx = days.findIndex((d) => d.isoDate === todayIso);
+        // 今日の献立を先頭に、過去になった献立は後ろへ（週内に今日が含まれる場合のみ回転）
+        const orderedDays = todayIdx >= 0 ? days.slice(todayIdx).concat(days.slice(0, todayIdx)) : days;
+
+        orderedDays.forEach((day) => {
+          const isToday = day.isoDate === todayIso;
+          const dayData = (kotoroMenus[currentWeekStart] && kotoroMenus[currentWeekStart][day.dayName]) || {};
+          const mealsPresent = ["breakfast", "lunch", "dinner"].map((t) => dayData[t]).filter(Boolean);
+          const dayDone = mealsPresent.length > 0 && mealsPresent.every((m) => m.done);
+
+          const card = document.createElement("div");
+          card.className = `bg-white rounded-2xl p-4 shadow-sm border transition-all ${dayDone ? "border-emerald-300 bg-emerald-50/40" : isToday ? "border-emerald-500 ring-1 ring-emerald-500" : "border-gray-200"}`;
+
+          let html = `
+            <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+              <div class="flex items-center gap-2">
+                <span class="${isToday ? "bg-emerald-600 text-white" : "bg-gray-200 text-gray-700"} text-xs font-bold px-2.5 py-1 rounded-xl">
+                  ${isToday ? "今日" : day.dayName.slice(0, 1)}
+                </span>
+                <h2 class="font-bold text-sm text-gray-800">${day.dateStr}</h2>
+                ${dayDone ? '<span class="bg-emerald-600 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm"><i class="fa-solid fa-check"></i> 作成済み</span>' : ""}
+              </div>
+            </div>
+          `;
+
+          html += renderMealRow(day, "breakfast", false);
+          html += renderMealRow(day, "lunch", false);
+          html += renderMealRow(day, "dinner", true);
+
+          card.innerHTML = html;
+          container.appendChild(card);
+        });
+      }
+
+      function renderMealRow(day, mealType, isLast) {
+        const label = mealLabels[mealType];
+        const entry = (kotoroMenus[currentWeekStart] && kotoroMenus[currentWeekStart][day.dayName] && kotoroMenus[currentWeekStart][day.dayName][mealType]) || null;
+        const changeUrl = buildRecipesUrl(day, mealType);
+        const borderClass = isLast ? "text-xs pt-2" : "flex items-center justify-between py-2 border-b border-gray-50 text-xs";
+
+        if (entry && entry.recipeId) {
+          const recipe = recipesById[entry.recipeId];
+          const title = recipe ? recipe.title : entry.title;
+          const count = kotoroRecipeCounts[entry.recipeId] || 0;
+          const isChecked = !!entry.done;
+
+          return `
+            <div class="${borderClass} ${isChecked ? "bg-emerald-100/50 px-2 rounded-lg" : ""}">
+              <div class="flex items-center gap-2.5 w-full justify-between">
+                <div class="flex items-center gap-2 min-w-0">
+                  <input type="checkbox" ${isChecked ? "checked" : ""} onchange="toggleMealDone('${day.dayName}', '${mealType}')" class="w-4 h-4 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500 cursor-pointer shrink-0">
+                  <span class="w-10 text-gray-400 font-semibold shrink-0">${label}</span>
+                  <button onclick="openRecipeModal('${entry.recipeId}')" class="font-bold text-left truncate ${isChecked ? "line-through text-gray-400" : "text-gray-800 hover:text-emerald-700"}">${title}</button>
+                  <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0">累計${count}回</span>
+                </div>
+                <button onclick="location.href='${changeUrl}'" class="bg-white text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-300 font-bold text-[11px] px-2.5 py-1 rounded-lg transition-all shadow-sm shrink-0">変更</button>
+              </div>
+            </div>
+          `;
         }
 
-        // 5. 該当なし：手動入力にフォールバック
-        alert("この商品の情報が見つかりませんでした。内容を確認して手動で登録してください。");
-        openAddModal({ barcode });
+        return `
+          <div class="${borderClass}">
+            <div class="flex items-center gap-2.5">
+              <input type="checkbox" disabled class="w-4 h-4 opacity-30 rounded border-gray-300 shrink-0">
+              <span class="w-10 text-gray-400 font-semibold shrink-0">${label}</span>
+              <span class="text-gray-400 italic text-[11px]">未設定</span>
+            </div>
+            <button onclick="location.href='${changeUrl}'" class="text-emerald-600 font-bold text-[11px] hover:underline shrink-0">+ 変更 / 追加</button>
+          </div>
+        `;
+      }
+
+      // ---------- 在庫（stock.html：kotoro_stock）との連携 ----------
+      // 在庫はingredientId単位で管理され、数量の単位はrecipes.json側のunitを基準とする。
+      // 単位が一致する場合のみ増減させ、在庫データが無い・単位が異なる食材はスキップする。
+      function adjustStockForRecipe(recipeId, sign) {
+        const recipe = recipesById[recipeId];
+        if (!recipe || !recipe.ingredients) return;
+
+        let stockData;
+        try {
+          stockData = JSON.parse(localStorage.getItem("kotoro_stock")) || {};
+        } catch (e) {
+          stockData = {};
+        }
+
+        recipe.ingredients.forEach((ing) => {
+          const info = ingredientsById[ing.ingredientId];
+          if (info && info.isExempt) return; // 調味料など常備品は在庫連携の対象外
+
+          const stockEntry = stockData[ing.ingredientId];
+          if (!stockEntry) return; // 在庫未登録の食材は対象外
+          if (stockEntry.unit !== ing.unit) return; // 単位が一致しない場合はスキップ
+
+          stockEntry.quantity = Math.max(0, parseFloat((stockEntry.quantity + sign * ing.amount).toFixed(2)));
+        });
+
+        localStorage.setItem("kotoro_stock", JSON.stringify(stockData));
+        kotoroStock = stockData; // 不足食材の再計算に使うグローバルの在庫情報も更新する
+      }
+
+      // ---------- 作成済みチェック ----------
+      function toggleMealDone(dayName, mealType) {
+        const entry = kotoroMenus[currentWeekStart] && kotoroMenus[currentWeekStart][dayName] && kotoroMenus[currentWeekStart][dayName][mealType];
+        if (!entry) return;
+
+        entry.done = !entry.done;
+
+        if (entry.done) {
+          kotoroRecipeCounts[entry.recipeId] = (kotoroRecipeCounts[entry.recipeId] || 0) + 1;
+          adjustStockForRecipe(entry.recipeId, -1);
+          alert(`「${entry.title}」を作成済み（調理完了）にしました。\n在庫リストから使用分を自動マイナスしました！`);
+        } else {
+          kotoroRecipeCounts[entry.recipeId] = Math.max(0, (kotoroRecipeCounts[entry.recipeId] || 0) - 1);
+          adjustStockForRecipe(entry.recipeId, 1);
+          alert(`「${entry.title}」の作成済みを解除しました。`);
+        }
+
+        saveMenus();
+        saveCounts();
+        renderMenu();
+        updateShortageBanner();
+      }
+
+      // ---------- 自動献立（月・区分フィルター＋作成回数／推奨曜日によるスコアリング） ----------
+      function autoGenerateMenu() {
+        if (!confirm("未設定の朝・昼・夕の献立を自動で作成しますか？\n（手動で設定済みの献立はそのまま残ります）")) return;
+
+        const days = buildWeekDays(currentWeekStart);
+        if (!kotoroMenus[currentWeekStart]) kotoroMenus[currentWeekStart] = {};
+
+        days.forEach((day) => {
+          if (!kotoroMenus[currentWeekStart][day.dayName]) kotoroMenus[currentWeekStart][day.dayName] = {};
+          const month = day.date.getMonth() + 1;
+
+          ["breakfast", "lunch", "dinner"].forEach((mealType) => {
+            const existing = kotoroMenus[currentWeekStart][day.dayName][mealType];
+            if (existing && existing.recipeId) return; // 手動入力優先
+
+            // 1. 月フィルター：対象月外の季節限定レシピは除外
+            // 2. 区分フィルター：朝食/昼食/夕食が一致するレシピのみ
+            const candidates = allRecipes.filter((r) => {
+              const matchMonth = !r.month || r.month.length === 0 || r.month.includes(month);
+              const matchMeal = r.meals === mealType;
+              return matchMonth && matchMeal;
+            });
+            if (candidates.length === 0) return;
+
+            // 3. 作成回数および推奨曜日による優先度スコア計算
+            //    推奨曜日が一致するレシピを優先しつつ、作成回数が少ないレシピほど高スコアにする
+            let best = null;
+            let bestScore = -Infinity;
+            candidates.forEach((r) => {
+              const dayMatchScore = r.recommendedDay === day.dayName ? 1000 : 0;
+              const count = kotoroRecipeCounts[r.recipeId] || 0;
+              const score = dayMatchScore - count * 10;
+              if (score > bestScore) {
+                bestScore = score;
+                best = r;
+              }
+            });
+
+            if (best) {
+              kotoroMenus[currentWeekStart][day.dayName][mealType] = {
+                recipeId: best.recipeId,
+                title: best.title,
+                done: false,
+              };
+            }
+          });
+        });
+
+        saveMenus();
+        alert("自動献立を作成しました！");
+        renderMenu();
+        updateShortageBanner();
+      }
+
+      // ---------- 不足食材（今週の献立で使う食材のうち、常備品と在庫がすでにある食材を除く）の集計 ----------
+      function computeNeededIngredients() {
+        const weekData = kotoroMenus[currentWeekStart] || {};
+        const ingredientMap = new Map();
+
+        Object.values(weekData).forEach((dayData) => {
+          Object.values(dayData).forEach((entry) => {
+            if (!entry || !entry.recipeId) return;
+            const recipe = recipesById[entry.recipeId];
+            if (!recipe || !recipe.ingredients) return;
+            recipe.ingredients.forEach((ing) => {
+              const info = ingredientsById[ing.ingredientId];
+              if (info && info.isExempt) return; // 調味料など常備品は対象外
+
+              // すでに在庫が残っている食材（quantityが0より大きい）は不足食材から除外する
+              const stockEntry = kotoroStock[ing.ingredientId];
+              if (stockEntry && stockEntry.quantity > 0) return;
+
+              if (!ingredientMap.has(ing.ingredientId)) {
+                ingredientMap.set(ing.ingredientId, info ? info.name : ing.ingredientId);
+              }
+            });
+          });
+        });
+
+        return ingredientMap;
+      }
+
+      function updateShortageBanner() {
+        const map = computeNeededIngredients();
+        const text = document.getElementById("shortageText");
+        const btn = document.getElementById("addAllMissingBtn");
+
+        if (map.size > 0) {
+          text.textContent = `まだ在庫にない食材が ${map.size}点あります`;
+          btn.disabled = false;
+        } else {
+          text.textContent = "今週の献立に必要な食材はありません";
+          btn.disabled = true;
+        }
+      }
+
+      // ---------- 買い物リストへの一括登録 ----------
+      function addAllMissingToCart() {
+        const map = computeNeededIngredients();
+        if (map.size === 0) {
+          alert("追加する食材がありません。");
+          return;
+        }
+
+        let shoppingList = [];
+        try {
+          shoppingList = JSON.parse(localStorage.getItem("kotoro_shopping_list")) || [];
+        } catch (e) {
+          shoppingList = [];
+        }
+        const existingIds = new Set(shoppingList.map((i) => i.ingredientId));
+
+        let addedCount = 0;
+        map.forEach((name, ingredientId) => {
+          if (!existingIds.has(ingredientId)) {
+            shoppingList.push({ ingredientId, name, checked: false });
+            addedCount++;
+          }
+        });
+
+        localStorage.setItem("kotoro_shopping_list", JSON.stringify(shoppingList));
+
+        if (addedCount > 0) {
+          alert(`${addedCount}点の食材を買い物リストへ一括登録しました！`);
+        } else {
+          alert("不足食材はすべて既に買い物リストへ登録済みです。");
+        }
+        updateShortageBanner();
+      }
+
+      // ---------- レシピのフルスクリーン表示 ----------
+      function openRecipeModal(recipeId) {
+        const recipe = recipesById[recipeId];
+        if (!recipe) {
+          alert("レシピ情報が見つかりませんでした。");
+          return;
+        }
+
+        document.getElementById("modal-title").innerText = recipe.title;
+
+        const ingredientsHtml = (recipe.ingredients || [])
+          .map((ing) => {
+            const info = ingredientsById[ing.ingredientId];
+            const name = info ? info.name : ing.ingredientId;
+            return `<li>・ ${name} ${ing.amount}${ing.unit}</li>`;
+          })
+          .join("");
+        document.getElementById("modal-ingredients").innerHTML = ingredientsHtml || "<li>材料情報がありません</li>";
+
+        const stepsHtml = (recipe.steps || []).map((s) => `<li>${s.text}</li>`).join("");
+        document.getElementById("modal-steps").innerHTML = stepsHtml || "<li>手順情報がありません</li>";
+
+        document.getElementById("recipe-modal").classList.remove("hidden");
+      }
+
+      function closeModal() {
+        document.getElementById("modal-title").innerText = "";
+        document.getElementById("recipe-modal").classList.add("hidden");
       }
     </script>
   </body>
