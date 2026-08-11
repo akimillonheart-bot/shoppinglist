@@ -385,6 +385,20 @@
         return "個";
       }
 
+      // recipes.json内の全レシピを横断し、そのingredientIdが使われているamountを合計する
+      // （＝そのレシピをすべて作った場合に必要となる、購入すべき目安量）
+      function getTotalAmountForIngredient(ingredientId) {
+        let total = 0;
+        allRecipes.forEach((r) => {
+          (r.ingredients || []).forEach((ing) => {
+            if (ing.ingredientId === ingredientId && typeof ing.amount === "number") {
+              total += ing.amount;
+            }
+          });
+        });
+        return parseFloat(total.toFixed(2));
+      }
+
       function categoryToDefaultStorage(category) {
         if (["肉類", "魚介類", "乳製品", "卵", "加工食品", "野菜"].includes(category)) return "refrigerated";
         if (["調味料", "穀類", "麺"].includes(category)) return "roomTemp";
@@ -549,6 +563,9 @@
         }
 
         const stockHtml = stockEntry ? `<span class="text-[10px] text-gray-400">在庫: ${stockEntry.quantity}${stockEntry.unit}</span>` : "";
+        const purchaseUnit = getDefaultUnitForIngredient(item.ingredientId);
+        const purchaseAmount = getTotalAmountForIngredient(item.ingredientId);
+        const purchaseAmountHtml = purchaseAmount > 0 ? `<span class="bg-slate-100 text-slate-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full">購入目安: ${purchaseAmount}${purchaseUnit}</span>` : "";
 
         return `
           <div class="bg-white rounded-2xl shadow-sm border ${item.checked ? "border-gray-200 opacity-60" : "border-emerald-200"} p-3.5 transition-all">
@@ -558,6 +575,7 @@
                 <div class="flex items-center gap-2 flex-wrap">
                   <span class="font-bold text-sm ${item.checked ? "line-through text-gray-400" : "text-gray-800"}">${info.name}</span>
                   <span class="${badgeClass} text-[10px] font-bold px-1.5 py-0.5 rounded-full">${badgeText}</span>
+                  ${purchaseAmountHtml}
                 </div>
                 ${statsHtml}
                 <div class="flex items-center justify-between mt-2">
