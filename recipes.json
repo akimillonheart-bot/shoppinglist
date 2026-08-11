@@ -1269,6 +1269,11 @@
         "ingredientId": "ing_牛肉",
         "amount": 100,
         "unit": "g"
+      },
+      {
+        "ingredientId": "ing_温泉卵",
+        "amount": 2,
+        "unit": "個"
       }
     ],
     "steps": [
@@ -1303,6 +1308,11 @@
         "ingredientId": "ing_ローストビーフ",
         "amount": 1,
         "unit": "パック"
+      },
+      {
+        "ingredientId": "ing_温泉卵",
+        "amount": 2,
+        "unit": "個"
       }
     ],
     "steps": [
@@ -1754,6 +1764,252 @@
       {
         "stepNo": 6,
         "text": "５のフライパンに２で取り分けた分を加え、中火で約1分煮詰め、５の肉と玉ねぎを戻して、煮絡める。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_030",
+    "title": "納豆ご飯",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_納豆",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_ソーセージ",
+        "amount": 1,
+        "unit": "袋"
+      },
+      {
+        "ingredientId": "ing_卵",
+        "amount": 2,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_031",
+    "title": "キャベツの重ね蒸し",
+    "servings": 2,
+    "recommendedDay": "日曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_キャベツ",
+        "amount": 0.2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_豚薄切り肉",
+        "amount": 180,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酢",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_みそ",
+        "amount": 10,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_マヨネーズ",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_ごま油",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_白すりごま",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_みず",
+        "amount": 10,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_にんじん",
+        "amount": 0.5,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_コーン",
+        "amount": 1,
+        "unit": "袋"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "キャベツは大きめに手でちぎる。"
+      },
+      {
+        "stepNo": 2,
+        "text": "せいろにキャベツ→肉→キャベツ→肉→キャベツ→肉→キャベツ→肉→キャベツ→肉→で5層に重ねる"
+      },
+      {
+        "stepNo": 3,
+        "text": "15分蒸す。つけダレを添える。"
+      },
+      {
+        "stepNo": 4,
+        "text": "余ったキャベツでコールスローを作成する。（キャベツ、粗目のみじん切り、ニンジン→細切り、塩を少し降って5分蒸す。蒸し終わったら、水けをきってマヨネーズと酢を加える"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_032",
+    "title": "ピラフ",
+    "servings": 2,
+    "recommendedDay": "日曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_えびピラフ",
+        "amount": 1,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_033",
+    "title": "豚のショウガ蒸し",
+    "servings": 2,
+    "recommendedDay": "木曜日",
+    "meals": "dinner",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_豚こま肉",
+        "amount": 200,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_おろししょうが",
+        "amount": 15,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_みりん",
+        "amount": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 2.5,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "玉ねぎは薄切り"
+      },
+      {
+        "stepNo": 2,
+        "text": "玉ねぎを広げ、豚肉をほぐしながら、しょうがをのせて、小麦粉をまぶす。たれをかける"
+      },
+      {
+        "stepNo": 3,
+        "text": "１０分むす"
       }
     ]
   }

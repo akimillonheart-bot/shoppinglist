@@ -393,7 +393,7 @@
   {
     "ingredientId": "ing_きのこ類",
     "name": "きのこ類",
-    "category": "きのこ類",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000007",
@@ -405,7 +405,7 @@
   {
     "ingredientId": "ing_春雨",
     "name": "春雨",
-    "category": "春雨",
+    "category": "加工食品",
     "isExempt": false,
     "product": [
       {
@@ -526,7 +526,7 @@
   {
     "ingredientId": "ing_小麦粉",
     "name": "小麦粉",
-    "category": "穀類",
+    "category": "調味料",
     "isExempt": false,
     "product": {
       "barcode": "4904444000001",
@@ -666,9 +666,11 @@
     "category": "冷凍食品",
     "isExempt": true,
     "product": {
-      "barcode": "2001234000016",
-      "productName": "鶏のから揚げデータ",
-      "capacity": "90g"
+      "barcode": "4902130114427",
+      "productName": "特から 380g",
+      "capacity": "380",
+      "unit": "g",
+      "amount": 100
     }
   },
   {
@@ -690,7 +692,9 @@
     "product": {
       "barcode": "2001234000019",
       "productName": "豆もやし",
-      "capacity": "90g"
+      "capacity": "90g",
+      "amount": 1,
+      "unit": "袋"
     }
   },
   {
@@ -1088,6 +1092,81 @@
         "amount": 1,
         "unit": "袋",
         "capacity": "210"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_納豆",
+    "name": "納豆",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4901160010143",
+        "productName": "極小粒ミニ3（50g×3）",
+        "amount": 1,
+        "unit": "個",
+        "capacity": "3"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_ソーセージ",
+    "name": "ソーセージ",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4902586024561",
+        "productName": "香薫 あらびきポークウインナー（90g / 2個束など）",
+        "amount": 1,
+        "unit": "袋",
+        "capacity": "2"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_コーン",
+    "name": "コーン（パウチ）",
+    "category": "野菜類",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4901577069505",
+        "productName": "サラダクラブ 北海道コーン ホール 50g",
+        "amount": 1,
+        "unit": "袋",
+        "capacity": "50"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_えびピラフ",
+    "name": "えびピラフ",
+    "category": "冷凍食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4902130344947",
+        "productName": "えびピラフ 450g（家庭用）",
+        "amount": 1,
+        "unit": "袋",
+        "capacity": "450"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_温泉卵",
+    "name": "温泉卵",
+    "category": "卵",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4977005556367",
+        "productName": "みやけ食品 温泉たまご 3個入",
+        "amount": 3,
+        "unit": "個",
+        "capacity": "1"
       }
     ]
   }
