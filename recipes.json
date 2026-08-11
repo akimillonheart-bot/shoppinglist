@@ -1001,7 +1001,7 @@
       }
     ]
   },
-    {
+  {
     "recipeId": "rec_013",
     "title": "鳥そぼろ弁当",
     "servings": 2,
@@ -1027,7 +1027,6 @@
         "amount": 1,
         "unit": "個"
       }
-
     ],
     "steps": [
       {
@@ -1036,7 +1035,7 @@
       }
     ]
   },
-      {
+  {
     "recipeId": "rec_014",
     "title": "鳥そぼろ",
     "servings": 2,
@@ -1067,27 +1066,27 @@
         "amount": 15,
         "unit": "ml"
       },
-            {
+      {
         "ingredientId": "ing_みりん",
         "amount": 15,
         "unit": "ml"
       },
-                  {
+      {
         "ingredientId": "ing_砂糖",
         "amount": 15,
         "unit": "g"
       },
-                        {
+      {
         "ingredientId": "ing_しょうゆ",
         "amount": 30,
         "unit": "ml"
       },
-                              {
+      {
         "ingredientId": "ing_卵",
         "amount": 4,
         "unit": "個"
       },
-                                    {
+      {
         "ingredientId": "ing_ほうれん草",
         "amount": 0.5,
         "unit": "束"
@@ -1098,17 +1097,17 @@
         "stepNo": 1,
         "text": "鶏ひき肉に調味料を入れて煮込む。"
       },
-            {
+      {
         "stepNo": 2,
         "text": "炒り卵を作る。"
       },
-                  {
+      {
         "stepNo": 3,
         "text": "ほうれん草をゆでる。"
       }
     ]
   },
-{
+  {
     "recipeId": "rec_015",
     "title": "ハンバーグ",
     "servings": 2,
@@ -1134,17 +1133,16 @@
         "amount": 1,
         "unit": "個"
       },
-            {
+      {
         "ingredientId": "ing_レタス",
         "amount": 1,
         "unit": "袋"
       },
-                  {
+      {
         "ingredientId": "ing_ポテトサラダ",
         "amount": 1,
         "unit": "パック"
       }
-
     ],
     "steps": [
       {
@@ -1179,22 +1177,21 @@
         "amount": 0.5,
         "unit": "箱"
       },
-            {
+      {
         "ingredientId": "ing_長ネギ",
         "amount": 1,
         "unit": "袋"
       },
-                  {
+      {
         "ingredientId": "ing_豚ひき肉",
         "amount": 50,
         "unit": "g"
       },
-                        {
+      {
         "ingredientId": "ing_もやし",
         "amount": 1,
         "unit": "袋"
       }
-
     ],
     "steps": [
       {
@@ -1229,12 +1226,11 @@
         "amount": 0.5,
         "unit": "箱"
       },
-                        {
+      {
         "ingredientId": "ing_もやし",
         "amount": 1,
         "unit": "袋"
       }
-
     ],
     "steps": [
       {
@@ -1243,7 +1239,7 @@
       }
     ]
   },
-    {
+  {
     "recipeId": "rec_018",
     "title": "ビビンバ丼",
     "servings": 2,
@@ -1269,12 +1265,11 @@
         "amount": 1,
         "unit": "パック"
       },
-                        {
+      {
         "ingredientId": "ing_牛肉",
         "amount": 100,
         "unit": "g"
       }
-
     ],
     "steps": [
       {
@@ -1283,7 +1278,7 @@
       }
     ]
   },
-      {
+  {
     "recipeId": "rec_019",
     "title": "ローストビーフ丼",
     "servings": 2,
@@ -1317,7 +1312,7 @@
       }
     ]
   },
-      {
+  {
     "recipeId": "rec_020",
     "title": "パスタ",
     "servings": 2,
@@ -1343,16 +1338,422 @@
         "amount": 2,
         "unit": "束"
       },
-            {
+      {
         "ingredientId": "ing_パスタソース",
-      "amount": 2,
-      "unit": "パック"
+        "amount": 2,
+        "unit": "パック"
       }
     ],
     "steps": [
       {
         "stepNo": 1,
-        "text": "牛肉を焼く。"
+        "text": "パスタを茹でる。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_021",
+    "title": "プロテイン",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_プロテイン",
+        "amount": 6,
+        "unit": "杯"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "お水に溶かす。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_022",
+    "title": "プロテイン",
+    "servings": 2,
+    "recommendedDay": "木曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_プロテイン",
+        "amount": 6,
+        "unit": "杯"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "お水に溶かす。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_023",
+    "title": "プロテイン",
+    "servings": 2,
+    "recommendedDay": "金曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_プロテイン",
+        "amount": 6,
+        "unit": "杯"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "お水に溶かす。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_024",
+    "title": "サンドイッチ",
+    "servings": 2,
+    "recommendedDay": "土曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_食パン",
+        "amount": 2,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_卵",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_バナナ",
+        "amount": 2,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_フルーツ",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_ヨーグルト",
+        "amount": 50,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_レタス",
+        "amount": 0.5,
+        "unit": "袋"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_025",
+    "title": "サンドイッチ",
+    "servings": 2,
+    "recommendedDay": "日曜日",
+    "meals": "breakfast",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_食パン",
+        "amount": 2,
+        "unit": "枚"
+      },
+      {
+        "ingredientId": "ing_卵",
+        "amount": 2,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_バナナ",
+        "amount": 2,
+        "unit": "本"
+      },
+      {
+        "ingredientId": "ing_フルーツ",
+        "amount": 0.5,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_ヨーグルト",
+        "amount": 50,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_レタス",
+        "amount": 0.5,
+        "unit": "袋"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_026",
+    "title": "牛丼",
+    "servings": 2,
+    "recommendedDay": "木曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_牛丼",
+        "amount": 1,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_027",
+    "title": "鶏から弁当",
+    "servings": 2,
+    "recommendedDay": "水曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_鶏から",
+        "amount": 4,
+        "unit": "個"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_028",
+    "title": "中華丼",
+    "servings": 2,
+    "recommendedDay": "火曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_中華丼",
+        "amount": 1,
+        "unit": "袋"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "下ごしらえをする。"
+      }
+    ]
+  },
+  {
+    "recipeId": "rec_029",
+    "title": "生姜焼き弁当",
+    "servings": 2,
+    "recommendedDay": "月曜日",
+    "meals": "lunch",
+    "month": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "ingredients": [
+      {
+        "ingredientId": "ing_豚こま肉",
+        "amount": 100,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_玉ねぎ",
+        "amount": 0.1,
+        "unit": "個"
+      },
+      {
+        "ingredientId": "ing_しょうゆ",
+        "amount": 7,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_酒",
+        "amount": 30,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_砂糖",
+        "amount": 5,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_おろししょうが",
+        "amount": 7,
+        "unit": "g"
+      },
+      {
+        "ingredientId": "ing_片栗粉",
+        "amount": 7,
+        "unit": "g"
+      }
+    ],
+    "steps": [
+      {
+        "stepNo": 1,
+        "text": "玉ねぎは薄切りにする。"
+      },
+      {
+        "stepNo": 2,
+        "text": "ボウルに調味料を合わせ、大さじ1分取り分けておく。"
+      },
+      {
+        "stepNo": 3,
+        "text": "豚肩ロース切り落とし肉を加えて２を絡め、１を加えてさっと混ぜ合わせる"
+      },
+      {
+        "stepNo": 4,
+        "text": "小麦粉を全体にふり入れてまぶす。"
+      },
+      {
+        "stepNo": 5,
+        "text": "フライパンにサラダ油を熱し、３を薄く広げ、肉の色が変わるまで炒め（約2分30秒）、肉と玉ねぎを取り出す。"
+      },
+      {
+        "stepNo": 6,
+        "text": "５のフライパンに２で取り分けた分を加え、中火で約1分煮詰め、５の肉と玉ねぎを戻して、煮絡める。"
       }
     ]
   }

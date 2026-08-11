@@ -443,7 +443,7 @@
   {
     "ingredientId": "ing_もやし",
     "name": "もやし",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000003",
@@ -596,7 +596,7 @@
   {
     "ingredientId": "ing_shimeji",
     "name": "しめじ",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000012",
@@ -618,7 +618,7 @@
   {
     "ingredientId": "ing_daikon",
     "name": "大根",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000013",
@@ -641,7 +641,7 @@
   {
     "ingredientId": "ing_garlic",
     "name": "にんにく",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "4909999000001",
@@ -718,7 +718,7 @@
   {
     "ingredientId": "ing_green_onion",
     "name": "青ネギ",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "2001234000022",
@@ -740,7 +740,7 @@
   {
     "ingredientId": "ing_cucumber",
     "name": "きゅうり",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "20012340000224",
@@ -806,7 +806,7 @@
   {
     "ingredientId": "ing_ほうれん草",
     "name": "ほうれん草",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "20012340000230",
@@ -923,7 +923,7 @@
       "unit": "パック"
     }
   },
-    {
+  {
     "ingredientId": "ing_らっきょ",
     "name": "らっきょ",
     "category": "加工食品",
@@ -935,7 +935,7 @@
       "unit": "パック"
     }
   },
-      {
+  {
     "ingredientId": "ing_福神漬け",
     "name": "福神漬け",
     "category": "加工食品",
@@ -947,7 +947,7 @@
       "unit": "パック"
     }
   },
-        {
+  {
     "ingredientId": "ing_パスタ",
     "name": "パスタ",
     "category": "加工食品",
@@ -959,7 +959,7 @@
       "unit": "束"
     }
   },
-          {
+  {
     "ingredientId": "ing_パスタソース",
     "name": "パスタソース",
     "category": "加工食品",
@@ -970,5 +970,125 @@
       "amount": 2,
       "unit": "パック"
     }
+  },
+  {
+    "ingredientId": "ing_プロテイン",
+    "name": "プロテイン",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "20012340000231",
+        "productName": "プロテイン",
+        "amount": 6,
+        "unit": "杯",
+        "capacity": "90"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_食パン",
+    "name": "食パン",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4903110002239",
+        "productName": "ロイヤルブレッド 8枚切り",
+        "amount": 1,
+        "unit": "袋",
+        "capacity": "8"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_バナナ",
+    "name": "バナナ",
+    "category": "果物",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "20012340000232",
+        "productName": "バナナ",
+        "amount": 4,
+        "unit": "本",
+        "capacity": "4"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_フルーツ",
+    "name": "フルーツ",
+    "category": "果物",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "20012340000233",
+        "productName": "フルーツ",
+        "amount": 0.5,
+        "unit": "袋",
+        "capacity": "1"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_ヨーグルト",
+    "name": "ヨーグルト",
+    "category": "乳製品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4902705011625",
+        "productName": "明治ブルガリアヨーグルト LB81 プレーン 400g",
+        "amount": 50,
+        "unit": "g",
+        "capacity": "400"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_牛丼",
+    "name": "牛丼",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4538872264016",
+        "productName": "冷凍 牛丼の具 120g（並盛）",
+        "amount": 2,
+        "unit": "袋",
+        "capacity": "1"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_鶏から",
+    "name": "鶏から（冷凍）",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4902130114427",
+        "productName": "特から 380g",
+        "amount": 4,
+        "unit": "個",
+        "capacity": "380g"
+      }
+    ]
+  },
+  {
+    "ingredientId": "ing_中華丼",
+    "name": "中華丼",
+    "category": "加工食品",
+    "isExempt": false,
+    "product": [
+      {
+        "barcode": "4549414161502",
+        "productName": "トップバリュベストプライス 中華丼 210g",
+        "amount": 1,
+        "unit": "袋",
+        "capacity": "210"
+      }
+    ]
   }
 ]
