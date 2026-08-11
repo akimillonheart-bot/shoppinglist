@@ -419,7 +419,7 @@
   {
     "ingredientId": "ing_にんじん",
     "name": "にんじん",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000001",
@@ -431,7 +431,7 @@
   {
     "ingredientId": "ing_ニラ",
     "name": "ニラ",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000002",
@@ -467,7 +467,7 @@
   {
     "ingredientId": "ing_スライスチーズ",
     "name": "スライスチーズ",
-    "category": "加工食品",
+    "category": "乳製品",
     "isExempt": false,
     "product": {
       "barcode": "4901111000001",
@@ -629,7 +629,7 @@
   {
     "ingredientId": "ing_長ネギ",
     "name": "長ネギ",
-    "category": "長ネギ",
+    "category": "野菜類",
     "isExempt": false,
     "product": {
       "barcode": "2001234000014",
@@ -652,7 +652,7 @@
   {
     "ingredientId": "ing_ginger",
     "name": "生姜",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "4909999000002",
@@ -662,8 +662,8 @@
   },
   {
     "ingredientId": "ing_starch",
-    "name": "鶏のから揚げデータ",
-    "category": "鶏のから揚げデータ",
+    "name": "鶏のから揚げ",
+    "category": "冷凍食品",
     "isExempt": true,
     "product": {
       "barcode": "2001234000016",
@@ -674,7 +674,7 @@
   {
     "ingredientId": "ing_potato",
     "name": "ジャガイモ",
-    "category": "野菜",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "2001234000018",
@@ -685,7 +685,7 @@
   {
     "ingredientId": "ing_bean_sprouts",
     "name": "豆もやし",
-    "category": "やさい",
+    "category": "野菜類",
     "isExempt": true,
     "product": {
       "barcode": "2001234000019",
@@ -696,7 +696,7 @@
   {
     "ingredientId": "ing_beef_pork_mince",
     "name": "豚合いびき肉",
-    "category": "肉",
+    "category": "肉類",
     "isExempt": true,
     "product": {
       "barcode": "2001234000020",
@@ -795,7 +795,7 @@
   {
     "ingredientId": "ing_beef_mince",
     "name": "牛ひき肉",
-    "category": "肉",
+    "category": "肉類",
     "isExempt": true,
     "product": {
       "barcode": "20012340000229",
@@ -866,7 +866,7 @@
   {
     "ingredientId": "ing_餃子",
     "name": "餃子",
-    "category": "加工食品",
+    "category": "冷凍食品",
     "isExempt": true,
     "product": {
       "barcode": "20012340000230",
@@ -950,7 +950,7 @@
   {
     "ingredientId": "ing_パスタ",
     "name": "パスタ",
-    "category": "加工食品",
+    "category": "麺",
     "isExempt": true,
     "product": {
       "barcode": "20012340000230",
@@ -1049,7 +1049,7 @@
   {
     "ingredientId": "ing_牛丼",
     "name": "牛丼",
-    "category": "加工食品",
+    "category": "冷凍食品",
     "isExempt": false,
     "product": [
       {
@@ -1064,7 +1064,7 @@
   {
     "ingredientId": "ing_鶏から",
     "name": "鶏から（冷凍）",
-    "category": "加工食品",
+    "category": "冷凍食品",
     "isExempt": false,
     "product": [
       {
