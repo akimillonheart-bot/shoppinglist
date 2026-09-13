@@ -99,9 +99,10 @@ dialog::backdrop{background:#0008}
     <h2 id="productTitle">商品登録</h2>
     <form class="form" id="productForm">
       <input type="hidden" id="editId">
+      <input type="hidden" id="originalEditId">
       <label>バーコード</label><input id="barcode" inputmode="numeric" placeholder="JANコード">
       <label>商品名</label><input id="name" required>
-      <div class="row"><div><label>大分類</label><input id="major" placeholder="食料品"></div><div><label>中分類</label><input id="middle" placeholder="醤油"></div></div>
+      <div class="row"><div><label>大分類</label><select id="major" required><option value="食料品">食料品</option><option value="日用品">日用品</option><option value="その他">その他</option></select></div><div><label>中分類</label><input id="middle" placeholder="醤油"></div></div>
       <div class="row"><div><label>容量</label><input id="capacity" type="number" min="0" step="any"></div><div><label>単位</label><input id="capacityUnit" placeholder="ml"></div></div>
       <div class="row"><div><label>在庫数</label><input id="quantity" type="number" min="0" step="1" value="0"></div><div><label>在庫単位</label><input id="unit" placeholder="本"></div></div>
       <div class="row"><div><label>最安値</label><input id="lowestPrice" type="number" min="0" step="1"></div><div><label>最安値の日付</label><input id="lowestPriceDate" type="date"></div></div>
@@ -169,6 +170,16 @@ function loadData(){
     }
   }catch{}
   return {products:[],stores:[]}
+}
+function removeDuplicateProductIds(){
+  const seen=new Set();
+  const before=data.products.length;
+  data.products=data.products.filter(p=>{
+    const id=String(p.id||"");
+    if(!id || seen.has(id)) return false;
+    seen.add(id); return true;
+  });
+  if(data.products.length!==before)localStorage.setItem(KEY,JSON.stringify(data));
 }
 function ensureStores(){
   if(!Array.isArray(data.stores)) data.stores=[];
@@ -259,22 +270,34 @@ function renderLowestStoreSelect(selectedId){
   if(selectedId && data.stores.some(s=>s.id===selectedId)) sel.value=selectedId;
 }
 function editProduct(id){
-  const p=data.products.find(x=>x.id===id);if(!p)return;
-  ["editId","barcode","name","major","middle","capacity","capacityUnit","quantity","unit","lowestPrice","lowestPriceDate"].forEach(k=>document.getElementById(k).value=p[k]??"");
+  const p=data.products.find(x=>String(x.id)===String(id));if(!p)return;
+  const $=id=>document.getElementById(id);
+  $("editId").value=String(p.id);
+  $("originalEditId").value=String(p.id);
+  ["barcode","name","major","middle","capacity","capacityUnit","quantity","unit","lowestPrice","lowestPriceDate"].forEach(k=>$(k).value=p[k]??"");
   renderLowestStoreSelect(p.lowestPriceStoreId||"");
   if(!p.lowestPriceStoreId && p.lowestPriceStore){
     const oldStore=data.stores.find(s=>s.name===p.lowestPriceStore);
-    if(oldStore) document.getElementById("lowestPriceStore").value=oldStore.id;
+    if(oldStore) $("lowestPriceStore").value=oldStore.id;
   }
-  document.getElementById("productTitle").textContent="商品編集";document.getElementById("productDialog").showModal();
+  $("productTitle").textContent="商品編集";
+  $("productDialog").showModal();
 }
 function deleteProduct(id){if(confirm("この商品を削除しますか？")){data.products=data.products.filter(p=>p.id!==id);save()}}
-document.getElementById("addBtn").onclick=()=>{document.getElementById("productForm").reset();document.getElementById("editId").value="";document.getElementById("productTitle").textContent="商品登録";document.getElementById("productDialog").showModal()};
+document.getElementById("addBtn").onclick=()=>{
+  document.getElementById("productForm").reset();
+  document.getElementById("editId").value="";
+  document.getElementById("originalEditId").value="";
+  renderLowestStoreSelect(selectedStoreId);
+  document.getElementById("productTitle").textContent="商品登録";
+  document.getElementById("productDialog").showModal();
+};
 document.getElementById("cancelProduct").onclick=()=>document.getElementById("productDialog").close();
 document.getElementById("productForm").onsubmit=e=>{
   e.preventDefault();
   const $=id=>document.getElementById(id);
-  const id=$("editId").value||"P"+Date.now();
+  const originalId=$("originalEditId").value.trim();
+  const id=originalId||"P"+Date.now();
   const p={
     id,
     barcode:$("barcode").value.trim(),
@@ -291,11 +314,17 @@ document.getElementById("productForm").onsubmit=e=>{
     lowestPriceStore:(()=>{const s=data.stores.find(s=>s.id===$("lowestPriceStore").value);return s?s.name:""})()
   };
   if(!p.name){alert("商品名を入力してください");$("name").focus();return}
-  const i=data.products.findIndex(x=>x.id===id);
-  if(i>=0)data.products[i]=p;else data.products.push(p);
+  const i=data.products.findIndex(x=>String(x.id)===String(originalId));
+  if(originalId){
+    if(i<0){alert("編集対象の商品が見つかりません。保存を中止しました。");return}
+    p.id=data.products[i].id;
+    data.products[i]=p;
+  }else{
+    data.products.push(p);
+  }
   save();
   $("productDialog").close();
-  if(i<0 && getSelectedStore()){
+  if(!originalId && getSelectedStore()){
     toast("商品を登録しました。価格を入力してください");
     setTimeout(()=>openPrice(id),180);
   }else{
@@ -409,14 +438,16 @@ async function lookupBarcode(code){
     major.value="";middle.value="";
     capacity.value=p.product_quantity_value||"";capacityUnit.value=p.product_quantity_unit||"";
     quantity.value=0;unit.value="個";lowestPrice.value="";lowestPriceDate.value="";lowestPriceStore.value="";
-    document.getElementById("editId").value="";document.getElementById("productTitle").textContent="商品登録";
+    document.getElementById("editId").value="";
+    document.getElementById("originalEditId").value="";
+    document.getElementById("productTitle").textContent="商品登録";
     productDialog.showModal();
   }catch{alert("Open Food Factsへの接続に失敗しました。")}
 }
 document.getElementById("scanBtn").onclick=startScanner;
 document.getElementById("closeScanner").onclick=stopScanner;
 function toast(s){const t=document.getElementById("toast");t.textContent=s;t.style.display="block";clearTimeout(window._toast);window._toast=setTimeout(()=>t.style.display="none",2200)}
-ensureStores();cleanExpired();render();renderStore();
+ensureStores();removeDuplicateProductIds();cleanExpired();render();renderStore();
 </script>
 </body>
 </html>
