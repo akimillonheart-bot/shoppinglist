@@ -52,6 +52,15 @@ dialog::backdrop{background:#0008}
 <body>
 <header><div class="head"><h1>🏠 在庫・価格管理</h1><button class="btn" id="settingsBtn">⚙ 設定</button></div></header>
 <main class="wrap">
+  <section class="tile" style="margin-bottom:14px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+      <div>
+        <div class="meta">現在の調査店舗</div>
+        <strong id="currentStoreLabel">店舗未選択</strong>
+      </div>
+      <button class="btn primary" id="selectStoreBtn">🏪 店を選ぶ</button>
+    </div>
+  </section>
   <div class="toolbar">
     <button class="btn primary" id="scanBtn">📷 バーコード</button>
     <button class="btn" id="addBtn">＋ 商品登録</button>
@@ -59,6 +68,22 @@ dialog::backdrop{background:#0008}
   <input class="search" id="search" placeholder="商品名・バーコード・分類で検索">
   <div id="app"></div>
 </main>
+
+
+<dialog id="storeDialog">
+  <div class="modal">
+    <h2>調査するお店を選択</h2>
+    <form class="form" id="storeForm">
+      <label>店舗</label>
+      <select id="storeSelect" required></select>
+      <div class="actions">
+        <button type="button" class="btn" id="cancelStore">キャンセル</button>
+        <button class="btn primary">この店にする</button>
+      </div>
+    </form>
+    <div class="notice">一度選択すると、価格調査を続けている間は店舗選択が維持されます。</div>
+  </div>
+</dialog>
 
 <dialog id="scannerDialog">
   <div class="modal">
@@ -93,7 +118,23 @@ dialog::backdrop{background:#0008}
       <input type="hidden" id="priceId">
       <label>今回の価格（円）</label><input id="currentPrice" type="number" min="0" step="1" required inputmode="numeric">
       <label>お店</label><input id="currentStore" placeholder="スーパーA">
-      <div class="actions"><button type="button" class="btn" id="cancelPrice">キャンセル</button><button class="btn primary">保存</button></div>
+      <div class="actions"><button type="button" class="btn" id="cancelPrice">キャンセル</button><button type="button" class="btn" id="saveAndScan">保存して次をスキャン</button><button class="btn primary">保存</button></div>
+    </form>
+  </div>
+</dialog>
+
+
+<dialog id="storeMasterDialog">
+  <div class="modal">
+    <h2>店舗マスター</h2>
+    <div id="storeList"></div>
+    <form class="form" id="storeAddForm" style="margin-top:14px">
+      <label>新しい店舗</label>
+      <input id="newStoreName" placeholder="例：スーパーA" required>
+      <div class="actions">
+        <button type="button" class="btn" id="closeStoreMaster">閉じる</button>
+        <button class="btn primary">店舗を追加</button>
+      </div>
     </form>
   </div>
 </dialog>
@@ -101,12 +142,13 @@ dialog::backdrop{background:#0008}
 <dialog id="settingsDialog">
   <div class="modal"><h2>データ管理</h2>
     <div class="toolbar">
+      <button class="btn" id="manageStoresBtn">🏪 店舗マスター</button>
       <button class="btn" id="exportBtn">JSONを書き出す</button>
       <button class="btn" id="importBtn">JSONを読み込む</button>
       <input type="file" id="fileInput" accept=".json,application/json" hidden>
       <button class="btn danger" id="clearBtn">全データ削除</button>
     </div>
-    <div class="notice">データはこのブラウザのLocalStorageに保存されます。最安値は日付から365日を過ぎると自動的に削除されます。</div>
+    <div class="notice">データはこのブラウザのLocalStorageに保存されます。調査店舗は一度選ぶと維持され、価格登録時に自動的に使用されます。最安値は日付から365日を過ぎると自動的に削除されます。</div>
     <div class="actions"><button class="btn" id="closeSettings">閉じる</button></div>
   </div>
 </dialog>
@@ -115,12 +157,44 @@ dialog::backdrop{background:#0008}
 <script>
 const KEY="household_inventory_v1";
 let data=loadData();
+let selectedStoreId=localStorage.getItem("selected_store_id")||"";
 let stream=null, detector=null, scanTimer=null;
 
 function loadData(){
-  try{return JSON.parse(localStorage.getItem(KEY))||{products:[]}}catch{return {products:[]}}
+  try{
+    const x=JSON.parse(localStorage.getItem(KEY));
+    if(x && Array.isArray(x.products)){
+      if(!Array.isArray(x.stores)) x.stores=[];
+      return x;
+    }
+  }catch{}
+  return {products:[],stores:[]}
 }
-function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function ensureStores(){
+  if(!Array.isArray(data.stores)) data.stores=[];
+}
+function getSelectedStore(){
+  ensureStores();
+  return data.stores.find(s=>s.id===selectedStoreId)||null;
+}
+function renderStore(){
+  ensureStores();
+  const s=getSelectedStore();
+  document.getElementById("currentStoreLabel").textContent=s?s.name:"店舗未選択";
+}
+function renderStoreSelect(){
+  ensureStores();
+  const sel=document.getElementById("storeSelect");
+  sel.innerHTML=data.stores.length
+    ? data.stores.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join("")
+    : `<option value="">店舗マスターに店舗がありません</option>`;
+  if(selectedStoreId && data.stores.some(s=>s.id===selectedStoreId)) sel.value=selectedStoreId;
+}
+function requireStore(){
+  if(!getSelectedStore()){renderStoreSelect();storeDialog.showModal();return false}
+  return true;
+}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render();renderStore()}
 function cleanExpired(){
   const now=Date.now(); let changed=false;
   data.products.forEach(p=>{
@@ -159,9 +233,13 @@ function card(p){
 }
 function changeQty(id,d){const p=data.products.find(x=>x.id===id);if(!p)return;p.quantity=Math.max(0,(p.quantity||0)+d);save()}
 function openPrice(id){
+  if(!requireStore()) return;
   const p=data.products.find(x=>x.id===id);if(!p)return;
-  document.getElementById("priceId").value=id;document.getElementById("priceProduct").textContent=p.name;
-  document.getElementById("currentPrice").value="";document.getElementById("currentStore").value="";
+  const s=getSelectedStore();
+  document.getElementById("priceId").value=id;
+  document.getElementById("priceProduct").textContent=`${p.name}　／　${s.name}`;
+  document.getElementById("currentPrice").value="";
+  document.getElementById("currentStore").value=s.name;
   document.getElementById("priceDialog").showModal();
 }
 function editProduct(id){
@@ -176,14 +254,35 @@ document.getElementById("productForm").onsubmit=e=>{
   e.preventDefault();
   const id=document.getElementById("editId").value||"P"+Date.now();
   const p={id,barcode:barcode.value.trim(),name:name.value.trim(),major:major.value.trim(),middle:middle.value.trim(),capacity:capacity.value?Number(capacity.value):null,capacityUnit:capacityUnit.value.trim(),quantity:Number(quantity.value||0),unit:unit.value.trim(),lowestPrice:lowestPrice.value?Number(lowestPrice.value):null,lowestPriceDate:lowestPriceDate.value||null,lowestPriceStore:lowestPriceStore.value.trim()};
-  const i=data.products.findIndex(x=>x.id===id);if(i>=0)data.products[i]=p;else data.products.push(p);save();productDialog.close();toast("保存しました")}
+  const i=data.products.findIndex(x=>x.id===id);if(i>=0)data.products[i]=p;else data.products.push(p);
+  save();productDialog.close();
+  if(i<0 && getSelectedStore()){
+    toast("商品を登録しました。価格を入力してください");
+    setTimeout(()=>openPrice(id),180);
+  } else {
+    toast("保存しました");
+  }
+}
 document.getElementById("cancelPrice").onclick=()=>priceDialog.close();
+function saveCurrentPrice(){
+  const p=data.products.find(x=>x.id===priceId.value);if(!p)return false;
+  const price=Number(currentPrice.value),today=new Date().toISOString().slice(0,10),store=getSelectedStore();
+  if(!store){priceDialog.close();requireStore();return false}
+  if(!Number.isFinite(price)||price<0){alert("価格を入力してください");currentPrice.focus();return false}
+  if(p.lowestPrice==null||price<p.lowestPrice||!p.lowestPriceDate){
+    p.lowestPrice=price;p.lowestPriceDate=today;p.lowestPriceStoreId=store.id;p.lowestPriceStore=store.name;
+    toast("最安値を更新しました");
+  } else toast("価格を保存しました（最安値は変更なし）");
+  save();return true;
+}
 document.getElementById("priceForm").onsubmit=e=>{
-  e.preventDefault();const p=data.products.find(x=>x.id===priceId.value);if(!p)return;
-  const price=Number(currentPrice.value),today=new Date().toISOString().slice(0,10),store=currentStore.value.trim();
-  if(p.lowestPrice==null||price<p.lowestPrice||!p.lowestPriceDate){p.lowestPrice=price;p.lowestPriceDate=today;p.lowestPriceStore=store;toast("最安値を更新しました")}
-  else toast("価格を保存しました（最安値は変更なし）");
-  save();priceDialog.close()
+  e.preventDefault();
+  if(saveCurrentPrice()) priceDialog.close();
+};
+document.getElementById("saveAndScan").onclick=async()=>{
+  if(!saveCurrentPrice())return;
+  priceDialog.close();
+  setTimeout(startScanner,150);
 };
 document.getElementById("search").oninput=render;
 document.getElementById("settingsBtn").onclick=()=>settingsDialog.showModal();
@@ -199,7 +298,47 @@ document.getElementById("fileInput").onchange=e=>{
 };
 document.getElementById("clearBtn").onclick=()=>{if(confirm("すべての在庫データを削除しますか？")){data={products:[]};save();settingsDialog.close()}};
 
+document.getElementById("selectStoreBtn").onclick=()=>{renderStoreSelect();storeDialog.showModal()};
+document.getElementById("cancelStore").onclick=()=>storeDialog.close();
+document.getElementById("storeForm").onsubmit=e=>{
+  e.preventDefault();
+  const id=storeSelect.value;
+  if(!id){alert("店舗を選択してください");return}
+  selectedStoreId=id;
+  localStorage.setItem("selected_store_id",id);
+  renderStore();storeDialog.close();toast("調査店舗を変更しました");
+};
+document.getElementById("manageStoresBtn").onclick=()=>{renderStoreList();storeMasterDialog.showModal()};
+document.getElementById("closeStoreMaster").onclick=()=>storeMasterDialog.close();
+function renderStoreList(){
+  ensureStores();
+  const el=document.getElementById("storeList");
+  el.innerHTML=data.stores.length?data.stores.map(s=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)">
+      <span>${esc(s.name)}${s.id===selectedStoreId?'　✓使用中':''}</span>
+      <button class="btn danger" onclick="deleteStore('${s.id}')">削除</button>
+    </div>`).join(""):'<div class="empty">店舗がありません。</div>';
+}
+function deleteStore(id){
+  const s=data.stores.find(x=>x.id===id);if(!s)return;
+  if(!confirm(`「${s.name}」を店舗マスターから削除しますか？`))return;
+  data.stores=data.stores.filter(x=>x.id!==id);
+  if(selectedStoreId===id){selectedStoreId="";localStorage.removeItem("selected_store_id")}
+  save();renderStoreList();renderStore();
+}
+document.getElementById("storeAddForm").onsubmit=e=>{
+  e.preventDefault();
+  const name=document.getElementById("newStoreName").value.trim();
+  if(!name)return;
+  ensureStores();
+  if(data.stores.some(s=>s.name===name)){alert("同じ名前の店舗が既にあります");return}
+  data.stores.push({id:"S"+Date.now(),name});
+  save();document.getElementById("newStoreName").value="";renderStoreList();
+  toast("店舗を追加しました");
+};
+
 async function startScanner(){
+  if(!requireStore()) return;
   if(!("BarcodeDetector" in window)){alert("このブラウザではBarcodeDetectorが利用できません。Chrome系の最新ブラウザを推奨します。");return}
   scannerDialog.showModal();scanStatus.textContent="カメラを起動しています…";
   try{
@@ -236,7 +375,7 @@ async function lookupBarcode(code){
 document.getElementById("scanBtn").onclick=startScanner;
 document.getElementById("closeScanner").onclick=stopScanner;
 function toast(s){const t=document.getElementById("toast");t.textContent=s;t.style.display="block";clearTimeout(window._toast);window._toast=setTimeout(()=>t.style.display="none",2200)}
-cleanExpired();render();
+ensureStores();cleanExpired();render();renderStore();
 </script>
 </body>
 </html>
