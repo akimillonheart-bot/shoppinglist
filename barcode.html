@@ -117,7 +117,7 @@ dialog::backdrop{background:#0008}
     <form class="form" id="priceForm">
       <input type="hidden" id="priceId">
       <label>今回の価格（円）</label><input id="currentPrice" type="number" min="0" step="1" required inputmode="numeric">
-      <label>お店</label><input id="currentStore" placeholder="スーパーA">
+      <label>お店</label><select id="currentStore" required></select>
       <div class="actions"><button type="button" class="btn" id="cancelPrice">キャンセル</button><button type="button" class="btn" id="saveAndScan">保存して次をスキャン</button><button class="btn primary">保存</button></div>
     </form>
   </div>
@@ -232,6 +232,14 @@ function card(p){
   </article>`
 }
 function changeQty(id,d){const p=data.products.find(x=>x.id===id);if(!p)return;p.quantity=Math.max(0,(p.quantity||0)+d);save()}
+function renderPriceStoreSelect(defaultId){
+  ensureStores();
+  const sel=document.getElementById("currentStore");
+  sel.innerHTML=data.stores.length
+    ? data.stores.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join("")
+    : '<option value="">店舗未登録</option>';
+  if(defaultId && data.stores.some(s=>s.id===defaultId)) sel.value=defaultId;
+}
 function openPrice(id){
   if(!requireStore()) return;
   const p=data.products.find(x=>x.id===id);if(!p)return;
@@ -239,7 +247,7 @@ function openPrice(id){
   document.getElementById("priceId").value=id;
   document.getElementById("priceProduct").textContent=`${p.name}　／　${s.name}`;
   document.getElementById("currentPrice").value="";
-  document.getElementById("currentStore").value=s.name;
+  renderPriceStoreSelect(s.id);
   document.getElementById("priceDialog").showModal();
 }
 function editProduct(id){
@@ -252,23 +260,42 @@ document.getElementById("addBtn").onclick=()=>{document.getElementById("productF
 document.getElementById("cancelProduct").onclick=()=>document.getElementById("productDialog").close();
 document.getElementById("productForm").onsubmit=e=>{
   e.preventDefault();
-  const id=document.getElementById("editId").value||"P"+Date.now();
-  const p={id,barcode:barcode.value.trim(),name:name.value.trim(),major:major.value.trim(),middle:middle.value.trim(),capacity:capacity.value?Number(capacity.value):null,capacityUnit:capacityUnit.value.trim(),quantity:Number(quantity.value||0),unit:unit.value.trim(),lowestPrice:lowestPrice.value?Number(lowestPrice.value):null,lowestPriceDate:lowestPriceDate.value||null,lowestPriceStore:lowestPriceStore.value.trim()};
-  const i=data.products.findIndex(x=>x.id===id);if(i>=0)data.products[i]=p;else data.products.push(p);
-  save();productDialog.close();
+  const $=id=>document.getElementById(id);
+  const id=$("editId").value||"P"+Date.now();
+  const p={
+    id,
+    barcode:$("barcode").value.trim(),
+    name:$("name").value.trim(),
+    major:$("major").value.trim(),
+    middle:$("middle").value.trim(),
+    capacity:$("capacity").value?Number($("capacity").value):null,
+    capacityUnit:$("capacityUnit").value.trim(),
+    quantity:Number($("quantity").value||0),
+    unit:$("unit").value.trim(),
+    lowestPrice:$("lowestPrice").value?Number($("lowestPrice").value):null,
+    lowestPriceDate:$("lowestPriceDate").value||null,
+    lowestPriceStore:$("lowestPriceStore").value.trim()
+  };
+  if(!p.name){alert("商品名を入力してください");$("name").focus();return}
+  const i=data.products.findIndex(x=>x.id===id);
+  if(i>=0)data.products[i]=p;else data.products.push(p);
+  save();
+  $("productDialog").close();
   if(i<0 && getSelectedStore()){
     toast("商品を登録しました。価格を入力してください");
     setTimeout(()=>openPrice(id),180);
-  } else {
+  }else{
     toast("保存しました");
   }
 }
-document.getElementById("cancelPrice").onclick=()=>priceDialog.close();
+document.getElementById("cancelPrice").onclick=()=>document.getElementById("priceDialog").close();
 function saveCurrentPrice(){
-  const p=data.products.find(x=>x.id===priceId.value);if(!p)return false;
-  const price=Number(currentPrice.value),today=new Date().toISOString().slice(0,10),store=getSelectedStore();
-  if(!store){priceDialog.close();requireStore();return false}
-  if(!Number.isFinite(price)||price<0){alert("価格を入力してください");currentPrice.focus();return false}
+  const p=data.products.find(x=>x.id===document.getElementById("priceId").value);if(!p)return false;
+  const price=Number(document.getElementById("currentPrice").value),today=new Date().toISOString().slice(0,10);
+  const storeId=document.getElementById("currentStore").value;
+  const store=data.stores.find(s=>s.id===storeId);
+  if(!store){document.getElementById("priceDialog").close();requireStore();return false}
+  if(!Number.isFinite(price)||price<0){alert("価格を入力してください");document.getElementById("currentPrice").focus();return false}
   if(p.lowestPrice==null||price<p.lowestPrice||!p.lowestPriceDate){
     p.lowestPrice=price;p.lowestPriceDate=today;p.lowestPriceStoreId=store.id;p.lowestPriceStore=store.name;
     toast("最安値を更新しました");
@@ -281,7 +308,7 @@ document.getElementById("priceForm").onsubmit=e=>{
 };
 document.getElementById("saveAndScan").onclick=async()=>{
   if(!saveCurrentPrice())return;
-  priceDialog.close();
+  document.getElementById("priceDialog").close();
   setTimeout(startScanner,150);
 };
 document.getElementById("search").oninput=render;
