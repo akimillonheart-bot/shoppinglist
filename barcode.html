@@ -105,7 +105,7 @@ dialog::backdrop{background:#0008}
       <div class="row"><div><label>容量</label><input id="capacity" type="number" min="0" step="any"></div><div><label>単位</label><input id="capacityUnit" placeholder="ml"></div></div>
       <div class="row"><div><label>在庫数</label><input id="quantity" type="number" min="0" step="1" value="0"></div><div><label>在庫単位</label><input id="unit" placeholder="本"></div></div>
       <div class="row"><div><label>最安値</label><input id="lowestPrice" type="number" min="0" step="1"></div><div><label>最安値の日付</label><input id="lowestPriceDate" type="date"></div></div>
-      <label>最安値のお店</label><input id="lowestPriceStore">
+      <label>最安値のお店</label><select id="lowestPriceStore"></select>
       <div class="actions"><button type="button" class="btn" id="cancelProduct">キャンセル</button><button class="btn primary">保存</button></div>
     </form>
   </div>
@@ -250,9 +250,22 @@ function openPrice(id){
   renderPriceStoreSelect(s.id);
   document.getElementById("priceDialog").showModal();
 }
+function renderLowestStoreSelect(selectedId){
+  ensureStores();
+  const sel=document.getElementById("lowestPriceStore");
+  sel.innerHTML=data.stores.length
+    ? data.stores.map(s=>`<option value="${esc(s.id)}">${esc(s.name)}</option>`).join("")
+    : '<option value="">店舗未登録</option>';
+  if(selectedId && data.stores.some(s=>s.id===selectedId)) sel.value=selectedId;
+}
 function editProduct(id){
   const p=data.products.find(x=>x.id===id);if(!p)return;
-  ["editId","barcode","name","major","middle","capacity","capacityUnit","quantity","unit","lowestPrice","lowestPriceDate","lowestPriceStore"].forEach(k=>document.getElementById(k).value=p[k]??"");
+  ["editId","barcode","name","major","middle","capacity","capacityUnit","quantity","unit","lowestPrice","lowestPriceDate"].forEach(k=>document.getElementById(k).value=p[k]??"");
+  renderLowestStoreSelect(p.lowestPriceStoreId||"");
+  if(!p.lowestPriceStoreId && p.lowestPriceStore){
+    const oldStore=data.stores.find(s=>s.name===p.lowestPriceStore);
+    if(oldStore) document.getElementById("lowestPriceStore").value=oldStore.id;
+  }
   document.getElementById("productTitle").textContent="商品編集";document.getElementById("productDialog").showModal();
 }
 function deleteProduct(id){if(confirm("この商品を削除しますか？")){data.products=data.products.filter(p=>p.id!==id);save()}}
@@ -274,7 +287,8 @@ document.getElementById("productForm").onsubmit=e=>{
     unit:$("unit").value.trim(),
     lowestPrice:$("lowestPrice").value?Number($("lowestPrice").value):null,
     lowestPriceDate:$("lowestPriceDate").value||null,
-    lowestPriceStore:$("lowestPriceStore").value.trim()
+    lowestPriceStoreId:$("lowestPriceStore").value||null,
+    lowestPriceStore:(()=>{const s=data.stores.find(s=>s.id===$("lowestPriceStore").value);return s?s.name:""})()
   };
   if(!p.name){alert("商品名を入力してください");$("name").focus();return}
   const i=data.products.findIndex(x=>x.id===id);
